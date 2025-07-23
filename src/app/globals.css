@@ -1,27 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  /* Light theme colors */
+  /* Brand Colors - Light Mode */
+  --brand-50: #ebf5fa;
+  --brand-100: #c3e7f9;
+  --brand-200: #93d5f5;
+  --brand-300: #42a5d7;
+  --brand-400: #18709b;
+  --brand-500: #07557c;
+
+  /* Neutral Colors - Light Mode */
+  --neutral-50: #fafdff;
+  --neutral-100: #f8fbfc;
+  --neutral-200: #d8dcde;
+  --neutral-300: #74797b;
+  --neutral-400: #3e4244;
+  --neutral-500: #181b1c;
+
+  /* Text Colors - Light Mode */
+  --text-primary: #181b1c;
+
+  /* Semantic Colors - Light Mode */
   --background: #ffffff;
-  --foreground: #171717;
-  --muted: #f5f5f5;
-  --muted-foreground: #6b7280;
+  --foreground: var(--text-primary);
+  --muted: var(--neutral-100);
+  --muted-foreground: var(--neutral-300);
   --popover: #ffffff;
-  --popover-foreground: #171717;
+  --popover-foreground: var(--text-primary);
   --card: #ffffff;
-  --card-foreground: #171717;
-  --border: #e5e7eb;
-  --input: #e5e7eb;
-  --primary: #0ea5e9;
+  --card-foreground: var(--text-primary);
+  --border: var(--neutral-200);
+  --input: var(--neutral-200);
+  --primary: var(--brand-500);
   --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
+  --secondary: var(--neutral-100);
+  --secondary-foreground: var(--text-primary);
+  --accent: var(--neutral-100);
+  --accent-foreground: var(--text-primary);
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --ring: #0ea5e9;
-  --chart-1: #0ea5e9;
+  --ring: var(--brand-500);
+  --chart-1: var(--brand-500);
   --chart-2: #10b981;
   --chart-3: #f59e0b;
   --chart-4: #ef4444;
@@ -29,27 +48,46 @@
 }
 
 .dark {
-  /* Dark theme colors */
+  /* Brand Colors - Dark Mode */
+  --brand-50: #c4ebff;
+  --brand-100: #82cff6;
+  --brand-200: #40b1e9;
+  --brand-300: #2896cd;
+  --brand-400: #1b94d1;
+  --brand-500: #0d72a5;
+
+  /* Neutral Colors - Dark Mode */
+  --neutral-50: #181b1c;
+  --neutral-100: #3e4244;
+  --neutral-200: #6b6f71;
+  --neutral-300: #b3b5b6;
+  --neutral-400: #d7d7d7;
+  --neutral-500: #ebebeb;
+
+  /* Text Colors - Dark Mode */
+  --text-primary: #ebebeb;
+
+  /* Semantic Colors - Dark Mode */
   --background: #0a0a0a;
-  --foreground: #ededed;
-  --muted: #1f2937;
-  --muted-foreground: #9ca3af;
-  --popover: #1f2937;
-  --popover-foreground: #ededed;
-  --card: #1f2937;
-  --card-foreground: #ededed;
-  --border: #374151;
-  --input: #374151;
-  --primary: #0ea5e9;
+  --foreground: var(--text-primary);
+  --muted: var(--neutral-100);
+  --muted-foreground: var(--neutral-300);
+  --popover: var(--neutral-100);
+  --popover-foreground: var(--text-primary);
+  --card: var(--neutral-100);
+  --card-foreground: var(--text-primary);
+  --border: var(--neutral-200);
+  --input: var(--neutral-200);
+  --primary: var(--brand-500);
   --primary-foreground: #ffffff;
-  --secondary: #374151;
-  --secondary-foreground: #ededed;
-  --accent: #374151;
-  --accent-foreground: #ededed;
+  --secondary: var(--neutral-200);
+  --secondary-foreground: var(--text-primary);
+  --accent: var(--neutral-200);
+  --accent-foreground: var(--text-primary);
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --ring: #0ea5e9;
-  --chart-1: #0ea5e9;
+  --ring: var(--brand-500);
+  --chart-1: var(--brand-500);
   --chart-2: #10b981;
   --chart-3: #f59e0b;
   --chart-4: #ef4444;
@@ -57,6 +95,24 @@
 }
 
 @theme inline {
+  /* Color System */
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+
+  --color-text-primary: var(--text-primary);
+
+  /* Semantic Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
@@ -81,12 +137,97 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Typography System */
+  --font-sans: var(--font-geist-sans), var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Fira Code", monospace;
+  --font-geist: var(--font-geist-sans), sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+
+  /* Font Sizes */
+  --font-size-xs: 10px; /* Caption Small */
+  --font-size-sm: 13px; /* Caption */
+  --font-size-base: 16px; /* Body */
+  --font-size-lg: 20px; /* Heading 3 */
+  --font-size-xl: 25px; /* Heading 2 */
+  --font-size-2xl: 31px; /* Heading 1 */
+  --font-size-3xl: 39px; /* Display */
+
+  /* Line Heights */
+  --line-height-tight: 120%;
+  --line-height-normal: 140%;
+  --line-height-relaxed: 160%;
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Letter Spacing */
+  --letter-spacing-normal: 0%;
+  --letter-spacing-wide: 2%;
+  --letter-spacing-wider: 4%;
+
+  /* Line Height Utilities */
+  --line-height-tight: var(--line-height-tight);
+  --line-height-normal: var(--line-height-normal);
+  --line-height-relaxed: var(--line-height-relaxed);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-400);
+}
+
+::selection {
+  background: var(--brand-200);
+  color: var(--text-primary);
+}
+
+.transition-colors {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+}
+
+.transition-all {
+  transition: all 0.2s ease-in-out;
 }
