@@ -2,13 +2,11 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
-import { Sun, Moon, Waves, Trees, Monitor } from "lucide-react";
+import { Sun, Moon, Monitor } from "lucide-react";
 
 const themes = [
   { name: "light", label: "Light", icon: Sun },
   { name: "dark", label: "Dark", icon: Moon },
-  { name: "ocean", label: "Ocean", icon: Waves },
-  { name: "forest", label: "Forest", icon: Trees },
   { name: "system", label: "System", icon: Monitor },
 ];
 
