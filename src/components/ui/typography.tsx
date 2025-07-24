@@ -1,17 +1,15 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-// Typography Variants
 export type TypographyVariant =
-  | "display"
-  | "heading-1"
-  | "heading-2"
-  | "heading-3"
-  | "body"
-  | "caption"
-  | "caption-small";
+  | "heading-01"
+  | "heading-02"
+  | "heading-03"
+  | "heading-04"
+  | "body-01"
+  | "body-02"
+  | "body-03";
 
-// Typography Props
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TypographyVariant;
   as?: React.ElementType;
@@ -19,91 +17,99 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   className?: string;
 }
 
-// Complete typography styles mapping object
 const TYPOGRAPHY_STYLES: Record<
   TypographyVariant,
   {
     element: React.ElementType;
     classes: string;
+    styles: React.CSSProperties;
   }
 > = {
-  display: {
+  "heading-01": {
     element: "h1",
-    classes: "font-geist text-3xl",
+    classes: "font-geist font-normal",
+    styles: {
+      fontSize: "39px",
+      lineHeight: "120%",
+      letterSpacing: "0%",
+    },
   },
-  "heading-1": {
-    element: "h1",
-    classes: "font-inter text-2xl",
+  "heading-02": {
+    element: "h2",
+    classes: "font-inter font-normal",
+    styles: {
+      fontSize: "31px",
+      lineHeight: "120%",
+      letterSpacing: "0%",
+    },
   },
-  "heading-2": {
-    element: "h1",
-    classes: "font-inter text-xl",
+  "heading-03": {
+    element: "h3",
+    classes: "font-inter font-normal",
+    styles: {
+      fontSize: "25px",
+      lineHeight: "120%",
+      letterSpacing: "0%",
+    },
   },
-  "heading-3": {
-    element: "h1",
-    classes: "font-inter text-lg",
+  "heading-04": {
+    element: "h4",
+    classes: "font-inter font-normal",
+    styles: {
+      fontSize: "20px",
+      lineHeight: "120%",
+      letterSpacing: "0%",
+    },
   },
-  body: {
+  "body-01": {
     element: "p",
-    classes: "font-geist text-base",
+    classes: "font-geist font-normal",
+    styles: {
+      fontSize: "16px",
+      lineHeight: "120%",
+      letterSpacing: "0%",
+    },
   },
-  caption: {
-    element: "span",
-    classes: "font-geist text-sm",
+  "body-02": {
+    element: "p",
+    classes: "font-geist font-normal",
+    styles: {
+      fontSize: "13px",
+      lineHeight: "120%",
+      letterSpacing: "0%",
+    },
   },
-  "caption-small": {
-    element: "span",
-    classes: "font-geist text-xs",
+  "body-03": {
+    element: "p",
+    classes: "font-geist font-normal",
+    styles: {
+      fontSize: "10px",
+      lineHeight: "120%",
+      letterSpacing: "0%",
+    },
   },
 };
 
-// Typography Component
 export const Typography: React.FC<TypographyProps> = ({
-  variant = "body",
+  variant = "body-01",
   as,
   children,
   className,
+  style,
   ...props
 }) => {
-  const style = TYPOGRAPHY_STYLES[variant];
-  const Element = as || style.element;
+  const styleConfig = TYPOGRAPHY_STYLES[variant];
+  const Element = as || styleConfig.element;
 
   return (
     <Element
-      className={cn("leading-tight", style.classes, className)}
+      className={cn(styleConfig.classes, className)}
+      style={{ ...styleConfig.styles, ...style }}
       {...props}
     >
       {children}
     </Element>
   );
 };
-
-export const Display: React.FC<Omit<TypographyProps, "variant">> = (props) => (
-  <Typography variant="display" {...props} />
-);
-
-export const Heading1: React.FC<Omit<TypographyProps, "variant">> = (props) => (
-  <Typography variant="heading-1" {...props} />
-);
-
-export const Heading2: React.FC<Omit<TypographyProps, "variant">> = (props) => (
-  <Typography variant="heading-2" {...props} />
-);
-
-export const Heading3: React.FC<Omit<TypographyProps, "variant">> = (props) => (
-  <Typography variant="heading-3" {...props} />
-);
-
-export const Body: React.FC<Omit<TypographyProps, "variant">> = (props) => (
-  <Typography variant="body" {...props} />
-);
-
-export const Caption: React.FC<Omit<TypographyProps, "variant">> = (props) => (
-  <Typography variant="caption" {...props} />
-);
-
-export const CaptionSmall: React.FC<Omit<TypographyProps, "variant">> = (
-  props
-) => <Typography variant="caption-small" {...props} />;
 
 export default Typography;
