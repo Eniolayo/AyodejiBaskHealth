@@ -120,15 +120,12 @@ export const SkeletonCard = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(
-      "rounded-lg border bg-card p-6 space-y-4",
-      className
-    )}
+    className={cn("bg-card space-y-4 rounded-lg border p-6", className)}
     {...props}
   >
     <div className="flex items-center space-x-4">
       <SkeletonAvatar size="md" />
-      <div className="space-y-2 flex-1">
+      <div className="flex-1 space-y-2">
         <SkeletonText className="h-4 w-3/4" />
         <SkeletonText className="h-3 w-1/2" />
       </div>
@@ -149,18 +146,11 @@ export const SkeletonTable = React.forwardRef<
     columns?: number;
   }
 >(({ className, rows = 5, columns = 4, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("space-y-2", className)}
-    {...props}
-  >
+  <div ref={ref} className={cn("space-y-2", className)} {...props}>
     {/* Header */}
     <div className="flex space-x-2">
       {Array.from({ length: columns }).map((_, index) => (
-        <SkeletonText
-          key={`header-${index}`}
-          className="h-6 flex-1"
-        />
+        <SkeletonText key={`header-${index}`} className="h-6 flex-1" />
       ))}
     </div>
     {/* Rows */}
@@ -184,15 +174,11 @@ export const SkeletonList = React.forwardRef<
     items?: number;
   }
 >(({ className, items = 3, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("space-y-3", className)}
-    {...props}
-  >
+  <div ref={ref} className={cn("space-y-3", className)} {...props}>
     {Array.from({ length: items }).map((_, index) => (
       <div key={index} className="flex items-center space-x-3">
         <SkeletonAvatar size="sm" />
-        <div className="space-y-2 flex-1">
+        <div className="flex-1 space-y-2">
           <SkeletonText className="h-4 w-3/4" />
           <SkeletonText className="h-3 w-1/2" />
         </div>
@@ -202,4 +188,4 @@ export const SkeletonList = React.forwardRef<
 ));
 SkeletonList.displayName = "SkeletonList";
 
-export { Skeleton }; 
+export { Skeleton };

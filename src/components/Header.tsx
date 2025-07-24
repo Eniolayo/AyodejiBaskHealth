@@ -7,10 +7,10 @@ import { useState } from "react";
 function Header() {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   return (
-    <header className="py-3 border-b border-neutral-200 bg-neutral-50 ">
-      <div className="flex px-3 justify-between items-center max-w-[1580px] mx-auto">
-        <div className="flex gap-4 w-[30%]">
-          <button className="border border-neutral-200 py-2 text-[13px] px-3 bg-neutral-50 rounded-lg">
+    <header className="border-b border-neutral-200 bg-neutral-50 py-3">
+      <div className="mx-auto flex max-w-[1580px] items-center justify-between px-3">
+        <div className="flex w-[30%] gap-4">
+          <button className="rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-[13px]">
             Reset to default
           </button>
           <div className="flex items-center gap-2">
@@ -23,11 +23,11 @@ function Header() {
         <img
           src="/AcmeLogo.avif"
           alt="logo"
-          className=" w-[136px] object-contain h-10"
+          className="h-10 w-[136px] object-contain"
         />
-        <div className="flex gap-2 w-[30%] justify-end">
+        <div className="flex w-[30%] justify-end gap-2">
           <button className="cursor-pointer">
-            <SunIcon className="size-5 text-text-primary" />
+            <SunIcon className="text-text-primary size-5" />
           </button>
         </div>
       </div>

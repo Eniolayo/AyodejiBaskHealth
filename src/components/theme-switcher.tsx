@@ -23,7 +23,7 @@ export function ThemeSwitcher() {
   }
 
   return (
-    <div className="flex items-center space-x-1 rounded-lg bg-muted p-1">
+    <div className="bg-muted flex items-center space-x-1 rounded-lg p-1">
       {themes.map((themeOption) => {
         const Icon = themeOption.icon;
         const isActive = theme === themeOption.name;
@@ -32,14 +32,11 @@ export function ThemeSwitcher() {
           <button
             key={themeOption.name}
             onClick={() => setTheme(themeOption.name)}
-            className={`
-              flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors
-              ${
-                isActive
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:bg-background/50 hover:text-foreground"
-              }
-            `}
+            className={`flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+              isActive
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-background/50 hover:text-foreground"
+            } `}
             title={`Switch to ${themeOption.label} theme`}
           >
             <Icon size={16} />
@@ -71,7 +68,7 @@ export function CompactThemeSwitcher() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 rounded-lg bg-muted px-3 py-2 text-sm font-medium transition-colors hover:bg-muted/80"
+        className="bg-muted hover:bg-muted/80 flex items-center space-x-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
         title="Switch theme"
       >
         <CurrentIcon size={16} />
@@ -84,7 +81,7 @@ export function CompactThemeSwitcher() {
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 top-full z-20 mt-2 w-48 rounded-lg border bg-popover p-1 shadow-lg">
+          <div className="bg-popover absolute top-full right-0 z-20 mt-2 w-48 rounded-lg border p-1 shadow-lg">
             {themes.map((themeOption) => {
               const Icon = themeOption.icon;
               const isActive = theme === themeOption.name;
@@ -96,14 +93,11 @@ export function CompactThemeSwitcher() {
                     setTheme(themeOption.name);
                     setIsOpen(false);
                   }}
-                  className={`
-                    flex w-full items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors
-                    ${
-                      isActive
-                        ? "bg-accent text-accent-foreground"
-                        : "text-popover-foreground hover:bg-accent hover:text-accent-foreground"
-                    }
-                  `}
+                  className={`flex w-full items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-accent text-accent-foreground"
+                      : "text-popover-foreground hover:bg-accent hover:text-accent-foreground"
+                  } `}
                 >
                   <Icon size={16} />
                   <span>{themeOption.label}</span>

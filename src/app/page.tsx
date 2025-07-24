@@ -10,16 +10,16 @@ import { PaymentsHistorySection } from "@/components/Dashboard/PaymentsHistorySe
 
 export default function Home() {
   return (
-    <main className="border border-neutral-200 font-geist min-h-screen ">
+    <main className="font-geist min-h-screen border border-neutral-200">
       <Header />
-      <section className="p-3 max-w-[1580px] mx-auto">
+      <section className="mx-auto max-w-[1580px] p-3">
         <DashboardHeader />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <SummarySection />
           <OrdersSection />
           <TopProductsSection />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <SalesOverTimeSection />
           <PaymentsHistorySection />
         </div>

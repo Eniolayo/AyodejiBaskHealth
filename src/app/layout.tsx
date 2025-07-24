@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased bg-neutral-100 text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} text-foreground bg-neutral-100 antialiased`}
       >
         <QueryProvider>
           <ThemeProvider

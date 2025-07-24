@@ -1,73 +1,73 @@
 import Typography from "@/components/ui/typography";
 import { paymentsHistoryData } from "@/data/dashboard-data";
-import { ChevronsUpDown, ChevronDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 export const PaymentsHistorySection = () => {
   return (
-    <div className="bg-neutral-50 rounded-lg border border-neutral-200">
-      <div className="border-b px-3 py-3.5 border-neutral-200">
+    <div className="rounded-lg border border-neutral-200 bg-neutral-50">
+      <div className="border-b border-neutral-200 px-3 py-3.5">
         <Typography variant="body-01" className="text-text-primary">
           Payments history
         </Typography>
       </div>
       <div className="p-3">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <div className="relative">
             <input
               type="text"
+              className="text-text-primary w-48 rounded-md border border-neutral-300 bg-transparent px-3 py-0 text-sm placeholder-neutral-400 focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Filter..."
-              className="px-3 py-2 bg-neutral-100 border border-neutral-300 rounded-md text-sm text-text-primary placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-48"
             />
           </div>
-          <button className="flex items-center gap-2 px-3 py-2 bg-neutral-100 border border-neutral-300 rounded-md text-sm text-text-primary hover:bg-neutral-200 transition-colors">
+          <button className="text-text-primary flex items-center gap-2 rounded-md border border-neutral-300 bg-neutral-100 px-3 py-2 text-sm transition-colors hover:bg-neutral-200">
             <span>Columns</span>
-            <ChevronDown className="w-4 h-4" />
+            <ChevronsUpDown className="h-4 w-4 text-neutral-500" />
           </button>
         </div>
 
-        <div className="bg-neutral-100 border border-neutral-300 rounded-md overflow-hidden">
+        <div className="overflow-hidden rounded-md border border-neutral-200">
           <table className="w-full">
-            <thead className="bg-neutral-200 border-b border-neutral-300">
+            <thead className="border-b border-neutral-200">
               <tr>
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-2 text-left">
                   <input
                     type="checkbox"
-                    className="rounded border-neutral-400 bg-white"
+                    className="rounded border-neutral-200 bg-white"
                   />
                 </th>
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-2 text-left">
                   <div className="flex items-center gap-1">
                     <Typography
                       variant="body-02"
-                      className="text-neutral-700 font-medium"
+                      className="font-medium text-neutral-400"
                     >
                       Status
                     </Typography>
                   </div>
                 </th>
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-2 text-left">
                   <div className="flex items-center gap-1">
                     <Typography
                       variant="body-02"
-                      className="text-neutral-700 font-medium"
+                      className="font-medium text-neutral-400"
                     >
                       Email
                     </Typography>
-                    <ChevronsUpDown className="w-4 h-4 text-neutral-500" />
+                    <ChevronsUpDown className="h-4 w-4 text-neutral-500" />
                   </div>
                 </th>
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-2 text-left">
                   <Typography
                     variant="body-02"
-                    className="text-neutral-700 font-medium"
+                    className="font-medium text-neutral-400"
                   >
                     Amount
                   </Typography>
                 </th>
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-2 text-left">
                   <Typography
                     variant="body-02"
-                    className="text-neutral-700 font-medium"
+                    className="font-medium text-neutral-400"
                   >
                     Total net
                   </Typography>
@@ -78,30 +78,30 @@ export const PaymentsHistorySection = () => {
               {paymentsHistoryData.map((payment) => (
                 <tr
                   key={payment.id}
-                  className="border-b border-neutral-200 last:border-b-0 bg-white hover:bg-neutral-200"
+                  className="border-b border-neutral-200 bg-transparent last:border-b-0"
                 >
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-2">
                     <input
                       type="checkbox"
-                      className="rounded border-neutral-400 bg-white"
+                      className="rounded border-neutral-200 bg-white"
                     />
                   </td>
-                  <td className="px-4 py-3">
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <td className="px-4 py-2">
+                    <Typography variant="body-02" className="text-text-primary">
                       {payment.status}
-                    </span>
+                    </Typography>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-2">
                     <Typography variant="body-02" className="text-text-primary">
                       {payment.email}
                     </Typography>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-2">
                     <Typography variant="body-02" className="text-text-primary">
                       {payment.amount}
                     </Typography>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-2">
                     <Typography variant="body-02" className="text-text-primary">
                       {payment.totalNet}
                     </Typography>
@@ -112,25 +112,25 @@ export const PaymentsHistorySection = () => {
           </table>
         </div>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="mt-4 flex items-center justify-between">
           <Typography variant="body-02" className="text-neutral-500">
             0 of 5 row(s) selected
           </Typography>
           <div className="flex items-center gap-1">
-            <button className="px-2 py-1 text-sm text-neutral-500 hover:text-text-primary transition-colors">
+            <button className="hover:text-text-primary px-2 py-1 text-sm text-neutral-500 transition-colors">
               &lt;
             </button>
-            <button className="px-2 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+            <button className="rounded bg-blue-500 px-2 py-1 text-sm text-white transition-colors hover:bg-blue-600">
               1
             </button>
-            <button className="px-2 py-1 text-sm text-neutral-500 hover:text-text-primary transition-colors">
+            <button className="hover:text-text-primary px-2 py-1 text-sm text-neutral-500 transition-colors">
               2
             </button>
-            <button className="px-2 py-1 text-sm text-neutral-500 hover:text-text-primary transition-colors">
+            <button className="hover:text-text-primary px-2 py-1 text-sm text-neutral-500 transition-colors">
               3
             </button>
             <span className="px-2 py-1 text-sm text-neutral-500">...</span>
-            <button className="px-2 py-1 text-sm text-neutral-500 hover:text-text-primary transition-colors">
+            <button className="hover:text-text-primary px-2 py-1 text-sm text-neutral-500 transition-colors">
               &gt;
             </button>
           </div>

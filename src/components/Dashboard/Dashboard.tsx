@@ -20,10 +20,10 @@ export function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="bg-background flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
-          <p className="text-lg text-muted-foreground">Loading dashboard...</p>
+          <RefreshCw className="text-primary mx-auto mb-4 h-8 w-8 animate-spin" />
+          <p className="text-muted-foreground text-lg">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -31,13 +31,13 @@ export function Dashboard() {
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="bg-background flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <p className="text-lg text-destructive mb-4">
+          <p className="text-destructive mb-4 text-lg">
             Error loading dashboard: {error?.message || "Unknown error"}
           </p>
           <Button onClick={manualRefresh} variant="outline">
-            <RefreshCw className="h-4 w-4 mr-2" />
+            <RefreshCw className="mr-2 h-4 w-4" />
             Retry
           </Button>
         </div>
@@ -46,19 +46,19 @@ export function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       {/* Header */}
-      <header className="border-b border-border bg-card">
+      <header className="border-border bg-card border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <h1 className="text-2xl font-bold text-foreground">
+              <h1 className="text-foreground text-2xl font-bold">
                 Health Dashboard
               </h1>
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+              <div className="text-muted-foreground flex items-center space-x-2 text-sm">
                 <div className="flex items-center space-x-1">
                   <div
-                    className={`w-2 h-2 rounded-full ${
+                    className={`h-2 w-2 rounded-full ${
                       isFetching ? "bg-green-500" : "bg-gray-400"
                     }`}
                   />
@@ -118,41 +118,41 @@ export function Dashboard() {
         {data ? (
           <div className="space-y-8">
             {/* Data Preview */}
-            <div className="bg-card rounded-lg border border-border p-6">
-              <h2 className="text-xl font-semibold mb-4 text-card-foreground">
+            <div className="bg-card border-border rounded-lg border p-6">
+              <h2 className="text-card-foreground mb-4 text-xl font-semibold">
                 Dashboard Data Preview
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <div className="bg-muted rounded-lg p-4">
-                  <h3 className="font-medium text-muted-foreground mb-2">
+                  <h3 className="text-muted-foreground mb-2 font-medium">
                     Charts
                   </h3>
-                  <p className="text-2xl font-bold text-foreground">
+                  <p className="text-foreground text-2xl font-bold">
                     {data.data.dashboardData.charts ? 2 : 0}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-muted-foreground mt-1 text-xs">
                     Sales & Engagement
                   </p>
                 </div>
                 <div className="bg-muted rounded-lg p-4">
-                  <h3 className="font-medium text-muted-foreground mb-2">
+                  <h3 className="text-muted-foreground mb-2 font-medium">
                     Tables
                   </h3>
-                  <p className="text-2xl font-bold text-foreground">
+                  <p className="text-foreground text-2xl font-bold">
                     {data.data.dashboardData.tables ? 2 : 0}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-muted-foreground mt-1 text-xs">
                     Transactions & Products
                   </p>
                 </div>
                 <div className="bg-muted rounded-lg p-4">
-                  <h3 className="font-medium text-muted-foreground mb-2">
+                  <h3 className="text-muted-foreground mb-2 font-medium">
                     Map Locations
                   </h3>
-                  <p className="text-2xl font-bold text-foreground">
+                  <p className="text-foreground text-2xl font-bold">
                     {data.data.dashboardData.map?.locations?.length || 0}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-muted-foreground mt-1 text-xs">
                     Active Cities
                   </p>
                 </div>
@@ -160,17 +160,17 @@ export function Dashboard() {
             </div>
 
             {/* Raw Data Display */}
-            <div className="bg-card rounded-lg border border-border p-6">
-              <h2 className="text-xl font-semibold mb-4 text-card-foreground">
+            <div className="bg-card border-border rounded-lg border p-6">
+              <h2 className="text-card-foreground mb-4 text-xl font-semibold">
                 Raw API Response
               </h2>
-              <pre className="bg-muted rounded-lg p-4 overflow-auto text-sm text-muted-foreground">
+              <pre className="bg-muted text-muted-foreground overflow-auto rounded-lg p-4 text-sm">
                 {JSON.stringify(data, null, 2)}
               </pre>
             </div>
           </div>
         ) : (
-          <div className="bg-card rounded-lg border border-border p-6 text-center">
+          <div className="bg-card border-border rounded-lg border p-6 text-center">
             <p className="text-muted-foreground">No data available</p>
           </div>
         )}

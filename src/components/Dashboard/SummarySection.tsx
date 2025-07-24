@@ -3,15 +3,15 @@ import { summaryData } from "@/data/dashboard-data";
 
 export const SummarySection = () => {
   return (
-    <div className="bg-neutral-50  rounded-lg border border-neutral-200">
-      <div className="border-b px-3 py-3.5 border-neutral-200 ">
-        <Typography variant="body-01" className="text-text-primary ">
+    <div className="rounded-lg border border-neutral-200 bg-neutral-50">
+      <div className="border-b border-neutral-200 px-3 py-3.5">
+        <Typography variant="body-01" className="text-text-primary">
           Summary
         </Typography>
       </div>
       <div className="">
-        <div className="py-3.5 px-[15px] border-b border-neutral-200">
-          <Typography variant="body-02" className="text-neutral-400 mb-2">
+        <div className="border-b border-neutral-200 px-[15px] py-3.5">
+          <Typography variant="body-02" className="mb-2 text-neutral-400">
             Total sales
           </Typography>
           <Typography
@@ -24,8 +24,8 @@ export const SummarySection = () => {
             </Typography>
           </Typography>
         </div>
-        <div className="py-3.5 px-[15px] border-b border-neutral-200">
-          <Typography variant="body-02" className="text-neutral-400 mb-2">
+        <div className="border-b border-neutral-200 px-[15px] py-3.5">
+          <Typography variant="body-02" className="mb-2 text-neutral-400">
             Total expenses
           </Typography>
           <Typography
@@ -38,8 +38,8 @@ export const SummarySection = () => {
             </Typography>
           </Typography>
         </div>
-        <div className="py-3.5 px-[15px] border-b border-neutral-200">
-          <Typography variant="body-02" className="text-neutral-400 mb-2">
+        <div className="border-b border-neutral-200 px-[15px] py-3.5">
+          <Typography variant="body-02" className="mb-2 text-neutral-400">
             Gross profit
           </Typography>
           <Typography
@@ -52,8 +52,8 @@ export const SummarySection = () => {
             </Typography>
           </Typography>
         </div>
-        <div className="py-3.5 px-[15px] ">
-          <Typography variant="body-02" className="text-neutral-400 mb-2">
+        <div className="px-[15px] py-3.5">
+          <Typography variant="body-02" className="mb-2 text-neutral-400">
             Total orders
           </Typography>
           <Typography

@@ -12,8 +12,8 @@ import { salesOverTimeData } from "@/data/dashboard-data";
 
 export const SalesOverTimeSection = () => {
   return (
-    <div className="bg-neutral-50 rounded-lg border border-neutral-200">
-      <div className="border-b px-3 py-3.5 border-neutral-200">
+    <div className="rounded-lg border border-neutral-200 bg-neutral-50">
+      <div className="border-b border-neutral-200 px-3 py-3.5">
         <Typography variant="body-01" className="text-text-primary">
           Total sales over time
         </Typography>

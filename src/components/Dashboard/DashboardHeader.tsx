@@ -3,20 +3,20 @@ import { PlayIcon, ReplayIcon } from "@/components/ui/icons";
 
 export const DashboardHeader = () => {
   return (
-    <div className="flex justify-between items-center mb-6">
+    <div className="mb-6 flex items-center justify-between">
       <Typography variant="heading-03" className="text-text-primary">
         Dashboard
       </Typography>
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <Typography variant="body-02" className="text-neutral-400">
           Last updated 2m ago
         </Typography>
-        <button className="border flex items-center gap-2 border-neutral-200 py-2 text-[13px] px-3 bg-neutral-50 rounded-lg cursor-pointer text-text-primary">
-          <PlayIcon className="size-3 text-text-primary" />
+        <button className="text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-[13px]">
+          <PlayIcon className="text-text-primary size-3" />
           Resume auto-fetch
         </button>
-        <button className="border flex items-center gap-2 border-neutral-200 p-2 text-[13px]  bg-neutral-50 rounded-lg cursor-pointer text-text-primary">
-          <ReplayIcon className="size-5 text-text-primary transform scale-x-[-1]" />
+        <button className="text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px]">
+          <ReplayIcon className="text-text-primary size-5 scale-x-[-1] transform" />
         </button>
       </div>
     </div>

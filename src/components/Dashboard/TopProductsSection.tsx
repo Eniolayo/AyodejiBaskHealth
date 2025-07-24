@@ -41,9 +41,9 @@ const CustomBottomBar = (props: BarProps): JSX.Element => {
 
 export const TopProductsSection = () => {
   return (
-    <div className="bg-neutral-50 rounded-lg border border-neutral-200">
-      <div className="border-b px-3 py-3.5 border-neutral-200 ">
-        <Typography variant="body-01" className="text-text-primary ">
+    <div className="rounded-lg border border-neutral-200 bg-neutral-50">
+      <div className="border-b border-neutral-200 px-3 py-3.5">
+        <Typography variant="body-01" className="text-text-primary">
           Top products
         </Typography>
       </div>
@@ -101,13 +101,13 @@ export const TopProductsSection = () => {
       </div>
       <div className="flex justify-center gap-4">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-[#0d72a5] rounded" />
+          <div className="h-3 w-3 rounded bg-[#0d72a5]" />
           <Typography variant="body-03" className="text-neutral-400">
             ACME Prod - 01
           </Typography>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-[#40b1e9] rounded" />
+          <div className="h-3 w-3 rounded bg-[#40b1e9]" />
           <Typography variant="body-03" className="text-neutral-400">
             ACME Prod - 02
           </Typography>
