@@ -1,6 +1,10 @@
 import Typography from "@/components/ui/typography";
 import { paymentsHistoryData } from "@/data/dashboard-data";
-import { ChevronsUpDown } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsUpDown,
+} from "lucide-react";
 
 export const PaymentsHistorySection = () => {
   return (
@@ -12,16 +16,14 @@ export const PaymentsHistorySection = () => {
       </div>
       <div className="p-3">
         <div className="mb-4 flex items-center justify-between">
-          <div className="relative">
-            <input
-              type="text"
-              className="text-text-primary w-48 rounded-md border border-neutral-300 bg-transparent px-3 py-0 text-sm placeholder-neutral-400 focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="Filter..."
-            />
-          </div>
-          <button className="text-text-primary flex items-center gap-2 rounded-md border border-neutral-300 bg-neutral-100 px-3 py-2 text-sm transition-colors hover:bg-neutral-200">
+          <input
+            type="text"
+            className="text-text-primary min-w-72 rounded-md border border-neutral-200 bg-transparent px-2 py-1 text-[13px] placeholder:text-neutral-400 focus:outline-none"
+            placeholder="Search..."
+          />
+          <button className="text-text-primary flex items-center gap-3 rounded-md border border-neutral-200 px-2 py-1.5 text-[13px] transition-colors hover:bg-neutral-200">
             <span>Columns</span>
-            <ChevronsUpDown className="h-4 w-4 text-neutral-500" />
+            <ChevronsUpDown className="text-text-primary size-3" />
           </button>
         </div>
 
@@ -112,26 +114,34 @@ export const PaymentsHistorySection = () => {
           </table>
         </div>
 
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-3 flex items-center justify-between">
           <Typography variant="body-02" className="text-neutral-500">
             0 of 5 row(s) selected
           </Typography>
-          <div className="flex items-center gap-1">
-            <button className="hover:text-text-primary px-2 py-1 text-sm text-neutral-500 transition-colors">
-              &lt;
+          <div className="flex items-center gap-3">
+            <button className="text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px]">
+              <ChevronLeftIcon className="text-text-primary size-4" />
             </button>
-            <button className="rounded bg-blue-500 px-2 py-1 text-sm text-white transition-colors hover:bg-blue-600">
-              1
-            </button>
-            <button className="hover:text-text-primary px-2 py-1 text-sm text-neutral-500 transition-colors">
-              2
-            </button>
-            <button className="hover:text-text-primary px-2 py-1 text-sm text-neutral-500 transition-colors">
-              3
-            </button>
-            <span className="px-2 py-1 text-sm text-neutral-500">...</span>
-            <button className="hover:text-text-primary px-2 py-1 text-sm text-neutral-500 transition-colors">
-              &gt;
+            <div className="flex items-center gap-4">
+              <button className="">
+                <Typography variant="body-02" className="text-text-primary">
+                  1
+                </Typography>
+              </button>
+              <button className="">
+                <Typography variant="body-02" className="text-text-primary">
+                  2
+                </Typography>
+              </button>
+              <button className="">
+                <Typography variant="body-02" className="text-text-primary">
+                  3
+                </Typography>
+              </button>
+              <span className="text-text-primary text-sm">...</span>
+            </div>
+            <button className="text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px]">
+              <ChevronRightIcon className="text-text-primary size-4" />
             </button>
           </div>
         </div>

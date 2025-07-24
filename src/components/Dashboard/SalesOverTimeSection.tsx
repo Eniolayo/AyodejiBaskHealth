@@ -18,11 +18,11 @@ export const SalesOverTimeSection = () => {
           Total sales over time
         </Typography>
       </div>
-      <div className="h-64 w-full">
+      <div className="h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={salesOverTimeData}
-            margin={{ top: 12, right: 12, left: 12, bottom: 12 }}
+            margin={{ top: 20, right: 19, left: 12, bottom: 12 }}
           >
             <CartesianGrid
               strokeDasharray="3 3"
