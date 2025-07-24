@@ -32,3 +32,50 @@ export const summaryData = {
   grossProfit: 137500,
   totalOrders: 1428,
 };
+
+export const salesOverTimeData = [
+  { month: "Jan", sales: 186, prod1: 120, prod2: 66 },
+  { month: "Feb", sales: 600, prod1: 380, prod2: 220 }, // Updated to hit the 600 peak
+  { month: "Mar", sales: 237, prod1: 150, prod2: 87 },
+  { month: "Apr", sales: 73, prod1: 45, prod2: 28 },
+  { month: "May", sales: 209, prod1: 130, prod2: 79 },
+  { month: "Jun", sales: 214, prod1: 135, prod2: 79 },
+];
+
+export const paymentsHistoryData = [
+  {
+    id: 1,
+    status: "Success",
+    email: "ken99@yahoo.com",
+    amount: "$316.00",
+    totalNet: "$316.00",
+  },
+  {
+    id: 2,
+    status: "Success",
+    email: "ken99@yahoo.com",
+    amount: "$316.00",
+    totalNet: "$316.00",
+  },
+  {
+    id: 3,
+    status: "Success",
+    email: "ken99@yahoo.com",
+    amount: "$316.00",
+    totalNet: "$316.00",
+  },
+  {
+    id: 4,
+    status: "Success",
+    email: "ken99@yahoo.com",
+    amount: "$316.00",
+    totalNet: "$316.00",
+  },
+  {
+    id: 5,
+    status: "Success",
+    email: "ken99@yahoo.com",
+    amount: "$316.00",
+    totalNet: "$316.00",
+  },
+];
