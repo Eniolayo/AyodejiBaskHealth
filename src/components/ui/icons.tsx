@@ -64,3 +64,25 @@ export function SunIcon({ className = "", size = 24 }) {
     </svg>
   );
 }
+
+export function DragHandleDotsIcon({ className = "", size = 15 }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 15 15"
+      className={className}
+      fill="currentColor"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M5.5 4.625a1.125 1.125 0 1 0 0-2.25a1.125 1.125 0 0 0 0 2.25m4 0a1.125 1.125 0 1 0 0-2.25a1.125 1.125 0 0 0 0 2.25M10.625 7.5a1.125 1.125 0 1 1-2.25 0a1.125 1.125 0 0 1 2.25 0M5.5 8.625a1.125 1.125 0 1 0 0-2.25a1.125 1.125 0 0 0 0 2.25m5.125 2.875a1.125 1.125 0 1 1-2.25 0a1.125 1.125 0 0 1 2.25 0M5.5 12.625a1.125 1.125 0 1 0 0-2.25a1.125 1.125 0 0 0 0 2.25"
+        clipRule="evenodd"
+        strokeWidth={0.5}
+        stroke="currentColor"
+      ></path>
+    </svg>
+  );
+}

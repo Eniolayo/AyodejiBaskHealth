@@ -1,35 +1,32 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  useMapEvents,
-  Popup,
-} from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import L from "leaflet";
-
+import React, { useState, useCallback, useEffect } from "react";
+import dynamic from "next/dynamic";
 import Typography from "@/components/ui/typography";
+import { Skeleton } from "@/components/ui/skeleton";
 
-// Fix for default markers
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+const MapComponent = dynamic(() => import("./MapComponent"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full w-full bg-neutral-100 p-4">
+      <div className="space-y-4">
+        <Skeleton className="h-64 w-full rounded-lg" variant="rectangular" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-3 w-24" />
+        </div>
+      </div>
+    </div>
+  ),
 });
 
-interface Location {
+type Location = {
   id: string;
   name: string;
   coordinates: [number, number];
   orders: number;
   revenue: number;
-}
+};
 
 const locationData: Location[] = [
   {
@@ -62,38 +59,15 @@ const locationData: Location[] = [
   },
 ];
 
-// Custom marker icon
-const createCustomIcon = () => {
-  return L.divIcon({
-    className: "custom-marker",
-    html: `<div style="
-      width: 20px;
-      height: 20px;
-      background-color: #0d72a5;
-      border: 3px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-    "></div>`,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10],
-  });
-};
-
-// Map event handler component
-function MapEvents() {
-  useMapEvents({
-    click: () => {
-      // Handle map click events if needed
-    },
-  });
-  return null;
-}
-
 export const LocationsMapSection = () => {
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
     null
   );
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleLocationClick = useCallback((location: Location) => {
     setSelectedLocation(location);
@@ -106,94 +80,30 @@ export const LocationsMapSection = () => {
           Locations
         </Typography>
       </div>
-      <div className="relative h-80">
-        <MapContainer
-          center={[40, -80]}
-          zoom={5}
-          className="h-full w-full"
-          style={{ background: "#3e4244" }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      <div className="relative h-[600px] p-3">
+        {isClient ? (
+          <MapComponent
+            locationData={locationData}
+            onLocationClick={handleLocationClick}
+            selectedLocation={selectedLocation}
+            onCloseLocation={() => setSelectedLocation(null)}
           />
-
-          <MapEvents />
-
-          {locationData.map((location) => (
-            <Marker
-              key={location.id}
-              position={location.coordinates}
-              icon={createCustomIcon()}
-              eventHandlers={{
-                click: () => handleLocationClick(location),
-              }}
-            >
-              <Popup className="location-popup">
-                <div className="p-2">
-                  <Typography variant="body-01" className="mb-1 font-medium">
-                    {location.name}
-                  </Typography>
-                  <Typography
-                    variant="body-02"
-                    className="mb-1 text-neutral-400"
-                  >
-                    Orders: {location.orders}
-                  </Typography>
-                  <Typography variant="body-02" className="text-neutral-400">
-                    Revenue: ${location.revenue.toLocaleString()}
-                  </Typography>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
-
-        {/* Location Details Panel */}
-        {selectedLocation && (
-          <div className="absolute right-3 bottom-3 left-3 rounded-lg border border-neutral-200 bg-white p-3 shadow-lg">
-            <div className="mb-2 flex items-center justify-between">
-              <Typography
-                variant="body-01"
-                className="text-text-primary font-medium"
-              >
-                {selectedLocation.name}
-              </Typography>
-              <button
-                onClick={() => setSelectedLocation(null)}
-                className="text-neutral-400 hover:text-neutral-600"
-              >
-                ×
-              </button>
-            </div>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <Typography variant="body-02" className="text-neutral-400">
-                  Orders
-                </Typography>
-                <Typography
-                  variant="body-01"
-                  className="text-text-primary font-medium"
-                >
-                  {selectedLocation.orders}
-                </Typography>
-              </div>
-              <div>
-                <Typography variant="body-02" className="text-neutral-400">
-                  Revenue
-                </Typography>
-                <Typography
-                  variant="body-01"
-                  className="text-text-primary font-medium"
-                >
-                  ${selectedLocation.revenue.toLocaleString()}
-                </Typography>
+        ) : (
+          <div className="h-full w-full bg-neutral-100 p-4">
+            <div className="space-y-4">
+              <Skeleton
+                className="h-64 w-full rounded-lg"
+                variant="rectangular"
+              />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-3 w-24" />
               </div>
             </div>
           </div>
         )}
       </div>
-      <div className="px-3 py-2">
+      <div className="px-3 pb-4">
         <Typography variant="body-02" className="text-text-primary">
           {locationData.length} active locations
         </Typography>
