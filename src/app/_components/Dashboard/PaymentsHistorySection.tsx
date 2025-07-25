@@ -92,8 +92,8 @@ export const PaymentsHistorySection = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Payments history" />
+      <Card cardId="paymentsHistory">
+        <CardHeader title="Payments history" cardId="paymentsHistory" />
         <CardContent className="p-3">
           <Skeleton variant="rectangular" className="mb-4 h-40 w-full" />
           <Skeleton variant="rectangular" className="h-8 w-1/2" />
@@ -105,8 +105,8 @@ export const PaymentsHistorySection = () => {
   if (!paymentsHistoryData.length) return null;
 
   return (
-    <Card>
-      <CardHeader title="Payments history" />
+    <Card cardId="paymentsHistory">
+      <CardHeader title="Payments history" cardId="paymentsHistory" />
       <CardContent className="space-y-4 p-3">
         <div className="flex items-center justify-between gap-4">
           <input

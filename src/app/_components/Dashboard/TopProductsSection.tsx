@@ -60,8 +60,8 @@ export const TopProductsSection = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Top products" />
+      <Card cardId="topProducts">
+        <CardHeader title="Top products" cardId="topProducts" />
         <CardContent padding="none">
           <div className="flex h-64 items-center justify-center">
             <Skeleton className="h-32 w-full" variant="rectangular" />
@@ -76,8 +76,8 @@ export const TopProductsSection = () => {
   }
   if (!productData) return null;
   return (
-    <Card>
-      <CardHeader title="Top products" />
+    <Card cardId="topProducts">
+      <CardHeader title="Top products" cardId="topProducts" />
       <CardContent padding="none">
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">

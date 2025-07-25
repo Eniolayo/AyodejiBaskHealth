@@ -30,8 +30,8 @@ export const OrdersSection = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Orders" />
+      <Card cardId="orders">
+        <CardHeader title="Orders" cardId="orders" />
         <CardContent padding="none">
           <div className="flex h-64 items-center justify-center pl-0.5">
             <Skeleton className="h-32 w-full" variant="rectangular" />
@@ -46,8 +46,8 @@ export const OrdersSection = () => {
   }
   if (!orderData) return null;
   return (
-    <Card>
-      <CardHeader title="Orders" />
+    <Card cardId="orders">
+      <CardHeader title="Orders" cardId="orders" />
       <CardContent padding="none">
         <div className="max-h-[240px] overflow-y-auto pr-2 pl-0.5">
           <ResponsiveContainer width="100%" height={orderData.length * 45}>

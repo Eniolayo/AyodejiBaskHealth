@@ -59,8 +59,8 @@ export const LocationsMapSection = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Locations" />
+      <Card cardId="locationsMap">
+        <CardHeader title="Locations" cardId="locationsMap" />
         <CardContent>
           <div className="relative h-[600px] p-3">
             <Skeleton
@@ -83,8 +83,8 @@ export const LocationsMapSection = () => {
   if (!locationData) return null;
 
   return (
-    <Card>
-      <CardHeader title="Locations" />
+    <Card cardId="locationsMap">
+      <CardHeader title="Locations" cardId="locationsMap" />
       <CardContent>
         <div className="relative h-[600px] p-3">
           {isClient ? (

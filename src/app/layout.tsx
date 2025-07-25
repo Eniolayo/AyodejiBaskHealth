@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { QueryProvider } from "@/providers/query-provider";
 import { DashboardDataProvider } from "@/contexts/DashboardDataContext";
+import { DashboardLayoutProvider } from "@/contexts/DashboardLayoutContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +44,9 @@ export default function RootLayout({
             themes={["light", "dark"]}
             disableTransitionOnChange={false}
           >
-            <DashboardDataProvider>{children}</DashboardDataProvider>
+            <DashboardDataProvider>
+              <DashboardLayoutProvider>{children}</DashboardLayoutProvider>
+            </DashboardDataProvider>
           </ThemeProvider>
         </QueryProvider>
       </body>

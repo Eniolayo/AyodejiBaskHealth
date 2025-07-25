@@ -2,9 +2,11 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import Typography from "./typography";
 import { CloseRoundedIcon, DragHandleDotsIcon } from "./icons";
+import { useDashboardLayout } from "@/contexts/DashboardLayoutContext";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
+  cardId?: string;
 }
 
 export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -12,6 +14,7 @@ export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   subtitle?: string;
   action?: React.ReactNode;
   children?: React.ReactNode;
+  cardId?: string;
 }
 
 export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -24,14 +27,19 @@ export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, children, ...props }, ref) => {
+  ({ className, children, cardId, ...props }, ref) => {
+    const { isEditMode } = useDashboardLayout();
+
     return (
       <div
         ref={ref}
         className={cn(
-          "rounded-lg border border-neutral-200 bg-neutral-50",
+          "rounded-lg border border-neutral-200 bg-neutral-50 transition-all duration-200",
+          isEditMode && "cursor-move hover:border-blue-300 hover:shadow-lg",
           className
         )}
+        data-draggable={isEditMode}
+        data-card-id={cardId}
         {...props}
       >
         {children}
@@ -42,8 +50,15 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({ className, title, subtitle, action, children, ...props }, ref) => {
-    const isDragging = false;
+  ({ className, title, subtitle, action, children, cardId, ...props }, ref) => {
+    const { isEditMode, deleteCard } = useDashboardLayout();
+
+    const handleDelete = () => {
+      if (cardId) {
+        deleteCard(cardId);
+      }
+    };
+
     return (
       <div
         ref={ref}
@@ -51,10 +66,13 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
         {...props}
       >
         <div className="flex items-center justify-between">
-          <div>
+          <div className="flex-1">
             <div className="flex items-center gap-2">
-              {isDragging && (
-                <button className="rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px]">
+              {isEditMode && (
+                <button
+                  className="cursor-grab rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px] transition-colors hover:bg-neutral-100 active:cursor-grabbing"
+                  onMouseDown={(e) => e.stopPropagation()}
+                >
                   <DragHandleDotsIcon />
                 </button>
               )}
@@ -68,12 +86,18 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
               </Typography>
             )}
           </div>
-          {isDragging && (
-            <button className="rounded-lg border border-neutral-200 bg-neutral-50 p-1.5 text-[13px]">
-              <CloseRoundedIcon className="size-5" />
-            </button>
-          )}
-          {action && <div className="flex items-center gap-2">{action}</div>}
+          <div className="flex items-center gap-2">
+            {action && <div className="flex items-center gap-2">{action}</div>}
+            {isEditMode && (
+              <button
+                className="rounded-lg border border-neutral-200 bg-neutral-50 p-1.5 text-[13px] transition-colors hover:border-red-200 hover:bg-red-50"
+                onClick={handleDelete}
+                title="Delete card"
+              >
+                <CloseRoundedIcon className="size-5 text-red-500" />
+              </button>
+            )}
+          </div>
         </div>
         {children}
       </div>
