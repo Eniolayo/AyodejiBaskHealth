@@ -2,11 +2,27 @@
 import React from "react";
 import { Switch } from "@/components/ui/switch";
 import Typography from "@/components/ui/typography";
-import { SunIcon } from "@/components/ui/icons";
+import { SunIcon, MoonIcon } from "@/components/ui/icons";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 
 function Header() {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <header className="border-b border-neutral-200 bg-neutral-50 py-3">
       <div className="mx-auto flex max-w-[1580px] items-center justify-between px-3">
@@ -27,8 +43,16 @@ function Header() {
           className="h-10 w-[136px] object-contain"
         />
         <div className="flex w-[30%] justify-end gap-2">
-          <button className="cursor-pointer">
-            <SunIcon className="text-text-primary size-5" />
+          <button
+            className="text-text-primary cursor-pointer rounded-lg p-2 hover:bg-neutral-500 hover:text-neutral-50"
+            onClick={toggleTheme}
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+          >
+            {theme === "dark" ? (
+              <SunIcon className="size-5" />
+            ) : (
+              <MoonIcon className="size-5" />
+            )}
           </button>
         </div>
       </div>

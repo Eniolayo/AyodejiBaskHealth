@@ -65,6 +65,29 @@ export function SunIcon({ className = "", size = 24 }) {
   );
 }
 
+export function MoonIcon({ className = "", size = 24 }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+    >
+      <g
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+      >
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+      </g>
+    </svg>
+  );
+}
+
 export function DragHandleDotsIcon({ className = "", size = 15 }) {
   return (
     <svg
