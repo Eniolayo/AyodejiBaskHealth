@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Typography from "@/components/ui/typography";
 import {
@@ -9,9 +11,42 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { salesOverTimeData } from "@/data/dashboard-data";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
 
 export const SalesOverTimeSection = () => {
+  const { data, isLoading } = useDashboardDataContext();
+
+  let salesOverTimeData;
+  if (data?.data?.dashboardData) {
+    const d = data.data.dashboardData;
+    salesOverTimeData = d.charts.salesOverTime.labels.map(
+      (month: string, i: number) => ({
+        month,
+        sales: d.charts.salesOverTime.data[i],
+        prod1: d.charts.salesOverTime.data[i],
+        prod2: Math.floor(d.charts.salesOverTime.data[i] * 0.6),
+      })
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader title="Total sales over time" />
+        <CardContent padding="none">
+          <div className="flex h-80 w-full items-center justify-center">
+            <Skeleton className="h-40 w-full" variant="rectangular" />
+          </div>
+          <div className="mt-4 px-3">
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="mt-2 h-4 w-1/3" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+  if (!salesOverTimeData) return null;
   return (
     <Card>
       <CardHeader title="Total sales over time" />

@@ -1,6 +1,7 @@
+"use client";
+
 import Typography from "@/components/ui/typography";
 import { Table, TableColumn } from "@/components/ui/table";
-import { paymentsHistoryData } from "@/data/dashboard-data";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -9,8 +10,17 @@ import {
 import Dropdown from "@/components/ui/dropdown";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
 
-type PaymentData = (typeof paymentsHistoryData)[0];
+type PaymentData = {
+  id: number;
+  status: string;
+  email: string;
+  amount: string;
+  totalNet: string;
+};
+
 type PaymentColumnKey = keyof PaymentData;
 
 const columnOptions: { key: PaymentColumnKey; label: string }[] = [
@@ -21,8 +31,21 @@ const columnOptions: { key: PaymentColumnKey; label: string }[] = [
 ];
 
 export const PaymentsHistorySection = () => {
+  const { data, isLoading } = useDashboardDataContext();
   const [selectedRows, setSelectedRows] = useState<PaymentData[]>([]);
   const [hiddenColumns, setHiddenColumns] = useState<PaymentColumnKey[]>([]);
+
+  let paymentsHistoryData;
+  if (data?.data?.dashboardData) {
+    const d = data.data.dashboardData;
+    paymentsHistoryData = d.tables.recentTransactions.map((t: any) => ({
+      id: t.id,
+      status: "Success", // Placeholder
+      email: t.user,
+      amount: t.amount,
+      totalNet: t.amount,
+    }));
+  }
 
   const columns: TableColumn<PaymentData>[] = [
     {
@@ -63,6 +86,19 @@ export const PaymentsHistorySection = () => {
 
   const isColumnHidden = (columnKey: PaymentColumnKey) =>
     hiddenColumns.includes(columnKey);
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader title="Payments history" />
+        <CardContent className="p-3">
+          <Skeleton variant="rectangular" className="mb-4 h-40 w-full" />
+          <Skeleton variant="rectangular" className="h-8 w-1/2" />
+        </CardContent>
+      </Card>
+    );
+  }
+  if (!paymentsHistoryData) return null;
 
   return (
     <Card>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Typography from "@/components/ui/typography";
 import {
@@ -9,9 +11,40 @@ import {
   ResponsiveContainer,
   LabelList,
 } from "recharts";
-import { orderData } from "@/data/dashboard-data";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
 
 export const OrdersSection = () => {
+  const { data, isLoading } = useDashboardDataContext();
+
+  let orderData;
+  if (data?.data?.dashboardData) {
+    const d = data.data.dashboardData;
+    orderData = d.charts.salesOverTime.labels.map(
+      (month: string, i: number) => ({
+        month,
+        orders: d.charts.salesOverTime.data[i],
+      })
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader title="Orders" />
+        <CardContent padding="none">
+          <div className="flex h-64 items-center justify-center pl-0.5">
+            <Skeleton className="h-32 w-full" variant="rectangular" />
+          </div>
+          <div className="px-3 pb-2">
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="mt-2 h-4 w-1/3" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+  if (!orderData) return null;
   return (
     <Card>
       <CardHeader title="Orders" />

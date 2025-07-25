@@ -5,7 +5,6 @@ import {
 } from "@/types/dashboard";
 
 const API_ENDPOINT = "/api/get";
-// const API_ENDPOINT = "https://dashboard-api-dusky.vercel.app/api/get";
 
 export class DashboardApiError extends Error {
   constructor(
@@ -27,7 +26,6 @@ export async function fetchDashboardData(): Promise<DashboardApiResponse> {
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
       },
-      // Add cache busting to ensure fresh data
       cache: "no-store",
     });
 
@@ -41,7 +39,6 @@ export async function fetchDashboardData(): Promise<DashboardApiResponse> {
 
     const rawData: unknown = await response.json();
 
-    // Validate the response using Zod schema
     const parseResult = DashboardApiResponseSchema.safeParse(rawData);
 
     if (!parseResult.success) {
@@ -65,12 +62,10 @@ export async function fetchDashboardData(): Promise<DashboardApiResponse> {
 
     return validatedData;
   } catch (error) {
-    // Re-throw our custom errors
     if (error instanceof DashboardApiError) {
       throw error;
     }
 
-    // Handle Zod validation errors specifically
     if (error instanceof z.ZodError) {
       throw new DashboardApiError(
         `Data validation failed: ${error.message}`,
@@ -80,7 +75,6 @@ export async function fetchDashboardData(): Promise<DashboardApiResponse> {
       );
     }
 
-    // Handle network errors, JSON parsing errors, etc.
     throw new DashboardApiError(
       `Network or parsing error: ${
         error instanceof Error ? error.message : "Unknown error"

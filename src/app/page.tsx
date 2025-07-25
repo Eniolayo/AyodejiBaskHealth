@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "@/components/Header";
 import { DashboardHeader } from "@/components/Dashboard/DashboardHeader";
 import { OrdersSection } from "@/components/Dashboard/OrdersSection";

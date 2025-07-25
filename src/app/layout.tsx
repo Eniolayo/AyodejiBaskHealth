@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "@/components/query-provider";
+import { DashboardDataProvider } from "@/hooks/DashboardDataContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,7 @@ export default function RootLayout({
             themes={["light", "dark"]}
             disableTransitionOnChange={false}
           >
-            {children}
+            <DashboardDataProvider>{children}</DashboardDataProvider>
           </ThemeProvider>
         </QueryProvider>
       </body>

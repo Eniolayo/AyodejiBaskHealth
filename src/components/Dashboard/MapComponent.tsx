@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type { FC } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -66,7 +66,7 @@ function MapEvents() {
   return null;
 }
 
-const MapComponent: React.FC<MapComponentProps> = ({
+const MapComponent: FC<MapComponentProps> = ({
   locationData,
   onLocationClick,
   selectedLocation,

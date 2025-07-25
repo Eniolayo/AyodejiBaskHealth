@@ -1,8 +1,45 @@
+"use client";
+
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Typography from "@/components/ui/typography";
-import { summaryData } from "@/data/dashboard-data";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
 
 export const SummarySection = () => {
+  const { data, isLoading } = useDashboardDataContext();
+
+  let summaryData;
+  if (data?.data?.dashboardData) {
+    const d = data.data.dashboardData;
+    summaryData = {
+      totalSales: d.charts.salesOverTime.data.reduce(
+        (a: number, b: number) => a + b,
+        0
+      ),
+      totalExpenses: 12500, // Placeholder, as not in API
+      grossProfit:
+        d.charts.salesOverTime.data.reduce((a: number, b: number) => a + b, 0) -
+        12500, // Placeholder
+      totalOrders: d.tables.recentTransactions.length,
+    };
+  }
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader title="Summary" />
+        <CardContent padding="none">
+          <div className="space-y-4 p-4">
+            <Skeleton className="h-6 w-1/2" />
+            <Skeleton className="h-6 w-1/2" />
+            <Skeleton className="h-6 w-1/2" />
+            <Skeleton className="h-6 w-1/2" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+  if (!summaryData) return null;
   return (
     <Card>
       <CardHeader title="Summary" />

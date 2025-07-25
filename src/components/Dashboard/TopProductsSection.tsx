@@ -1,3 +1,4 @@
+"use client";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Typography from "@/components/ui/typography";
 import {
@@ -10,9 +11,10 @@ import {
   ResponsiveContainer,
   LabelList,
 } from "recharts";
-import { productData } from "@/data/dashboard-data";
 import { JSX } from "react";
 import { BarProps } from "recharts";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
 
 const CustomBottomBar = (props: BarProps): JSX.Element => {
   const fill = props.fill ?? "#000";
@@ -41,6 +43,38 @@ const CustomBottomBar = (props: BarProps): JSX.Element => {
 };
 
 export const TopProductsSection = () => {
+  const { data, isLoading } = useDashboardDataContext();
+
+  let productData;
+  if (data?.data?.dashboardData) {
+    const d = data.data.dashboardData;
+    productData = d.tables.topProducts.map(
+      (prod: { name: string; sales: number }) => ({
+        month: prod.name.replace(/product\s+/i, ""),
+        "ACME Prod - 01": prod.sales, // For demo, all sales in one
+        "ACME Prod - 02": Math.floor(prod.sales * 0.6),
+        total: prod.sales,
+      })
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader title="Top products" />
+        <CardContent padding="none">
+          <div className="flex h-64 items-center justify-center">
+            <Skeleton className="h-32 w-full" variant="rectangular" />
+          </div>
+          <div className="mt-4 flex justify-center gap-4">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-24" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+  if (!productData) return null;
   return (
     <Card>
       <CardHeader title="Top products" />
