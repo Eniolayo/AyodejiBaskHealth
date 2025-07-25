@@ -18,11 +18,16 @@ export const SalesOverTimeSection = () => {
   const { data, isLoading } = useDashboardDataContext();
 
   let salesOverTimeData;
+
   if (data?.data?.dashboardData) {
     const d = data.data.dashboardData;
     salesOverTimeData = d.charts.salesOverTime.labels.map(
       (month: string, i: number) => ({
-        month,
+        month: new Date(month).toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+        }),
+
         sales: d.charts.salesOverTime.data[i],
         prod1: d.charts.salesOverTime.data[i],
         prod2: Math.floor(d.charts.salesOverTime.data[i] * 0.6),
@@ -72,13 +77,18 @@ export const SalesOverTimeSection = () => {
                 stroke="#6b6f71"
                 opacity={0.3}
               />
+
               <XAxis
                 dataKey="month"
                 stroke="#ebebeb"
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
+                angle={-45}
+                textAnchor="end"
+                interval="preserveStartEnd"
               />
+
               <YAxis
                 stroke="#ebebeb"
                 fontSize={12}

@@ -279,7 +279,7 @@ const Table = <T,>({
         </div>
       )}
 
-      <div className="overflow-hidden rounded-md border border-neutral-200">
+      <div className="min-h-[245px] overflow-hidden rounded-md border border-neutral-200">
         <table className="w-full">
           <TableHeader
             columns={columns}
