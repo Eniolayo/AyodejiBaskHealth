@@ -1,3 +1,4 @@
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Typography from "@/components/ui/typography";
 import {
   BarChart,
@@ -12,67 +13,65 @@ import { orderData } from "@/data/dashboard-data";
 
 export const OrdersSection = () => {
   return (
-    <div className="rounded-lg border border-neutral-200 bg-neutral-50">
-      <div className="border-b border-neutral-200 px-3 py-3.5">
-        <Typography variant="body-01" className="text-text-primary">
-          Orders
-        </Typography>
-      </div>
-      <div className="h-64 pl-0.5">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={orderData}
-            layout="vertical"
-            margin={{ top: 10, right: 80, left: 10, bottom: 10 }}
-          >
-            <XAxis type="number" hide={true} />
-            <YAxis type="category" hide={true} />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#3e4244",
-                border: "1px solid #6b6f71",
-                borderRadius: "8px",
-                color: "#ebebeb",
-              }}
-            />
-            <Bar
-              dataKey="orders"
-              fill="#0d72a5"
-              barSize={32}
-              radius={[4, 4, 4, 4]}
+    <Card>
+      <CardHeader title="Orders" />
+      <CardContent>
+        <div className="h-64 pl-0.5">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={orderData}
+              layout="vertical"
+              margin={{ top: 10, right: 80, left: 10, bottom: 10 }}
             >
-              <LabelList
-                dataKey="month"
-                position="insideLeft"
-                style={{
-                  fill: "white",
-                  fontSize: "12px",
-                  fontWeight: "500",
+              <XAxis type="number" hide={true} />
+              <YAxis type="category" hide={true} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#3e4244",
+                  border: "1px solid #6b6f71",
+                  borderRadius: "8px",
+                  color: "#ebebeb",
                 }}
-                offset={10}
               />
-              <LabelList
+              <Bar
                 dataKey="orders"
-                position="right"
-                style={{
-                  fill: "#a3a3a3",
-                  fontSize: "12px",
-                  fontWeight: "400",
-                }}
-                offset={10}
-              />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-      <div className="px-3">
-        <Typography variant="body-02" className="text-text-primary">
-          Trending up by 5.2% this month
-        </Typography>
-        <Typography variant="body-02" className="text-neutral-400">
-          January - June 2027
-        </Typography>
-      </div>
-    </div>
+                fill="#0d72a5"
+                barSize={32}
+                radius={[4, 4, 4, 4]}
+              >
+                <LabelList
+                  dataKey="month"
+                  position="insideLeft"
+                  style={{
+                    fill: "white",
+                    fontSize: "12px",
+                    fontWeight: "500",
+                  }}
+                  offset={10}
+                />
+                <LabelList
+                  dataKey="orders"
+                  position="right"
+                  style={{
+                    fill: "#a3a3a3",
+                    fontSize: "12px",
+                    fontWeight: "400",
+                  }}
+                  offset={10}
+                />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="px-3">
+          <Typography variant="body-02" className="text-text-primary mt-1">
+            Trending up by 5.2% this month
+          </Typography>
+          <Typography variant="body-02" className="mt-1.5 text-neutral-400">
+            January - June 2027
+          </Typography>
+        </div>
+      </CardContent>
+    </Card>
   );
 };

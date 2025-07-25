@@ -1,27 +1,59 @@
 import Typography from "@/components/ui/typography";
-import Dropdown from "@/components/ui/dropdown";
+import { Table, TableColumn } from "@/components/ui/table";
 import { paymentsHistoryData } from "@/data/dashboard-data";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsUpDown,
 } from "lucide-react";
+import Dropdown from "@/components/ui/dropdown";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 
+type PaymentData = (typeof paymentsHistoryData)[0];
+type PaymentColumnKey = keyof PaymentData;
+
+const columnOptions: { key: PaymentColumnKey; label: string }[] = [
+  { key: "status", label: "Status" },
+  { key: "email", label: "Email" },
+  { key: "amount", label: "Amount" },
+  { key: "totalNet", label: "Total net" },
+];
+
 export const PaymentsHistorySection = () => {
-  const [hiddenColumns, setHiddenColumns] = useState<string[]>([]);
+  const [selectedRows, setSelectedRows] = useState<PaymentData[]>([]);
+  const [hiddenColumns, setHiddenColumns] = useState<PaymentColumnKey[]>([]);
 
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const [selectAll, setSelectAll] = useState(false);
-
-  const columnOptions = [
-    { key: "status", label: "Status" },
-    { key: "email", label: "Email" },
-    { key: "amount", label: "Amount" },
-    { key: "totalNet", label: "Total net" },
+  const columns: TableColumn<PaymentData>[] = [
+    {
+      key: "status",
+      label: "Status",
+    },
+    {
+      key: "email",
+      label: "Email",
+    },
+    {
+      key: "amount",
+      label: "Amount",
+      sortable: true,
+    },
+    {
+      key: "totalNet",
+      label: "Total net",
+      sortable: true,
+    },
   ];
 
-  const toggleColumn = (columnKey: string) => {
+  const visibleColumns = columns.filter(
+    (col) => !hiddenColumns.includes(col.key)
+  );
+
+  const handleRowSelect = (selectedRows: PaymentData[]) => {
+    setSelectedRows(selectedRows);
+  };
+
+  const toggleColumn = (columnKey: PaymentColumnKey) => {
     setHiddenColumns((prev) =>
       prev.includes(columnKey)
         ? prev.filter((col) => col !== columnKey)
@@ -29,190 +61,55 @@ export const PaymentsHistorySection = () => {
     );
   };
 
-  const handleRowSelect = (rowId: number) => {
-    setSelectedRows((prev) =>
-      prev.includes(rowId)
-        ? prev.filter((id) => id !== rowId)
-        : [...prev, rowId]
-    );
-  };
-
-  const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedRows([]);
-      setSelectAll(false);
-    } else {
-      setSelectedRows(paymentsHistoryData.map((payment) => payment.id));
-      setSelectAll(true);
-    }
-  };
-
-  const isColumnHidden = (columnKey: string) =>
+  const isColumnHidden = (columnKey: PaymentColumnKey) =>
     hiddenColumns.includes(columnKey);
 
   return (
-    <div className="rounded-lg border border-neutral-200 bg-neutral-50">
-      <div className="border-b border-neutral-200 px-3 py-3.5">
-        <Typography variant="body-01" className="text-text-primary">
-          Payments history
-        </Typography>
-      </div>
-      <div className="p-3">
-        <div className="mb-4 flex items-center justify-between">
-          <input
-            type="text"
-            className="text-text-primary min-w-72 rounded-md border border-neutral-200 bg-transparent px-2 py-1 text-[13px] placeholder:text-neutral-400 focus:outline-none"
-            placeholder="Search..."
-          />
-          <Dropdown
-            trigger={
-              <button className="text-text-primary flex items-center gap-3 rounded-md border border-neutral-200 px-2 py-1.5 text-[13px] transition-colors hover:bg-neutral-200">
-                <span>Columns</span>
-                <ChevronsUpDown className="text-text-primary size-3" />
-              </button>
-            }
-            dropdownClassName="bg-neutral-50 border border-neutral-200 rounded-md shadow-lg p-2 min-w-48"
-          >
-            <div className="space-y-2">
-              {columnOptions.map((option) => (
-                <label
-                  key={option.key}
-                  className="flex cursor-pointer items-center gap-2 rounded px-2 py-1 hover:bg-neutral-50"
-                >
-                  <input
-                    type="checkbox"
-                    checked={!isColumnHidden(option.key)}
-                    onChange={() => toggleColumn(option.key)}
-                    className="rounded border-neutral-200 bg-white"
-                  />
-                  <Typography variant="body-02" className="text-text-primary">
-                    {option.label}
-                  </Typography>
-                </label>
-              ))}
-            </div>
-          </Dropdown>
-        </div>
-
-        <div className="overflow-hidden rounded-md border border-neutral-200">
-          <table className="w-full">
-            <thead className="border-b border-neutral-200">
-              <tr>
-                <th className="px-4 py-2 text-left">
-                  <input
-                    type="checkbox"
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                    className="rounded border-neutral-200 bg-white"
-                  />
-                </th>
-                {!isColumnHidden("status") && (
-                  <th className="px-4 py-2 text-left">
-                    <div className="flex items-center gap-1">
-                      <Typography
-                        variant="body-02"
-                        className="font-medium text-neutral-400"
-                      >
-                        Status
-                      </Typography>
-                    </div>
-                  </th>
-                )}
-                {!isColumnHidden("email") && (
-                  <th className="px-4 py-2 text-left">
-                    <div className="flex items-center gap-1">
-                      <Typography
-                        variant="body-02"
-                        className="font-medium text-neutral-400"
-                      >
-                        Email
-                      </Typography>
-                      <ChevronsUpDown className="h-4 w-4 text-neutral-500" />
-                    </div>
-                  </th>
-                )}
-                {!isColumnHidden("amount") && (
-                  <th className="px-4 py-2 text-left">
-                    <Typography
-                      variant="body-02"
-                      className="font-medium text-neutral-400"
-                    >
-                      Amount
-                    </Typography>
-                  </th>
-                )}
-                {!isColumnHidden("totalNet") && (
-                  <th className="px-4 py-2 text-left">
-                    <Typography
-                      variant="body-02"
-                      className="font-medium text-neutral-400"
-                    >
-                      Total net
-                    </Typography>
-                  </th>
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {paymentsHistoryData.map((payment) => (
-                <tr
-                  key={payment.id}
-                  className="border-b border-neutral-200 bg-transparent last:border-b-0"
-                >
-                  <td className="px-4 py-2">
+    <Card>
+      <CardHeader title="Payments history" />
+      <CardContent className="p-3">
+        <Table
+          data={paymentsHistoryData}
+          columns={visibleColumns}
+          selectable={true}
+          searchable={true}
+          pagination={false}
+          itemsPerPage={5}
+          onRowSelect={handleRowSelect}
+          loading={false}
+          emptyMessage="No payments found"
+          toolbarRight={
+            <Dropdown
+              trigger={
+                <button className="text-text-primary flex items-center gap-3 rounded-md border border-neutral-200 px-2 py-1.5 text-[13px] transition-colors hover:bg-neutral-200">
+                  <span>Columns</span>
+                  <ChevronsUpDown className="text-text-primary size-3" />
+                </button>
+              }
+              dropdownClassName="bg-neutral-50 border border-neutral-200 rounded-md shadow-lg p-2 min-w-36"
+              position="left"
+            >
+              <div className="space-y-2">
+                {columnOptions.map((option) => (
+                  <label
+                    key={option.key}
+                    className="flex cursor-pointer items-center gap-2 rounded p-1 hover:bg-neutral-50"
+                  >
                     <input
                       type="checkbox"
-                      checked={selectedRows.includes(payment.id)}
-                      onChange={() => handleRowSelect(payment.id)}
+                      checked={!isColumnHidden(option.key)}
+                      onChange={() => toggleColumn(option.key)}
                       className="rounded border-neutral-200 bg-white"
                     />
-                  </td>
-                  {!isColumnHidden("status") && (
-                    <td className="px-4 py-2">
-                      <Typography
-                        variant="body-02"
-                        className="text-text-primary"
-                      >
-                        {payment.status}
-                      </Typography>
-                    </td>
-                  )}
-                  {!isColumnHidden("email") && (
-                    <td className="px-4 py-2">
-                      <Typography
-                        variant="body-02"
-                        className="text-text-primary"
-                      >
-                        {payment.email}
-                      </Typography>
-                    </td>
-                  )}
-                  {!isColumnHidden("amount") && (
-                    <td className="px-4 py-2">
-                      <Typography
-                        variant="body-02"
-                        className="text-text-primary"
-                      >
-                        {payment.amount}
-                      </Typography>
-                    </td>
-                  )}
-                  {!isColumnHidden("totalNet") && (
-                    <td className="px-4 py-2">
-                      <Typography
-                        variant="body-02"
-                        className="text-text-primary"
-                      >
-                        {payment.totalNet}
-                      </Typography>
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
+                    <Typography variant="body-02" className="text-text-primary">
+                      {option.label}
+                    </Typography>
+                  </label>
+                ))}
+              </div>
+            </Dropdown>
+          }
+        />
         <div className="mt-3 flex items-center justify-between">
           <Typography variant="body-02" className="text-neutral-500">
             {selectedRows.length} of {paymentsHistoryData.length} row(s)
@@ -245,7 +142,7 @@ export const PaymentsHistorySection = () => {
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import React, { useState, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Typography from "@/components/ui/typography";
@@ -74,43 +75,41 @@ export const LocationsMapSection = () => {
   }, []);
 
   return (
-    <div className="rounded-lg border border-neutral-200 bg-neutral-50">
-      <div className="border-b border-neutral-200 px-3 py-3.5">
-        <Typography variant="body-01" className="text-text-primary">
-          Locations
-        </Typography>
-      </div>
-      <div className="relative h-[600px] p-3">
-        {isClient ? (
-          <MapComponent
-            locationData={locationData}
-            onLocationClick={handleLocationClick}
-            selectedLocation={selectedLocation}
-            onCloseLocation={() => setSelectedLocation(null)}
-          />
-        ) : (
-          <div className="h-full w-full bg-neutral-100 p-4">
-            <div className="space-y-4">
-              <Skeleton
-                className="h-64 w-full rounded-lg"
-                variant="rectangular"
-              />
-              <div className="space-y-2">
-                <Skeleton className="h-4 w-32" />
-                <Skeleton className="h-3 w-24" />
+    <Card>
+      <CardHeader title="Locations" />
+      <CardContent>
+        <div className="relative h-[600px] p-3">
+          {isClient ? (
+            <MapComponent
+              locationData={locationData}
+              onLocationClick={handleLocationClick}
+              selectedLocation={selectedLocation}
+              onCloseLocation={() => setSelectedLocation(null)}
+            />
+          ) : (
+            <div className="h-full w-full bg-neutral-100 p-4">
+              <div className="space-y-4">
+                <Skeleton
+                  className="h-64 w-full rounded-lg"
+                  variant="rectangular"
+                />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-3 w-24" />
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-      <div className="px-3 pb-4">
-        <Typography variant="body-02" className="text-text-primary">
-          {locationData.length} active locations
-        </Typography>
-        <Typography variant="body-02" className="text-neutral-400">
-          Click markers for details
-        </Typography>
-      </div>
-    </div>
+          )}
+        </div>
+        <div className="px-3 pb-4">
+          <Typography variant="body-02" className="text-text-primary">
+            {locationData.length} active locations
+          </Typography>
+          <Typography variant="body-02" className="text-neutral-400">
+            Click markers for details
+          </Typography>
+        </div>
+      </CardContent>
+    </Card>
   );
 };

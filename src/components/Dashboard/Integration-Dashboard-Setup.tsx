@@ -2,7 +2,6 @@
 
 import { useDashboardData } from "@/hooks/useDashboardData";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { Button } from "@/components/ui/button";
 import { Play, Pause, RefreshCw } from "lucide-react";
 
 export function Dashboard() {
@@ -36,10 +35,13 @@ export function Dashboard() {
           <p className="text-destructive mb-4 text-lg">
             Error loading dashboard: {error?.message || "Unknown error"}
           </p>
-          <Button onClick={manualRefresh} variant="outline">
+          <button
+            onClick={manualRefresh}
+            className="text-text-primary flex items-center gap-2 rounded-md border border-neutral-200 bg-neutral-50 px-2 py-1.5 text-[13px] transition-colors hover:bg-neutral-200"
+          >
             <RefreshCw className="mr-2 h-4 w-4" />
             Retry
-          </Button>
+          </button>
         </div>
       </div>
     );
@@ -74,10 +76,8 @@ export function Dashboard() {
 
             <div className="flex items-center space-x-2">
               {/* Data Controls */}
-              <Button
+              <button
                 onClick={toggleAutoRefresh}
-                variant="outline"
-                size="sm"
                 className="flex items-center space-x-1"
               >
                 {isAutoRefetchEnabled ? (
@@ -91,12 +91,10 @@ export function Dashboard() {
                     <span>Resume</span>
                   </>
                 )}
-              </Button>
+              </button>
 
-              <Button
+              <button
                 onClick={manualRefresh}
-                variant="outline"
-                size="sm"
                 disabled={isFetching}
                 className="flex items-center space-x-1"
               >
@@ -104,7 +102,7 @@ export function Dashboard() {
                   className={`h-3 w-3 ${isFetching ? "animate-spin" : ""}`}
                 />
                 <span>Refresh</span>
-              </Button>
+              </button>
 
               {/* Theme Switcher */}
               <ThemeSwitcher />
