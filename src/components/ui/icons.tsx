@@ -109,3 +109,45 @@ export function DragHandleDotsIcon({ className = "", size = 15 }) {
     </svg>
   );
 }
+
+export function CloseRoundedIcon({ className = "", size = 24 }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+    >
+      <path
+        fill="currentColor"
+        d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"
+        strokeWidth={0.5}
+        stroke="currentColor"
+      ></path>
+    </svg>
+  );
+}
+
+export function HamburgerIcon({ className = "", size = 24 }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M0 3.75A.75.75 0 0 1 .75 3h14.5a.75.75 0 0 1 0 1.5H.75A.75.75 0 0 1 0 3.75M0 8a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H.75A.75.75 0 0 1 0 8m.75 3.5a.75.75 0 0 0 0 1.5h14.5a.75.75 0 0 0 0-1.5z"
+        clipRule="evenodd"
+        strokeWidth={0.5}
+        stroke="currentColor"
+      ></path>
+    </svg>
+  );
+}
