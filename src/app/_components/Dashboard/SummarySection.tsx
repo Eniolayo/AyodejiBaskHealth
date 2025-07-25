@@ -3,7 +3,7 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Typography from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDashboardDataContext } from "@/contexts/DashboardContext";
+import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
 
 export const SummarySection = () => {
   const { isLoading, summary: summaryData } = useDashboardDataContext();

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import Typography from "./typography";
+import { CloseRoundedIcon, DragHandleDotsIcon } from "./icons";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -42,6 +43,7 @@ Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, title, subtitle, action, children, ...props }, ref) => {
+    const isDragging = false;
     return (
       <div
         ref={ref}
@@ -50,15 +52,27 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
       >
         <div className="flex items-center justify-between">
           <div>
-            <Typography variant="body-01" className="text-text-primary">
-              {title}
-            </Typography>
+            <div className="flex items-center gap-2">
+              {isDragging && (
+                <button className="rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px]">
+                  <DragHandleDotsIcon />
+                </button>
+              )}
+              <Typography variant="body-01" className="text-text-primary">
+                {title}
+              </Typography>
+            </div>
             {subtitle && (
               <Typography variant="body-02" className="mt-1 text-neutral-400">
                 {subtitle}
               </Typography>
             )}
           </div>
+          {isDragging && (
+            <button className="rounded-lg border border-neutral-200 bg-neutral-50 p-1.5 text-[13px]">
+              <CloseRoundedIcon className="size-5" />
+            </button>
+          )}
           {action && <div className="flex items-center gap-2">{action}</div>}
         </div>
         {children}

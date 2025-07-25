@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Typography from "@/components/ui/typography";
 import { PlayIcon, ReplayIcon } from "@/components/ui/icons";
 import { Pause } from "lucide-react";
-import { useDashboardDataContext } from "@/contexts/DashboardContext";
+import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
 
 export const DashboardHeader = () => {
   const {

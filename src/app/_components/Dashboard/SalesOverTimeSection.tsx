@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDashboardDataContext } from "@/contexts/DashboardContext";
+import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
 
 export const SalesOverTimeSection = () => {
   const { data, isLoading } = useDashboardDataContext();
