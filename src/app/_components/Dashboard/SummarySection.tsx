@@ -5,13 +5,16 @@ import Typography from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
 
-export const SummarySection = () => {
+export const SummarySection = ({
+  cardId,
+  rowId,
+}: { cardId?: string; rowId?: string } = {}) => {
   const { isLoading, summary: summaryData } = useDashboardDataContext();
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Summary" />
+      <Card cardId={cardId} rowId={rowId}>
+        <CardHeader title="Summary" cardId={cardId} rowId={rowId} />
         <CardContent padding="none">
           <div className="space-y-4 p-4">
             <Skeleton className="h-6 w-1/2" />
@@ -25,8 +28,8 @@ export const SummarySection = () => {
   }
   if (!summaryData) return null;
   return (
-    <Card>
-      <CardHeader title="Summary" />
+    <Card cardId={cardId} rowId={rowId}>
+      <CardHeader title="Summary" cardId={cardId} rowId={rowId} />
       <CardContent padding="none">
         <div className="">
           <div className="border-b border-neutral-200 px-[15px] py-3.5">

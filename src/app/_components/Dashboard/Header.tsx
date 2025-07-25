@@ -3,11 +3,11 @@ import React from "react";
 import { Switch } from "@/components/ui/switch";
 import Typography from "@/components/ui/typography";
 import { SunIcon, MoonIcon } from "@/components/ui/icons";
-import { useState } from "react";
 import { useTheme } from "next-themes";
+import { useDashboardLayout } from "@/contexts/DashboardLayoutContext";
 
 function Header() {
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const { state, toggleEditMode, resetToDefault } = useDashboardLayout();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
@@ -27,11 +27,17 @@ function Header() {
     <header className="border-b border-neutral-200 bg-neutral-50 py-3">
       <div className="mx-auto flex max-w-[1580px] items-center justify-between px-3">
         <div className="flex w-[30%] gap-4">
-          <button className="rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-[13px]">
+          <button
+            className="rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-[13px]"
+            onClick={resetToDefault}
+          >
             Reset to default
           </button>
           <div className="flex items-center gap-2">
-            <Switch checked={isSwitchOn} onCheckedChange={setIsSwitchOn} />
+            <Switch
+              checked={state.isEditMode}
+              onCheckedChange={toggleEditMode}
+            />
             <Typography variant="body-02" className="text-text-primary">
               Edit mode
             </Typography>

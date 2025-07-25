@@ -15,7 +15,6 @@ export const DashboardHeader = () => {
     manualRefresh,
   } = useDashboardDataContext();
 
-  // Countdown state
   const [countdown, setCountdown] = useState(refetchInterval / 1000);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 

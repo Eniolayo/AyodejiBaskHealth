@@ -30,7 +30,10 @@ const MapComponent = dynamic(() => import("./MapComponent"), {
   ),
 });
 
-export const LocationsMapSection = () => {
+export const LocationsMapSection = ({
+  cardId,
+  rowId,
+}: { cardId?: string; rowId?: string } = {}) => {
   const { data, isLoading } = useDashboardDataContext();
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
     null
@@ -59,8 +62,8 @@ export const LocationsMapSection = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Locations" />
+      <Card cardId={cardId} rowId={rowId}>
+        <CardHeader title="Locations" cardId={cardId} rowId={rowId} />
         <CardContent>
           <div className="relative h-[600px] p-3">
             <Skeleton
@@ -83,8 +86,8 @@ export const LocationsMapSection = () => {
   if (!locationData) return null;
 
   return (
-    <Card>
-      <CardHeader title="Locations" />
+    <Card cardId={cardId} rowId={rowId}>
+      <CardHeader title="Locations" cardId={cardId} rowId={rowId} />
       <CardContent>
         <div className="relative h-[600px] p-3">
           {isClient ? (

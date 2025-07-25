@@ -32,7 +32,10 @@ const columnOptions: { key: PaymentColumnKey; label: string }[] = [
 
 const ITEMS_PER_PAGE = 5;
 
-export const PaymentsHistorySection = () => {
+export const PaymentsHistorySection = ({
+  cardId,
+  rowId,
+}: { cardId?: string; rowId?: string } = {}) => {
   const { data, isLoading } = useDashboardDataContext();
   const [selectedRows, setSelectedRows] = useState<PaymentData[]>([]);
   const [hiddenColumns, setHiddenColumns] = useState<PaymentColumnKey[]>([]);
@@ -92,8 +95,8 @@ export const PaymentsHistorySection = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Payments history" />
+      <Card cardId={cardId} rowId={rowId}>
+        <CardHeader title="Payments history" cardId={cardId} rowId={rowId} />
         <CardContent className="p-3">
           <Skeleton variant="rectangular" className="mb-4 h-40 w-full" />
           <Skeleton variant="rectangular" className="h-8 w-1/2" />
@@ -105,8 +108,8 @@ export const PaymentsHistorySection = () => {
   if (!paymentsHistoryData.length) return null;
 
   return (
-    <Card>
-      <CardHeader title="Payments history" />
+    <Card cardId={cardId} rowId={rowId}>
+      <CardHeader title="Payments history" cardId={cardId} rowId={rowId} />
       <CardContent className="space-y-4 p-3">
         <div className="flex items-center justify-between gap-4">
           <input

@@ -14,7 +14,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
 
-export const SalesOverTimeSection = () => {
+export const SalesOverTimeSection = ({
+  cardId,
+  rowId,
+}: { cardId?: string; rowId?: string } = {}) => {
   const { data, isLoading } = useDashboardDataContext();
 
   let salesOverTimeData;
@@ -37,8 +40,12 @@ export const SalesOverTimeSection = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Total sales over time" />
+      <Card cardId={cardId} rowId={rowId}>
+        <CardHeader
+          title="Total sales over time"
+          cardId={cardId}
+          rowId={rowId}
+        />
         <CardContent padding="none">
           <div className="flex h-80 w-full items-center justify-center">
             <Skeleton className="h-40 w-full" variant="rectangular" />
@@ -53,8 +60,8 @@ export const SalesOverTimeSection = () => {
   }
   if (!salesOverTimeData) return null;
   return (
-    <Card>
-      <CardHeader title="Total sales over time" />
+    <Card cardId={cardId} rowId={rowId}>
+      <CardHeader title="Total sales over time" cardId={cardId} rowId={rowId} />
       <CardContent padding="none">
         <div className="h-80 w-full">
           <ResponsiveContainer width="100%" height="100%">

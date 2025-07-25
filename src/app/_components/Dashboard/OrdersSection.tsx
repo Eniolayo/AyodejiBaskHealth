@@ -14,7 +14,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
 
-export const OrdersSection = () => {
+export const OrdersSection = ({
+  cardId,
+  rowId,
+}: { cardId?: string; rowId?: string } = {}) => {
   const { data, isLoading } = useDashboardDataContext();
 
   let orderData;
@@ -30,8 +33,8 @@ export const OrdersSection = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader title="Orders" />
+      <Card cardId={cardId} rowId={rowId}>
+        <CardHeader title="Orders" cardId={cardId} rowId={rowId} />
         <CardContent padding="none">
           <div className="flex h-64 items-center justify-center pl-0.5">
             <Skeleton className="h-32 w-full" variant="rectangular" />
@@ -46,8 +49,8 @@ export const OrdersSection = () => {
   }
   if (!orderData) return null;
   return (
-    <Card>
-      <CardHeader title="Orders" />
+    <Card cardId={cardId} rowId={rowId}>
+      <CardHeader title="Orders" cardId={cardId} rowId={rowId} />
       <CardContent padding="none">
         <div className="max-h-[240px] overflow-y-auto pr-2 pl-0.5">
           <ResponsiveContainer width="100%" height={orderData.length * 45}>
