@@ -11,7 +11,7 @@ import Dropdown from "@/components/ui/dropdown";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { useState, useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
+import { useDashboardDataContext } from "@/contexts/DashboardContext";
 
 type PaymentData = {
   id: number;

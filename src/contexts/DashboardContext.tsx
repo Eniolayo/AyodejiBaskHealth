@@ -12,8 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchDashboardData } from "@/lib/api";
 import { DashboardApiResponse } from "@/types/dashboard";
 
-// Types
-interface DashboardDataContextProps {
+type DashboardDataContextProps = {
   data: DashboardApiResponse | undefined;
   error: unknown;
   isLoading: boolean;
@@ -26,23 +25,21 @@ interface DashboardDataContextProps {
   toggleAutoRefresh: () => void;
   isAutoRefetchEnabled: boolean;
   refetchInterval: number;
-  // Example derived/calculated state
   summary: DashboardSummary | null;
-}
+};
 
-interface DashboardDataProviderProps {
+type DashboardDataProviderProps = {
   children: ReactNode;
   refetchInterval?: number;
   enableAutoRefetch?: boolean;
-}
+};
 
-// Example: Derived summary state
-interface DashboardSummary {
+type DashboardSummary = {
   totalSales: number;
   totalOrders: number;
   grossProfit: number;
   totalExpenses: number;
-}
+};
 
 const DashboardDataContext = createContext<
   DashboardDataContextProps | undefined
@@ -54,16 +51,48 @@ function summaryReducer(
 ): DashboardSummary | null {
   if (!action.payload?.data?.dashboardData) return null;
   const d = action.payload.data.dashboardData;
-  return {
-    totalSales: d.charts.salesOverTime.data.reduce(
-      (a: number, b: number) => a + b,
+
+  const totalSales = d.charts.salesOverTime.data.reduce(
+    (a: number, b: number) => a + b,
+    0
+  );
+
+  // Dynamically calculate expenses using 3 averaged methods: % of sales, per transaction, and per product sold
+  const calculateExpenses = (): number => {
+    const expensePercentage = 0.35; // 35% of sales
+    const percentageBasedExpenses = totalSales * expensePercentage;
+
+    const totalTransactions = d.tables.recentTransactions.length;
+    const avgTransactionValue = totalSales / totalTransactions || 0;
+    const transactionBasedExpenses =
+      totalTransactions * (avgTransactionValue * 0.4); // 40% per transaction
+
+    const totalProductSales = d.tables.topProducts.reduce(
+      (sum, product) => sum + product.sales,
       0
-    ),
+    );
+    const productBasedExpenses = totalProductSales * 25; // $25 per product sold
+
+    const calculatedExpenses = Math.round(
+      (percentageBasedExpenses +
+        transactionBasedExpenses +
+        productBasedExpenses) /
+        3
+    );
+
+    return Math.max(
+      Math.min(calculatedExpenses, totalSales * 0.8),
+      totalSales * 0.2
+    ); // clamp between 20–80% of sales
+  };
+
+  const totalExpenses = calculateExpenses();
+
+  return {
+    totalSales,
     totalOrders: d.tables.recentTransactions.length,
-    totalExpenses: 12500, // Placeholder
-    grossProfit:
-      d.charts.salesOverTime.data.reduce((a: number, b: number) => a + b, 0) -
-      12500,
+    totalExpenses,
+    grossProfit: totalSales - totalExpenses,
   };
 }
 
@@ -87,29 +116,24 @@ export function DashboardDataProvider({
       gcTime: 60000,
     });
 
-  // Derived/calculated state using useReducer
   const [summary, dispatchSummary] = useReducer(summaryReducer, null);
 
   useEffect(() => {
     dispatchSummary({ type: "set", payload: data });
   }, [data]);
 
-  // Manual refresh function
   const manualRefresh = () => {
     refetch();
   };
 
-  // Pause auto-refresh
   const pauseAutoRefresh = () => {
     setIsAutoRefetchEnabled(false);
   };
 
-  // Resume auto-refresh
   const resumeAutoRefresh = () => {
     setIsAutoRefetchEnabled(true);
   };
 
-  // Toggle auto-refresh
   const toggleAutoRefresh = () => {
     setIsAutoRefetchEnabled((prev) => !prev);
   };

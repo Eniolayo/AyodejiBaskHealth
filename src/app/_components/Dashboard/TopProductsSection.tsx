@@ -14,7 +14,7 @@ import {
 import { JSX } from "react";
 import { BarProps } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
+import { useDashboardDataContext } from "@/contexts/DashboardContext";
 
 const CustomBottomBar = (props: BarProps): JSX.Element => {
   const fill = props.fill ?? "#000";

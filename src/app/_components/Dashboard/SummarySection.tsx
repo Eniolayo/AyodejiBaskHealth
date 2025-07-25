@@ -3,26 +3,10 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Typography from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
+import { useDashboardDataContext } from "@/contexts/DashboardContext";
 
 export const SummarySection = () => {
-  const { data, isLoading } = useDashboardDataContext();
-
-  let summaryData;
-  if (data?.data?.dashboardData) {
-    const d = data.data.dashboardData;
-    summaryData = {
-      totalSales: d.charts.salesOverTime.data.reduce(
-        (a: number, b: number) => a + b,
-        0
-      ),
-      totalExpenses: 12500, // Placeholder, as not in API
-      grossProfit:
-        d.charts.salesOverTime.data.reduce((a: number, b: number) => a + b, 0) -
-        12500, // Placeholder
-      totalOrders: d.tables.recentTransactions.length,
-    };
-  }
+  const { isLoading, summary: summaryData } = useDashboardDataContext();
 
   if (isLoading) {
     return (

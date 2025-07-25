@@ -5,7 +5,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Typography from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
+import { useDashboardDataContext } from "@/contexts/DashboardContext";
 
 type Location = {
   id: string;

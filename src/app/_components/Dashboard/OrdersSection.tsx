@@ -12,7 +12,7 @@ import {
   LabelList,
 } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useDashboardDataContext } from "@/hooks/DashboardDataContext";
+import { useDashboardDataContext } from "@/contexts/DashboardContext";
 
 export const OrdersSection = () => {
   const { data, isLoading } = useDashboardDataContext();

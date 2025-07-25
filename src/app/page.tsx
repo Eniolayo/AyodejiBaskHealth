@@ -1,11 +1,11 @@
-import Header from "@/components/Header";
-import { DashboardHeader } from "@/components/Dashboard/DashboardHeader";
-import { OrdersSection } from "@/components/Dashboard/OrdersSection";
-import { TopProductsSection } from "@/components/Dashboard/TopProductsSection";
-import { SummarySection } from "@/components/Dashboard/SummarySection";
-import { SalesOverTimeSection } from "@/components/Dashboard/SalesOverTimeSection";
-import { PaymentsHistorySection } from "@/components/Dashboard/PaymentsHistorySection";
-import { LocationsMapSection } from "@/components/Dashboard/LocationsMapSection";
+import Header from "@/app/_components/Dashboard/Header";
+import { DashboardHeader } from "@/app/_components/Dashboard/DashboardHeader";
+import { OrdersSection } from "@/app/_components/Dashboard/OrdersSection";
+import { TopProductsSection } from "@/app/_components/Dashboard/TopProductsSection";
+import { SummarySection } from "@/app/_components/Dashboard/SummarySection";
+import { SalesOverTimeSection } from "@/app/_components/Dashboard/SalesOverTimeSection";
+import { PaymentsHistorySection } from "@/app/_components/Dashboard/PaymentsHistorySection";
+import { LocationsMapSection } from "@/app/_components/Dashboard/LocationsMapSection";
 
 export default function Home() {
   return (
