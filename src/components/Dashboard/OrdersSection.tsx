@@ -49,8 +49,8 @@ export const OrdersSection = () => {
     <Card>
       <CardHeader title="Orders" />
       <CardContent padding="none">
-        <div className="h-64 pl-0.5">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="max-h-[240px] overflow-y-auto pr-2 pl-0.5">
+          <ResponsiveContainer width="100%" height={orderData.length * 45}>
             <BarChart
               data={orderData}
               layout="vertical"
@@ -96,7 +96,7 @@ export const OrdersSection = () => {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="px-3 pb-2">
+        <div className="px-3 py-2">
           <Typography variant="body-02" className="text-text-primary">
             Trending up by 5.2% this month
           </Typography>
