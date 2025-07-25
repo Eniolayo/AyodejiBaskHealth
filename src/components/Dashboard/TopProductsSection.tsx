@@ -44,12 +44,12 @@ export const TopProductsSection = () => {
   return (
     <Card>
       <CardHeader title="Top products" />
-      <CardContent>
+      <CardContent padding="none">
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart
               data={productData}
-              margin={{ top: 12, right: 12, left: 12, bottom: 12 }}
+              margin={{ top: 20, right: 12, left: 12, bottom: 12 }}
             >
               <CartesianGrid
                 strokeDasharray="3 3"
@@ -81,7 +81,7 @@ export const TopProductsSection = () => {
               <Bar
                 dataKey="ACME Prod - 02"
                 stackId="a"
-                fill="#40b1e9"
+                fill="#0d73a5bf"
                 shape={CustomBottomBar}
               >
                 <LabelList
@@ -105,7 +105,7 @@ export const TopProductsSection = () => {
             </Typography>
           </div>
           <div className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded bg-[#40b1e9]" />
+            <div className="h-3 w-3 rounded bg-[#0d73a5bf]" />
             <Typography variant="body-03" className="text-neutral-400">
               ACME Prod - 02
             </Typography>

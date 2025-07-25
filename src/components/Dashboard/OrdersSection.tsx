@@ -15,7 +15,7 @@ export const OrdersSection = () => {
   return (
     <Card>
       <CardHeader title="Orders" />
-      <CardContent>
+      <CardContent padding="none">
         <div className="h-64 pl-0.5">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
@@ -35,7 +35,7 @@ export const OrdersSection = () => {
               />
               <Bar
                 dataKey="orders"
-                fill="#0d72a5"
+                fill="#0D72A5"
                 barSize={32}
                 radius={[4, 4, 4, 4]}
               >
@@ -63,8 +63,8 @@ export const OrdersSection = () => {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="px-3">
-          <Typography variant="body-02" className="text-text-primary mt-1">
+        <div className="px-3 pb-2">
+          <Typography variant="body-02" className="text-text-primary">
             Trending up by 5.2% this month
           </Typography>
           <Typography variant="body-02" className="mt-1.5 text-neutral-400">
