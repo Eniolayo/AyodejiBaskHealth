@@ -6,7 +6,15 @@ import { PlayIcon, ReplayIcon } from "@/components/ui/icons";
 import { Pause } from "lucide-react";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
 
-export const DashboardHeader = () => {
+interface DashboardHeaderProps {
+  cardId?: string;
+  rowId?: string;
+}
+
+export const DashboardHeader = ({
+  cardId: _cardId,
+  rowId: _rowId,
+}: DashboardHeaderProps = {}) => {
   const {
     isFetching,
     isAutoRefetchEnabled,
