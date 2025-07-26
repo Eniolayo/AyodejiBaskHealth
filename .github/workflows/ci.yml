@@ -53,8 +53,18 @@ jobs:
       - name: Run Jest tests
         run: npm run test:coverage
 
+      - name: Display coverage summary
+        run: |
+          echo "=== Coverage Summary ==="
+          if [ -f "coverage/lcov.info" ]; then
+            echo "Coverage report generated successfully"
+            echo "View detailed coverage in the Codecov report below"
+          else
+            echo "No coverage report generated"
+          fi
+
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           file: ./coverage/lcov.info
           flags: unittests
@@ -88,7 +98,7 @@ jobs:
         run: npm run test:e2e
 
       - name: Upload Playwright report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: playwright-report
@@ -117,7 +127,7 @@ jobs:
         run: npm run build
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-files
           path: .next/
