@@ -1,6 +1,6 @@
-import { render, RenderOptions } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactElement } from 'react';
+import { render, RenderOptions } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactElement } from "react";
 
 // Custom render function that includes providers
 const createTestQueryClient = () =>
@@ -17,7 +17,7 @@ const createTestQueryClient = () =>
     },
   });
 
-interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
+interface CustomRenderOptions extends Omit<RenderOptions, "wrapper"> {
   queryClient?: QueryClient;
 }
 
@@ -29,9 +29,7 @@ export const renderWithProviders = (
 
   function Wrapper({ children }: { children: React.ReactNode }) {
     return (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
   }
 
@@ -44,9 +42,9 @@ export const mockDashboardData = {
     total: 125000,
     growth: 12.5,
     data: [
-      { month: 'Jan', value: 10000 },
-      { month: 'Feb', value: 12000 },
-      { month: 'Mar', value: 15000 },
+      { month: "Jan", value: 10000 },
+      { month: "Feb", value: 12000 },
+      { month: "Mar", value: 15000 },
     ],
   },
   orders: {
@@ -55,15 +53,15 @@ export const mockDashboardData = {
     completed: 1205,
   },
   locations: [
-    { id: 1, name: 'New York', lat: 40.7128, lng: -74.0060, orders: 150 },
-    { id: 2, name: 'Los Angeles', lat: 34.0522, lng: -118.2437, orders: 120 },
+    { id: 1, name: "New York", lat: 40.7128, lng: -74.006, orders: 150 },
+    { id: 2, name: "Los Angeles", lat: 34.0522, lng: -118.2437, orders: 120 },
   ],
 };
 
 // Common test helpers
 export const waitForLoadingToFinish = async () => {
   // Wait for any loading states to complete
-  await new Promise(resolve => setTimeout(resolve, 100));
+  await new Promise((resolve) => setTimeout(resolve, 100));
 };
 
 export const mockIntersectionObserver = () => {

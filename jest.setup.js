@@ -1,13 +1,13 @@
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Mock Next.js router
-jest.mock('next/router', () => ({
+jest.mock("next/router", () => ({
   useRouter() {
     return {
-      route: '/',
-      pathname: '/',
-      query: '',
-      asPath: '/',
+      route: "/",
+      pathname: "/",
+      query: "",
+      asPath: "/",
       push: jest.fn(),
       pop: jest.fn(),
       reload: jest.fn(),
@@ -24,7 +24,7 @@ jest.mock('next/router', () => ({
 }));
 
 // Mock Next.js navigation (App Router)
-jest.mock('next/navigation', () => ({
+jest.mock("next/navigation", () => ({
   useRouter() {
     return {
       push: jest.fn(),
@@ -39,7 +39,7 @@ jest.mock('next/navigation', () => ({
     return new URLSearchParams();
   },
   usePathname() {
-    return '/';
+    return "/";
   },
 }));
 
@@ -58,9 +58,9 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 }));
 
 // Mock window.matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -73,27 +73,27 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock Leaflet for map components
-jest.mock('react-leaflet', () => ({
+jest.mock("react-leaflet", () => ({
   MapContainer: ({ children }) => (
     <div data-testid="map-container">{children}</div>
   ),
   TileLayer: () => <div data-testid="tile-layer" />,
   Marker: () => <div data-testid="marker" />,
-  Popup: ({ children }) => (
-    <div data-testid="popup">{children}</div>
-  ),
+  Popup: ({ children }) => <div data-testid="popup">{children}</div>,
 }));
 
-jest.mock('leaflet', () => ({
-  icon: jest.fn(() => ({ iconUrl: 'test.png' })),
-  divIcon: jest.fn(() => ({ className: 'test-icon' })),
+jest.mock("leaflet", () => ({
+  icon: jest.fn(() => ({ iconUrl: "test.png" })),
+  divIcon: jest.fn(() => ({ className: "test-icon" })),
 }));
 
 // Mock framer-motion for animations
-jest.mock('framer-motion', () => ({
+jest.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }) => <div {...props}>{children}</div>,
-    section: ({ children, ...props }) => <section {...props}>{children}</section>,
+    section: ({ children, ...props }) => (
+      <section {...props}>{children}</section>
+    ),
     span: ({ children, ...props }) => <span {...props}>{children}</span>,
     h1: ({ children, ...props }) => <h1 {...props}>{children}</h1>,
     h2: ({ children, ...props }) => <h2 {...props}>{children}</h2>,
