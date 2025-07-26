@@ -1,9 +1,0 @@
-1. UI ✓
-2. Confirm Colors ✓
-3. Integration ✓
-4. Light and dark mode ✓
-5. Edit mode ✓
-6. Testing (Integration and e2e) ✓
-7. Responsiveness
-8. Resuable button and fix other no reusable components
-9. Check for ways to change colors on light and dark mode
