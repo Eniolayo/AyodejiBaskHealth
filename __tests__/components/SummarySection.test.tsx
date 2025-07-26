@@ -67,7 +67,7 @@ describe("SummarySection Component", () => {
 
       // Should show skeleton elements (they don't have testid, so check by class)
       const skeletons = screen.getAllByText("", {
-        selector: ".bg-muted.rounded-md.animate-pulse",
+        selector: ".bg-neutral-200.rounded-md.animate-pulse",
       });
       expect(skeletons).toHaveLength(4);
 

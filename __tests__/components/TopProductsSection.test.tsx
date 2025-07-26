@@ -111,7 +111,7 @@ describe("TopProductsSection Component", () => {
 
       // check for loading skeletons
       const skeletons = screen.getAllByText("", {
-        selector: ".bg-muted.rounded-md.animate-pulse",
+        selector: ".bg-neutral-200.rounded-md.animate-pulse",
       });
       expect(skeletons.length).toBeGreaterThan(0);
 

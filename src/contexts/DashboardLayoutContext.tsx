@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useReducer, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  useState,
+} from "react";
 
 // Define card types based on the dashboard components
 export type CardType =
@@ -183,6 +189,7 @@ function layoutReducer(state: LayoutState, action: LayoutAction): LayoutState {
 
 interface DashboardLayoutContextType {
   state: LayoutState;
+  isLoading: boolean;
   toggleEditMode: () => void;
   resetToDefault: () => void;
   moveCard: (
@@ -212,6 +219,7 @@ export function DashboardLayoutProvider({
     isEditMode: false,
     rows: DEFAULT_LAYOUT,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load layout from localStorage on mount
   useEffect(() => {
@@ -226,14 +234,15 @@ export function DashboardLayoutProvider({
         }
       }
     }
+    setIsLoading(false);
   }, []);
 
-  // Save layout to localStorage whenever rows change
+  // Save layout to localStorage whenever rows change (but only after initial load)
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && !isLoading) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.rows));
     }
-  }, [state.rows]);
+  }, [state.rows, isLoading]);
 
   const toggleEditMode = () => {
     dispatch({ type: "TOGGLE_EDIT_MODE" });
@@ -275,6 +284,7 @@ export function DashboardLayoutProvider({
 
   const value: DashboardLayoutContextType = {
     state,
+    isLoading,
     toggleEditMode,
     resetToDefault,
     moveCard,

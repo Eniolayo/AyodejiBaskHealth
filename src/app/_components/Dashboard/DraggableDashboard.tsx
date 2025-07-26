@@ -22,6 +22,7 @@ import { TopProductsSection } from "@/app/_components/Dashboard/TopProductsSecti
 import { SalesOverTimeSection } from "@/app/_components/Dashboard/SalesOverTimeSection";
 import { PaymentsHistorySection } from "@/app/_components/Dashboard/PaymentsHistorySection";
 import { LocationsMapSection } from "@/app/_components/Dashboard/LocationsMapSection";
+import { Skeleton } from "../../../components/ui/skeleton";
 
 interface DraggableCardWrapperProps {
   cardId: string;
@@ -63,7 +64,6 @@ function DashboardRow({ rowId, cards }: DashboardRowProps) {
   if (!cards || cards.length === 0) {
     return null;
   }
-
   return (
     <SortableContext
       items={cards.map((card) => card.id)}
@@ -92,10 +92,21 @@ function DashboardRow({ rowId, cards }: DashboardRowProps) {
 }
 
 export function DraggableDashboard() {
-  const { state, moveCard, reorderCardsInRow } = useDashboardLayout();
+  const { state, isLoading, moveCard, reorderCardsInRow } =
+    useDashboardLayout();
+
+  if (isLoading) {
+    return <Skeleton className="h-[calc(100vh-100px)] w-full" />;
+  }
 
   if (!state || !state.rows || state.rows.length === 0) {
-    return <div>Loading dashboard...</div>;
+    return (
+      <div className="flex h-[calc(100vh-200px)] items-center justify-center rounded-lg border-2 border-dashed border-neutral-200 bg-neutral-50 p-8">
+        <p className="text-center text-lg text-neutral-500">
+          No dashboard data available
+        </p>
+      </div>
+    );
   }
 
   const handleDragEnd = (event: DragEndEvent) => {

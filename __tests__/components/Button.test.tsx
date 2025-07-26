@@ -64,7 +64,6 @@ describe("Button Component", () => {
 
       const button = screen.getByRole("button");
       expect(button.className).toContain("hover:border-red-200");
-      expect(button.className).toContain("hover:bg-red-50");
     });
 
     it("should render with ghost variant", () => {

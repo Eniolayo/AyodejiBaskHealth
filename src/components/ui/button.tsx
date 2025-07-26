@@ -74,7 +74,7 @@ const BUTTON_STYLES: Record<
     },
   },
   danger: {
-    base: "rounded-lg border border-neutral-200 bg-neutral-50 text-[13px] transition-colors hover:border-red-200 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    base: "rounded-lg border border-neutral-200 bg-neutral-50 text-[13px] transition-colors hover:border-red-200 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     sizes: {
       xs: "p-1",
       sm: "p-1.5",

@@ -9,7 +9,11 @@ describe("Skeleton", () => {
 
     const skeleton = screen.getByTestId("skeleton");
     expect(skeleton).toBeInTheDocument();
-    expect(skeleton).toHaveClass("animate-pulse", "rounded-md", "bg-muted");
+    expect(skeleton).toHaveClass(
+      "animate-pulse",
+      "rounded-md",
+      "bg-neutral-200"
+    );
   });
 
   it("renders with custom className", () => {
@@ -77,7 +81,11 @@ describe("Skeleton", () => {
     render(<Skeleton data-testid="skeleton" />);
 
     const skeleton = screen.getByTestId("skeleton");
-    expect(skeleton).toHaveClass("animate-pulse", "rounded-md", "bg-muted");
+    expect(skeleton).toHaveClass(
+      "animate-pulse",
+      "rounded-md",
+      "bg-neutral-200"
+    );
   });
 
   it("renders with custom data attributes", () => {

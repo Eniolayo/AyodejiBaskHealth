@@ -71,7 +71,7 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
     return (
       <div
         className={cn(
-          "bg-muted",
+          "bg-neutral-200",
           getSizeClasses(),
           getVariantClasses(),
           getAnimationClasses(),
