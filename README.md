@@ -13,6 +13,7 @@ A modern, real-time health data dashboard built with Next.js 15, featuring custo
 - **Interactive Charts**: Sales over time, user engagement, and product analytics
 - **Geographic Visualization**: Interactive map showing location-based activity
 - **Type Safety**: Full TypeScript implementation with Zod validation
+- **Comprehensive Testing**: Jest and React Testing Library with 70% coverage threshold
 
 ## 👤 User Journey
 
@@ -75,6 +76,16 @@ A modern, real-time health data dashboard built with Next.js 15, featuring custo
 
 - **Rationale**: Runtime validation with compile-time type checking
 - **Benefits**: Catch errors early, better IDE support, and self-documenting code
+
+**Drag & Drop**: @dnd-kit
+
+- **Rationale**: Modern, accessible drag-and-drop library
+- **Benefits**: Touch support, keyboard navigation, and smooth animations
+
+**Maps**: React Leaflet
+
+- **Rationale**: Interactive maps with geographic data visualization
+- **Benefits**: Customizable markers, popups, and real-time updates
 
 ### Component Architecture
 
@@ -154,7 +165,7 @@ App
 1. **Clone the repository**:
 
    ```bash
-   git clone [<repository-url>](https://github.com/Eniolayo/AyodejiBaskHealth.git)
+   git clone https://github.com/Eniolayo/AyodejiBaskHealth.git
    cd AyodejiBaskHealth
    ```
 
@@ -203,28 +214,14 @@ npm run test:watch        # Run tests in watch mode
 npm run test:coverage     # Run tests with coverage report
 ```
 
-**End-to-End Tests**:
-
-```bash
-npm run test:e2e          # Run E2E tests
-npm run test:e2e:ui       # Run E2E tests with UI
-npm run test:e2e:headed   # Run E2E tests in headed mode
-```
-
-**All Tests**:
-
-```bash
-npm run test:all          # Run both unit and E2E tests
-```
-
 ### Test Coverage
 
-The project maintains comprehensive test coverage:
+The project maintains comprehensive test coverage with a 70% threshold:
 
-- **Branches**: 50%
-- **Functions**: 50%
-- **Lines**: 55%
-- **Statements**: 55%
+- **Branches**: 70%
+- **Functions**: 70%
+- **Lines**: 70%
+- **Statements**: 70%
 
 ### Testing Strategy
 
@@ -233,12 +230,21 @@ The project maintains comprehensive test coverage:
 - Component behavior and user interactions
 - Context state management
 - API integration and error handling
+- Drag-and-drop functionality
+- Theme switching and persistence
 
-**E2E Tests**: Playwright
+**Test Structure**:
 
-- Full user journeys
-- Cross-browser compatibility
-- Mobile responsiveness
+```
+__tests__/
+├── api/                  # API route tests
+├── components/           # Component tests
+│   └── ui/              # UI component tests
+├── contexts/             # Context tests
+├── lib/                  # Utility tests
+├── pages/                # Page tests
+└── providers/            # Provider tests
+```
 
 ## 📁 Project Structure
 
@@ -247,17 +253,44 @@ src/
 ├── app/                    # Next.js App Router
 │   ├── _components/        # App-specific components
 │   │   └── Dashboard/      # Dashboard widgets
+│   │       ├── DraggableDashboard.tsx
+│   │       ├── Header.tsx
+│   │       ├── DashboardHeader.tsx
+│   │       ├── SummarySection.tsx
+│   │       ├── OrdersSection.tsx
+│   │       ├── TopProductsSection.tsx
+│   │       ├── SalesOverTimeSection.tsx
+│   │       ├── PaymentsHistorySection.tsx
+│   │       ├── LocationsMapSection.tsx
+│   │       └── MapComponent.tsx
 │   ├── api/               # API routes
 │   ├── globals.css        # Global styles
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page
 ├── components/            # Reusable UI components
 │   └── ui/               # Base UI components
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── dropdown.tsx
+│       ├── icons.tsx
+│       ├── skeleton.tsx
+│       ├── switch.tsx
+│       ├── table.tsx
+│       └── typography.tsx
 ├── contexts/             # React contexts
+│   ├── DashboardDataContext.tsx
+│   └── DashboardLayoutContext.tsx
 ├── lib/                  # Utility libraries
+│   ├── api.ts
+│   ├── utils.ts
+│   └── validation-test.ts
 ├── providers/            # Provider components
+│   ├── query-provider.tsx
+│   └── theme-provider.tsx
 ├── types/                # TypeScript type definitions
+│   └── dashboard.ts
 └── utils/                # Helper functions
+    └── test-utils.tsx
 ```
 
 ## 🎨 Design System
