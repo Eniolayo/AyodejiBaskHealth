@@ -1,6 +1,6 @@
 import { DashboardApiResponseSchema } from "@/types/dashboard";
 
-// Test the Zod schema validation
+// Sample data for testing our schema validation
 const testValidData = {
   success: true,
   data: {
@@ -47,12 +47,12 @@ const testValidData = {
 };
 
 const testInvalidData = {
-  success: "true", // Should be boolean, not string
+  success: "true", // wrong type - should be boolean
   data: {
     dashboardData: {
       charts: {
         salesOverTime: {
-          labels: "invalid", // Should be array, not string
+          labels: "invalid", // wrong type - should be array
           data: [122, 168],
         },
       },
@@ -60,14 +60,14 @@ const testInvalidData = {
   },
 };
 
-// These tests would be run in a test environment
+// Quick validation tests
 console.log(
   "Valid data test:",
   DashboardApiResponseSchema.safeParse(testValidData).success
-); // Should be true
+); // expect true
 console.log(
   "Invalid data test:",
   DashboardApiResponseSchema.safeParse(testInvalidData).success
-); // Should be false
+); // expect false
 
-export {}; // Make this a module
+export {}; // module export

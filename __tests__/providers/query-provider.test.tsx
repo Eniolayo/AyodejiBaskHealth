@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryProvider } from "@/providers/query-provider";
 
-// Mock @tanstack/react-query
+// mock react-query
 jest.mock("@tanstack/react-query", () => ({
   QueryClient: jest.fn().mockImplementation(() => ({
     defaultOptions: {
@@ -62,7 +62,7 @@ describe("QueryProvider", () => {
     expect(queryClientProvider).toHaveAttribute("data-client", "present");
   });
 
-  // ReactQueryDevtools test removed due to implementation differences
+  // devtools test removed - implementation differences
 
   it("creates QueryClient with correct default options", () => {
     const mockQueryClient = jest.requireMock(

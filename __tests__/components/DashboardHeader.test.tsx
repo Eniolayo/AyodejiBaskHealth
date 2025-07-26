@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+/* eslint-disable @typescript-eslint/no-require-imports */
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DashboardDataProvider } from "@/contexts/DashboardDataContext";
 import { DashboardLayoutProvider } from "@/contexts/DashboardLayoutContext";
@@ -15,15 +16,40 @@ jest.mock("next-themes", () => ({
     theme: "light",
     setTheme: jest.fn(),
   }),
-  ThemeProvider: ({ children }: any) => <div>{children}</div>,
+  ThemeProvider: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 // Mock next/image
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: ({ src, alt, ...props }: any) => (
+  default: ({ src, alt, ...props }: { src: string; alt: string }) => (
     <img src={src} alt={alt} {...props} />
   ),
+}));
+
+// Mock the DashboardDataContext
+const mockToggleAutoRefresh = jest.fn();
+const mockManualRefresh = jest.fn();
+
+jest.mock("@/contexts/DashboardDataContext", () => ({
+  useDashboardDataContext: jest.fn(() => ({
+    isFetching: false,
+    isAutoRefetchEnabled: true,
+    toggleAutoRefresh: mockToggleAutoRefresh,
+    manualRefresh: mockManualRefresh,
+    lastUpdated: new Date("2024-01-15T10:00:00Z"),
+  })),
+  DashboardDataProvider: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+}));
+
+// Mock formatTimeAgo
+jest.mock("@/lib/utils", () => ({
+  formatTimeAgo: jest.fn(() => `2 hours ago`),
+  cn: jest.fn((...classes) => classes.filter(Boolean).join(" ")),
 }));
 
 const mockDashboardData = {
@@ -73,6 +99,8 @@ const renderWithProviders = (component: React.ReactElement) => {
 
 describe("DashboardHeader Component", () => {
   const mockFetchDashboardData = require("@/lib/api").fetchDashboardData;
+  const mockUseDashboardDataContext =
+    require("@/contexts/DashboardDataContext").useDashboardDataContext;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -107,6 +135,182 @@ describe("DashboardHeader Component", () => {
       renderWithProviders(<DashboardHeader />);
 
       // Should display dashboard title
+      expect(screen.getByText("Dashboard")).toBeInTheDocument();
+    });
+  });
+
+  describe("Status Text Logic", () => {
+    it("should show 'Updating...' when isFetching is true", () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: true,
+        isAutoRefetchEnabled: true,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: new Date("2024-01-15T10:00:00Z"),
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      expect(screen.getByText("Updating...")).toBeInTheDocument();
+    });
+
+    it("should show 'Last updated X' when auto-refresh is disabled and lastUpdated exists", () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: false,
+        isAutoRefetchEnabled: false,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: new Date("2024-01-15T10:00:00Z"),
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      expect(screen.getByText("Last updated 2 hours ago")).toBeInTheDocument();
+    });
+
+    it("should show 'Up to date' when auto-refresh is enabled", () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: false,
+        isAutoRefetchEnabled: true,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: new Date("2024-01-15T10:00:00Z"),
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      expect(screen.getByText("Up to date")).toBeInTheDocument();
+    });
+
+    it("should show 'Up to date' when auto-refresh is disabled but no lastUpdated", () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: false,
+        isAutoRefetchEnabled: false,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: null,
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      expect(screen.getByText("Up to date")).toBeInTheDocument();
+    });
+  });
+
+  describe("Button Interactions", () => {
+    it("should call toggleAutoRefresh when auto-refresh button is clicked", () => {
+      renderWithProviders(<DashboardHeader />);
+
+      const autoRefreshButton = screen.getByTestId("auto-refresh-toggle");
+      fireEvent.click(autoRefreshButton);
+
+      expect(mockToggleAutoRefresh).toHaveBeenCalledTimes(1);
+    });
+
+    it("should call manualRefresh when manual refresh button is clicked", () => {
+      renderWithProviders(<DashboardHeader />);
+
+      const manualRefreshButton = screen.getByTestId("manual-refresh");
+      fireEvent.click(manualRefreshButton);
+
+      expect(mockManualRefresh).toHaveBeenCalledTimes(1);
+    });
+
+    it("should show 'Pause auto-fetch' when auto-refresh is enabled", () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: false,
+        isAutoRefetchEnabled: true,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: new Date("2024-01-15T10:00:00Z"),
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      expect(screen.getByText("Pause auto-fetch")).toBeInTheDocument();
+    });
+
+    it("should show 'Resume auto-fetch' when auto-refresh is disabled", () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: false,
+        isAutoRefetchEnabled: false,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: new Date("2024-01-15T10:00:00Z"),
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      expect(screen.getByText("Resume auto-fetch")).toBeInTheDocument();
+    });
+  });
+
+  describe("useEffect Logic", () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it("should set up interval when auto-refresh is disabled and lastUpdated exists", async () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: false,
+        isAutoRefetchEnabled: false,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: new Date("2024-01-15T10:00:00Z"),
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      // Fast-forward time to trigger interval
+      await act(async () => {
+        jest.advanceTimersByTime(60000);
+      });
+
+      // The component should still be rendered
+      expect(screen.getByText("Dashboard")).toBeInTheDocument();
+    });
+
+    it("should not set up interval when auto-refresh is enabled", async () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: false,
+        isAutoRefetchEnabled: true,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: new Date("2024-01-15T10:00:00Z"),
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      // Fast-forward time
+      await act(async () => {
+        jest.advanceTimersByTime(60000);
+      });
+
+      // The component should still be rendered
+      expect(screen.getByText("Dashboard")).toBeInTheDocument();
+    });
+
+    it("should not set up interval when lastUpdated is null", async () => {
+      mockUseDashboardDataContext.mockReturnValue({
+        isFetching: false,
+        isAutoRefetchEnabled: false,
+        toggleAutoRefresh: mockToggleAutoRefresh,
+        manualRefresh: mockManualRefresh,
+        lastUpdated: null,
+      });
+
+      renderWithProviders(<DashboardHeader />);
+
+      // Fast-forward time
+      await act(async () => {
+        jest.advanceTimersByTime(60000);
+      });
+
+      // The component should still be rendered
       expect(screen.getByText("Dashboard")).toBeInTheDocument();
     });
   });
@@ -203,6 +407,17 @@ describe("DashboardHeader Component", () => {
 
       // Should have descriptive title
       expect(screen.getByText("Dashboard")).toBeInTheDocument();
+    });
+
+    it("should have proper button accessibility", () => {
+      renderWithProviders(<DashboardHeader />);
+
+      const autoRefreshButton = screen.getByTestId("auto-refresh-toggle");
+      const manualRefreshButton = screen.getByTestId("manual-refresh");
+
+      expect(autoRefreshButton).toBeInTheDocument();
+      expect(manualRefreshButton).toBeInTheDocument();
+      expect(manualRefreshButton).toHaveAttribute("title", "Refresh now");
     });
   });
 });

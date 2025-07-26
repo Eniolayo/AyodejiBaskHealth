@@ -48,7 +48,7 @@ export const LocationsMapSection = ({
       name: loc.label,
       coordinates: [loc.latitude, loc.longitude] as [number, number],
       orders: loc.activity,
-      revenue: loc.activity * 100, // Placeholder
+      revenue: loc.activity * 100, // rough estimate for demo
     }));
   }
 
@@ -89,7 +89,10 @@ export const LocationsMapSection = ({
     <Card cardId={cardId} rowId={rowId}>
       <CardHeader title="Locations" cardId={cardId} rowId={rowId} />
       <CardContent>
-        <div className="relative h-[400px] p-3 sm:h-[600px]" data-testid="locations-map">
+        <div
+          className="relative h-[400px] p-3 sm:h-[600px]"
+          data-testid="locations-map"
+        >
           {isClient ? (
             <MapComponent
               locationData={locationData}

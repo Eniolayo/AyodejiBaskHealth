@@ -1,14 +1,14 @@
 import { z } from "zod";
 
-// Chart data schemas
+// Chart schemas
 const SalesOverTimeChartSchema = z.object({
-  labels: z.array(z.string()), // Date strings in YYYY-MM-DD format
-  data: z.array(z.number()), // Sales values
+  labels: z.array(z.string()), // dates in YYYY-MM-DD format
+  data: z.array(z.number()), // sales numbers
 });
 
 const UserEngagementChartSchema = z.object({
-  labels: z.array(z.string()), // Week labels like "Week 1", "Week 2", etc.
-  data: z.array(z.number()), // Engagement values
+  labels: z.array(z.string()), // week labels like "Week 1", "Week 2"
+  data: z.array(z.number()), // engagement metrics
 });
 
 const ChartsSchema = z.object({
@@ -16,18 +16,18 @@ const ChartsSchema = z.object({
   userEngagement: UserEngagementChartSchema,
 });
 
-// Table data schemas
+// Table schemas
 const TransactionSchema = z.object({
   id: z.number(),
   user: z.string(),
-  amount: z.string(), // Formatted as currency string like "$192"
-  date: z.string(), // Date string in YYYY-MM-DD format
+  amount: z.string(), // currency format like "$192"
+  date: z.string(), // YYYY-MM-DD format
 });
 
 const ProductSchema = z.object({
-  id: z.string(), // Product ID like "A1", "B2", etc.
-  name: z.string(), // Product name
-  sales: z.number(), // Sales count
+  id: z.string(), // product IDs like "A1", "B2"
+  name: z.string(), // product name
+  sales: z.number(), // sales count
 });
 
 const TablesSchema = z.object({
@@ -35,26 +35,26 @@ const TablesSchema = z.object({
   topProducts: z.array(ProductSchema),
 });
 
-// Map data schemas
+// Map schemas
 const LocationSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
-  label: z.string(), // City name
-  activity: z.number(), // Activity level/count
+  label: z.string(), // city name
+  activity: z.number(), // activity count
 });
 
 const MapDataSchema = z.object({
   locations: z.array(LocationSchema),
 });
 
-// Main dashboard data schema
+// Main dashboard schema
 const DashboardDataSchema = z.object({
   charts: ChartsSchema,
   tables: TablesSchema,
   map: MapDataSchema,
 });
 
-// Root API response schema
+// API response schema
 const DashboardApiResponseSchema = z.object({
   success: z.boolean(),
   data: z.object({
@@ -62,7 +62,7 @@ const DashboardApiResponseSchema = z.object({
   }),
 });
 
-// Infer TypeScript types from schemas
+// TypeScript types from schemas
 export type SalesOverTimeChart = z.infer<typeof SalesOverTimeChartSchema>;
 export type UserEngagementChart = z.infer<typeof UserEngagementChartSchema>;
 export type Charts = z.infer<typeof ChartsSchema>;

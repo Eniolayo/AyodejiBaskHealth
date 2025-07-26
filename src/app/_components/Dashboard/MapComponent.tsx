@@ -15,7 +15,7 @@ import L from "leaflet";
 
 import Typography from "@/components/ui/typography";
 
-// Fix for default markers
+// Leaflet marker fix - default icons don't work well
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -38,7 +38,7 @@ interface MapComponentProps {
   onCloseLocation: () => void;
 }
 
-// Custom marker icon
+// Custom marker styling
 const createCustomIcon = () => {
   return L.divIcon({
     className: "custom-marker",
@@ -56,11 +56,11 @@ const createCustomIcon = () => {
   });
 };
 
-// Map event handler component
+// Map event handler - handles clicks and other map events
 function MapEvents() {
   useMapEvents({
     click: () => {
-      // Handle map click events if needed
+      // map click handler - can add logic here if needed
     },
   });
   return null;
@@ -116,7 +116,7 @@ const MapComponent: FC<MapComponentProps> = ({
         ))}
       </MapContainer>
 
-      {/* Location Details Panel */}
+      {/* Location details panel - shows when a marker is clicked */}
       {selectedLocation && (
         <div className="absolute right-3 bottom-3 left-3 rounded-lg border border-neutral-200 bg-white p-3 shadow-lg">
           <div className="mb-2 flex items-center justify-between">
