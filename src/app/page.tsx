@@ -8,7 +8,7 @@ export default function Home() {
     <main className="font-geist min-h-screen border border-neutral-200">
       <DashboardLayoutProvider>
         <Header />
-        <section className="mx-auto max-w-[1580px] p-3">
+        <section className="mx-auto max-w-[1580px] p-4">
           <DashboardHeader />
           <DraggableDashboard />
         </section>

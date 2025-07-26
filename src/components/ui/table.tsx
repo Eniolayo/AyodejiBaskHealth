@@ -280,8 +280,8 @@ const Table = <T,>({
         </div>
       )}
 
-      <div className="min-h-[245px] overflow-hidden rounded-md border border-neutral-200">
-        <table className="w-full">
+      <div className="scrollbar-thin min-h-[245px] overflow-x-auto overflow-y-hidden rounded-md border border-neutral-200">
+        <table className="w-full min-w-max whitespace-nowrap">
           <TableHeader
             columns={columns}
             selectable={selectable}

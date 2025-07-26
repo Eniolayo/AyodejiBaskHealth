@@ -57,7 +57,7 @@ export const DashboardHeader = ({
   };
 
   return (
-    <div className="mb-6 flex flex-col justify-between md:flex-row md:items-center">
+    <div className="mb-4 flex flex-col justify-between md:flex-row md:items-center">
       <Typography variant="heading-03" className="text-text-primary">
         Dashboard
       </Typography>

@@ -70,7 +70,7 @@ function DashboardRow({ rowId, cards }: DashboardRowProps) {
       strategy={verticalListSortingStrategy}
     >
       <div
-        className={`grid gap-6 ${
+        className={`grid gap-4 ${
           cards.length === 3
             ? "grid-cols-1 lg:grid-cols-3"
             : cards.length === 2
@@ -156,7 +156,7 @@ export function DraggableDashboard() {
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
     >
-      <div className="space-y-6">
+      <div className="space-y-4">
         {state.rows.map((row) => (
           <DashboardRow key={row.id} rowId={row.id} cards={row.cards} />
         ))}

@@ -216,6 +216,25 @@ body {
   background: var(--neutral-400);
 }
 
+/* Thin scrollbar utility for tables */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-400);
+}
+
 ::selection {
   background: var(--brand-200);
   color: var(--text-primary);

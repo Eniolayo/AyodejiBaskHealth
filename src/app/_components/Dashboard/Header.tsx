@@ -51,8 +51,8 @@ function Header() {
   );
 
   return (
-    <header className="border-b border-neutral-200 bg-neutral-50 py-3">
-      <div className="mx-auto flex max-w-[1580px] items-center justify-between px-3">
+    <header className="sticky top-0 z-[99999] border-b border-neutral-200 bg-neutral-50 py-3">
+      <div className="mx-auto flex max-w-[1580px] items-center justify-between px-4">
         <div className="hidden w-[30%] lg:flex">
           <ControlsSection />
         </div>
