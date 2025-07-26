@@ -63,7 +63,6 @@ function Header() {
           width={136}
           height={40}
           className="h-10 w-[136px] object-contain"
-          priority
         />
 
         <div className="flex w-[30%] justify-end gap-1 lg:justify-end">
@@ -71,6 +70,7 @@ function Header() {
             variant="icon"
             onClick={toggleTheme}
             title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+            data-testid="theme-toggle"
           >
             {theme === "dark" ? (
               <SunIcon className="size-5" />

@@ -89,7 +89,7 @@ export const LocationsMapSection = ({
     <Card cardId={cardId} rowId={rowId}>
       <CardHeader title="Locations" cardId={cardId} rowId={rowId} />
       <CardContent>
-        <div className="relative h-[400px] p-3 sm:h-[600px]">
+        <div className="relative h-[400px] p-3 sm:h-[600px]" data-testid="locations-map">
           {isClient ? (
             <MapComponent
               locationData={locationData}

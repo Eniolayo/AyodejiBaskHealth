@@ -85,7 +85,7 @@ describe("Card Component", () => {
         ?.parentElement?.parentElement?.parentElement;
       expect(headerDiv?.className).toContain("border-b");
       expect(headerDiv?.className).toContain("px-3");
-      expect(headerDiv?.className).toContain("py-3.5");
+      expect(headerDiv?.className).toContain("h-12");
     });
 
     it("should render close button in edit mode", () => {

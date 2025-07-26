@@ -162,6 +162,7 @@ export const PaymentsHistorySection = ({
           onRowSelect={handleRowSelect}
           loading={false}
           emptyMessage="No payments found"
+          data-testid="payments-table"
         />
 
         <div className="flex items-center justify-between pt-2">

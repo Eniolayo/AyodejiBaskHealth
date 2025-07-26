@@ -165,7 +165,7 @@ describe("Header Component", () => {
       expect(container?.className).toContain("max-w-[1580px]");
       expect(container?.className).toContain("items-center");
       expect(container?.className).toContain("justify-between");
-      expect(container?.className).toContain("px-3");
+      expect(container?.className).toContain("px-4");
     });
 
     it("should have three main sections", () => {
@@ -189,7 +189,7 @@ describe("Header Component", () => {
         // Left section (buttons)
         expect(sections[0].className).toContain("w-[30%]");
         expect(sections[0].className).toContain("flex");
-        expect(sections[0].className).toContain("gap-4");
+        expect(sections[0].className).toContain("hidden");
 
         // Center section (logo)
         // No specific width class, should be centered
@@ -198,7 +198,7 @@ describe("Header Component", () => {
         expect(sections[2].className).toContain("w-[30%]");
         expect(sections[2].className).toContain("flex");
         expect(sections[2].className).toContain("justify-end");
-        expect(sections[2].className).toContain("gap-2");
+        expect(sections[2].className).toContain("gap-1");
       }
     });
   });

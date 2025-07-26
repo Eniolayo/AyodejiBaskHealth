@@ -66,7 +66,12 @@ export const DashboardHeader = ({
           {getStatusText()}
         </Typography>
         <div className="flex gap-2">
-          <Button variant="navigation" size="lg" onClick={toggleAutoRefresh}>
+          <Button
+            variant="navigation"
+            size="lg"
+            onClick={toggleAutoRefresh}
+            data-testid="auto-refresh-toggle"
+          >
             {isAutoRefetchEnabled ? (
               <>
                 <Pause className="text-text-primary size-3" /> Pause auto-fetch
@@ -82,6 +87,7 @@ export const DashboardHeader = ({
             variant="navigation"
             onClick={handleManualRefresh}
             title="Refresh now"
+            data-testid="manual-refresh"
           >
             <ReplayIcon className="text-text-primary size-5 scale-x-[-1] transform" />
           </Button>
