@@ -298,6 +298,13 @@ body {
 .leaflet-popup-content {
   color: var(--text-primary) !important;
 }
+.leaflet-popup-content p {
+  margin: 0 !important;
+}
+.leaflet-popup-content .map-order-details {
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
 
 .leaflet-container {
   background: var(--neutral-100) !important;

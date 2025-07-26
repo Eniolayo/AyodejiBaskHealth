@@ -13,13 +13,14 @@ import {
 } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
+import { useTheme } from "next-themes";
 
 export const OrdersSection = ({
   cardId,
   rowId,
 }: { cardId?: string; rowId?: string } = {}) => {
   const { data, isLoading } = useDashboardDataContext();
-
+  const { resolvedTheme } = useTheme();
   let orderData;
   if (data?.data?.dashboardData) {
     const d = data.data.dashboardData;
@@ -63,15 +64,28 @@ export const OrdersSection = ({
               <YAxis type="category" hide={true} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#3e4244",
-                  border: "1px solid #6b6f71",
+                  backgroundColor: "var(--neutral-100)",
+                  border: "1px solid var(--neutral-200)",
                   borderRadius: "8px",
-                  color: "#ebebeb",
+                  color: "var(--text-primary)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                  width: "120px",
                 }}
+                labelStyle={{
+                  color: "var(--text-primary)",
+                  fontWeight: "500",
+                  marginBottom: "4px",
+                }}
+                itemStyle={{
+                  color: "var(--text-primary)",
+                  fontSize: "13px",
+                  textTransform: "capitalize",
+                }}
+                cursor={{ stroke: "var(--neutral-300)", strokeWidth: 1 }}
               />
               <Bar
                 dataKey="orders"
-                fill="#0D72A5"
+                fill={resolvedTheme === "dark" ? "#0D72A5" : "#07557C"}
                 barSize={32}
                 radius={[4, 4, 4, 4]}
               >

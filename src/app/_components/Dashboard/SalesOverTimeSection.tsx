@@ -13,13 +13,14 @@ import {
 } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
+import { useTheme } from "next-themes";
 
 export const SalesOverTimeSection = ({
   cardId,
   rowId,
 }: { cardId?: string; rowId?: string } = {}) => {
   const { data, isLoading } = useDashboardDataContext();
-
+  const { resolvedTheme } = useTheme();
   let salesOverTimeData;
 
   if (data?.data?.dashboardData) {
@@ -71,12 +72,40 @@ export const SalesOverTimeSection = ({
             >
               <defs>
                 <linearGradient id="prod2-gradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="rgba(13, 114, 165, 0.6)" />
-                  <stop offset="95%" stopColor="rgba(196, 235, 255, 0.6)" />
+                  <stop
+                    offset="5%"
+                    stopColor={
+                      resolvedTheme === "dark"
+                        ? "rgba(13, 114, 165, 0.6)"
+                        : "rgba(147, 213, 245, 0.4)"
+                    }
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor={
+                      resolvedTheme === "dark"
+                        ? "rgba(196, 235, 255, 0.6)"
+                        : "rgba(235, 245, 250, 0.4)"
+                    }
+                  />
                 </linearGradient>
                 <linearGradient id="prod1-gradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="rgba(64, 177, 233, 0.4)" />
-                  <stop offset="95%" stopColor="rgba(196, 235, 255, 0.4)" />
+                  <stop
+                    offset="5%"
+                    stopColor={
+                      resolvedTheme === "dark"
+                        ? "rgba(64, 177, 233, 0.4)"
+                        : "rgba(7, 85, 124, 0.6)"
+                    }
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor={
+                      resolvedTheme === "dark"
+                        ? "rgba(196, 235, 255, 0.4)"
+                        : "rgba(235, 245, 250, 0.6)"
+                    }
+                  />
                 </linearGradient>
               </defs>
               <CartesianGrid
@@ -87,7 +116,7 @@ export const SalesOverTimeSection = ({
 
               <XAxis
                 dataKey="month"
-                stroke="#ebebeb"
+                stroke={resolvedTheme === "dark" ? "#D7D7D7" : "#3E4244"}
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
@@ -97,7 +126,7 @@ export const SalesOverTimeSection = ({
               />
 
               <YAxis
-                stroke="#ebebeb"
+                stroke={resolvedTheme === "dark" ? "#D7D7D7" : "#3E4244"}
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
@@ -106,18 +135,35 @@ export const SalesOverTimeSection = ({
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#3e4244",
-                  border: "1px solid #6b6f71",
+                  backgroundColor: "var(--neutral-100)",
+                  border: "1px solid var(--neutral-200)",
                   borderRadius: "8px",
-                  color: "#ebebeb",
+                  color: "var(--text-primary)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                  width: "120px",
                 }}
+                labelStyle={{
+                  color: "var(--text-primary)",
+                  fontWeight: "500",
+                  marginBottom: "4px",
+                }}
+                itemStyle={{
+                  color: "var(--text-primary)",
+                  fontSize: "13px",
+                  textTransform: "capitalize",
+                }}
+                cursor={{ stroke: "var(--neutral-300)", strokeWidth: 1 }}
               />
               <Area
                 type="monotone"
                 dataKey="prod1"
                 stackId="1"
                 stroke="#0d72a5"
-                fill="url(#prod1-gradient)"
+                fill={
+                  resolvedTheme === "dark"
+                    ? "url(#prod1-gradient)"
+                    : "url(#prod2-gradient)"
+                }
                 fillOpacity={1}
               />
               <Area
@@ -125,13 +171,17 @@ export const SalesOverTimeSection = ({
                 dataKey="prod2"
                 stackId="1"
                 stroke="#40b1e9"
-                fill="url(#prod2-gradient)"
+                fill={
+                  resolvedTheme === "dark"
+                    ? "url(#prod2-gradient)"
+                    : "url(#prod1-gradient)"
+                }
                 fillOpacity={1}
               />
             </AreaChart>
           </ResponsiveContainer>
         </div>
-        <div className="px-3">
+        <div className="px-3 pt-1 pb-3 sm:pb-0">
           <Typography variant="body-02" className="text-text-primary">
             Trending up by 5.2% this month
           </Typography>

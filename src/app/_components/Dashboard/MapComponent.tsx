@@ -97,11 +97,14 @@ const MapComponent: FC<MapComponentProps> = ({
             }}
           >
             <Popup className="location-popup">
-              <div className="p-2">
+              <div>
                 <Typography variant="body-01" className="mb-1 font-medium">
                   {location.name}
                 </Typography>
-                <Typography variant="body-02" className="mb-1 text-neutral-400">
+                <Typography
+                  variant="body-02"
+                  className="map-order-details text-neutral-400"
+                >
                   Orders: {location.orders}
                 </Typography>
                 <Typography variant="body-02" className="text-neutral-400">

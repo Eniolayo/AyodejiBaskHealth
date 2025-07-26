@@ -65,7 +65,7 @@ export const LocationsMapSection = ({
       <Card cardId={cardId} rowId={rowId}>
         <CardHeader title="Locations" cardId={cardId} rowId={rowId} />
         <CardContent>
-          <div className="relative h-[600px] p-3">
+          <div className="relative h-[400px] p-3 sm:h-[600px]">
             <Skeleton
               className="h-64 w-full rounded-lg"
               variant="rectangular"
@@ -89,7 +89,7 @@ export const LocationsMapSection = ({
     <Card cardId={cardId} rowId={rowId}>
       <CardHeader title="Locations" cardId={cardId} rowId={rowId} />
       <CardContent>
-        <div className="relative h-[600px] p-3">
+        <div className="relative h-[400px] p-3 sm:h-[600px]">
           {isClient ? (
             <MapComponent
               locationData={locationData}

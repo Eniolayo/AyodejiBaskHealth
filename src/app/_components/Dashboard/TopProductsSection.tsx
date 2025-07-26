@@ -15,6 +15,7 @@ import { JSX } from "react";
 import { BarProps } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
+import { useTheme } from "next-themes";
 
 const CustomBottomBar = (props: BarProps): JSX.Element => {
   const fill = props.fill ?? "#000";
@@ -47,6 +48,7 @@ export const TopProductsSection = ({
   rowId,
 }: { cardId?: string; rowId?: string } = {}) => {
   const { data, isLoading } = useDashboardDataContext();
+  const { resolvedTheme } = useTheme();
 
   let productData;
   if (data?.data?.dashboardData) {
@@ -95,7 +97,7 @@ export const TopProductsSection = ({
               />
               <XAxis
                 dataKey="month"
-                stroke="#ebebeb"
+                stroke={resolvedTheme === "dark" ? "#D7D7D7" : "#3E4244"}
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
@@ -103,22 +105,34 @@ export const TopProductsSection = ({
               <YAxis hide={true} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#3e4244",
-                  border: "1px solid #6b6f71",
+                  backgroundColor: "var(--neutral-100)",
+                  border: "1px solid var(--neutral-200)",
                   borderRadius: "8px",
-                  color: "#ebebeb",
+                  color: "var(--text-primary)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                 }}
+                labelStyle={{
+                  color: "var(--text-primary)",
+                  fontWeight: "500",
+                  marginBottom: "4px",
+                }}
+                itemStyle={{
+                  color: "var(--text-primary)",
+                  fontSize: "13px",
+                  textTransform: "capitalize",
+                }}
+                cursor={{ stroke: "var(--neutral-300)", strokeWidth: 1 }}
               />
               <Bar
                 dataKey="ACME Prod - 01"
                 stackId="a"
-                fill="#0d72a5"
+                fill={resolvedTheme === "dark" ? "#0d72a5" : "#07557C"}
                 radius={[9, 9, 0, 0]}
               />
               <Bar
                 dataKey="ACME Prod - 02"
                 stackId="a"
-                fill="#0d73a5bf"
+                fill={resolvedTheme === "dark" ? "#0d73a5bf" : "#07557Cbf"}
                 shape={CustomBottomBar}
               >
                 <LabelList
@@ -134,15 +148,15 @@ export const TopProductsSection = ({
             </ComposedChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-4 pb-3 sm:pb-0">
           <div className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded bg-[#0d72a5]" />
+            <div className="bg-brand-500 h-3 w-3 rounded" />
             <Typography variant="body-03" className="text-neutral-400">
               ACME Prod - 01
             </Typography>
           </div>
           <div className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded bg-[#0d73a5bf]" />
+            <div className="bg-brand-500/75 h-3 w-3 rounded" />
             <Typography variant="body-03" className="text-neutral-400">
               ACME Prod - 02
             </Typography>
