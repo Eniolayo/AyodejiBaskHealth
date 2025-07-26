@@ -111,7 +111,10 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
     return (
       <div
         ref={ref}
-        className={cn("border-b border-neutral-200 px-3 py-3.5", className)}
+        className={cn(
+          "grid h-12 items-center border-b border-neutral-200 px-3",
+          className
+        )}
         {...props}
       >
         <div className="flex items-center justify-between">
@@ -121,7 +124,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
                 <Button
                   variant="primary"
                   size="md"
-                  className="cursor-grab px-2 active:cursor-grabbing"
+                  className="cursor-grab p-[7px] active:cursor-grabbing"
                   {...attributes}
                   {...listeners}
                 >

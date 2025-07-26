@@ -130,24 +130,28 @@ export function CloseRoundedIcon({ className = "", size = 24 }) {
   );
 }
 
-export function HamburgerIcon({ className = "", size = 24 }) {
+export function HamburgerIcon({ className = "", size = 20 }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
       width={size}
       height={size}
-      viewBox="0 0 24 24"
       className={className}
       fill="currentColor"
     >
       <path
-        fill="currentColor"
         fillRule="evenodd"
-        d="M0 3.75A.75.75 0 0 1 .75 3h14.5a.75.75 0 0 1 0 1.5H.75A.75.75 0 0 1 0 3.75M0 8a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H.75A.75.75 0 0 1 0 8m.75 3.5a.75.75 0 0 0 0 1.5h14.5a.75.75 0 0 0 0-1.5z"
-        clipRule="evenodd"
-        strokeWidth={0.5}
-        stroke="currentColor"
-      ></path>
+        d="M3 4.75a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5h-12.5a.75.75 0 0 1-.75-.75Z"
+      />
+      <path
+        fillRule="evenodd"
+        d="M3 10a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5h-12.5a.75.75 0 0 1-.75-.75Z"
+      />
+      <path
+        fillRule="evenodd"
+        d="M3 15.25a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5h-12.5a.75.75 0 0 1-.75-.75Z"
+      />
     </svg>
   );
 }
