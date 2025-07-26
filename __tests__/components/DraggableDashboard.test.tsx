@@ -188,45 +188,45 @@ describe("DraggableDashboard Component", () => {
       );
     });
 
-          it("should render correct number of rows", async () => {
-        renderWithProviders(<DraggableDashboard />);
+    it("should render correct number of rows", async () => {
+      renderWithProviders(<DraggableDashboard />);
 
-        await screen.findByTestId("summary-summary");
+      await screen.findByTestId("summary-summary");
 
-        // Should have 3 rows based on default layout
-        // Check by looking for the grid containers instead
-        const gridContainers = document.querySelectorAll('.grid');
-        expect(gridContainers.length).toBeGreaterThan(0);
-      });
+      // Should have 3 rows based on default layout
+      // Check by looking for the grid containers instead
+      const gridContainers = document.querySelectorAll(".grid");
+      expect(gridContainers.length).toBeGreaterThan(0);
+    });
   });
 
   describe("Layout Structure", () => {
-          it("should have correct grid layout for different card counts", async () => {
-        renderWithProviders(<DraggableDashboard />);
+    it("should have correct grid layout for different card counts", async () => {
+      renderWithProviders(<DraggableDashboard />);
 
-        await screen.findByTestId("summary-summary");
+      await screen.findByTestId("summary-summary");
 
-        // Check that grid classes are applied
-        const gridContainers = document.querySelectorAll('.grid');
-        expect(gridContainers.length).toBeGreaterThan(0);
-      });
+      // Check that grid classes are applied
+      const gridContainers = document.querySelectorAll(".grid");
+      expect(gridContainers.length).toBeGreaterThan(0);
+    });
 
-          it("should render empty state when no rows", () => {
-        // Mock empty state
-        const EmptyTestComponent = () => {
-          const { state } =
-            require("@/contexts/DashboardLayoutContext").useDashboardLayout();
-          if (!state || !state.rows || state.rows.length === 0) {
-            return <div>Loading dashboard...</div>;
-          }
-          return <DraggableDashboard />;
-        };
+    it("should render empty state when no rows", () => {
+      // Mock empty state
+      const EmptyTestComponent = () => {
+        const { state } =
+          require("@/contexts/DashboardLayoutContext").useDashboardLayout();
+        if (!state || !state.rows || state.rows.length === 0) {
+          return <div>Loading dashboard...</div>;
+        }
+        return <DraggableDashboard />;
+      };
 
-        renderWithProviders(<EmptyTestComponent />);
+      renderWithProviders(<EmptyTestComponent />);
 
-        // The DashboardLayoutProvider always provides a default state, so this should render the dashboard
-        expect(screen.getByTestId("summary-summary")).toBeInTheDocument();
-      });
+      // The DashboardLayoutProvider always provides a default state, so this should render the dashboard
+      expect(screen.getByTestId("summary-summary")).toBeInTheDocument();
+    });
   });
 
   describe("Card Rendering", () => {

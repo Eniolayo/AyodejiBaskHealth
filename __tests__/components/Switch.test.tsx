@@ -75,13 +75,13 @@ describe("Switch Component", () => {
   });
 
   describe("Styling", () => {
-          it("should have correct CSS classes", () => {
-        render(<Switch />);
+    it("should have correct CSS classes", () => {
+      render(<Switch />);
 
-        const switchElement = screen.getByRole("switch");
-        expect(switchElement.className).toContain("inline-flex");
-        expect(switchElement.className).toContain("rounded-full");
-      });
+      const switchElement = screen.getByRole("switch");
+      expect(switchElement.className).toContain("inline-flex");
+      expect(switchElement.className).toContain("rounded-full");
+    });
 
     it("should have correct styling for checked state", () => {
       render(<Switch checked={true} />);

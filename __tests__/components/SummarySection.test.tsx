@@ -144,21 +144,24 @@ describe("SummarySection Component", () => {
       expect(screen.getByText("Summary")).toBeInTheDocument();
     });
 
-          it("should have proper content structure", async () => {
-        renderWithProviders(<SummarySection />);
+    it("should have proper content structure", async () => {
+      renderWithProviders(<SummarySection />);
 
-        await screen.findByText("Total sales");
+      await screen.findByText("Total sales");
 
-        // Should have proper border structure (there are 4 sections: sales, expenses, profit, orders)
-        const sections = screen.getAllByText(
-          /Total (sales|expenses|profit|orders)/
-        );
-        // Debug: log what sections are found
-        console.log('Found sections:', sections.map(s => s.textContent));
-        // The component only renders 3 sections: Total sales, Total expenses, Total orders
-        // "Gross profit" is not being rendered, so we expect 3
-        expect(sections).toHaveLength(3);
-      });
+      // Should have proper border structure (there are 4 sections: sales, expenses, profit, orders)
+      const sections = screen.getAllByText(
+        /Total (sales|expenses|profit|orders)/
+      );
+      // Debug: log what sections are found
+      console.log(
+        "Found sections:",
+        sections.map((s) => s.textContent)
+      );
+      // The component only renders 3 sections: Total sales, Total expenses, Total orders
+      // "Gross profit" is not being rendered, so we expect 3
+      expect(sections).toHaveLength(3);
+    });
   });
 
   describe("Styling and Layout", () => {
@@ -171,16 +174,16 @@ describe("SummarySection Component", () => {
       const sections = screen.getAllByText(
         /Total (sales|expenses|profit|orders)/
       );
-              sections.forEach((section) => {
-          const parent = section.closest("div");
-          // Only first 2 sections have border-b (not the last one)
-          if (section.textContent !== "Total orders") {
-            expect(parent?.className).toContain("border-b");
-          }
-          // Remove the border-neutral-200 check as it's not always present
-          expect(parent?.className).toContain("px-[15px]");
-          expect(parent?.className).toContain("py-3.5");
-        });
+      sections.forEach((section) => {
+        const parent = section.closest("div");
+        // Only first 2 sections have border-b (not the last one)
+        if (section.textContent !== "Total orders") {
+          expect(parent?.className).toContain("border-b");
+        }
+        // Remove the border-neutral-200 check as it's not always present
+        expect(parent?.className).toContain("px-[15px]");
+        expect(parent?.className).toContain("py-3.5");
+      });
     });
 
     it("should have proper typography variants", async () => {
@@ -297,9 +300,9 @@ describe("SummarySection Component", () => {
       const sections = screen.getAllByText(
         /Total (sales|expenses|profit|orders)/
       );
-              // The component only renders 3 sections: Total sales, Total expenses, Total orders
-        // "Gross profit" is not being rendered, so we expect 3
-        expect(sections).toHaveLength(3);
+      // The component only renders 3 sections: Total sales, Total expenses, Total orders
+      // "Gross profit" is not being rendered, so we expect 3
+      expect(sections).toHaveLength(3);
     });
 
     it("should have proper text content", async () => {

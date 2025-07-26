@@ -59,7 +59,9 @@ const renderWithProviders = (component: React.ReactElement) => {
 };
 
 describe("PaymentsHistorySection Component", () => {
-  const mockFetchDashboardData = jest.mocked(jest.requireMock("@/lib/api").fetchDashboardData);
+  const mockFetchDashboardData = jest.mocked(
+    jest.requireMock("@/lib/api").fetchDashboardData
+  );
 
   beforeEach(() => {
     jest.clearAllMocks();
