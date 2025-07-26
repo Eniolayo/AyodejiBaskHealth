@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { PlayIcon, ReplayIcon } from "@/components/ui/icons";
 import { Pause } from "lucide-react";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
+import { formatTimeAgo } from "@/lib/utils";
 
 interface DashboardHeaderProps {
   cardId?: string;
@@ -16,12 +17,43 @@ export const DashboardHeader = ({
   cardId: _cardId,
   rowId: _rowId,
 }: DashboardHeaderProps = {}) => {
-  const { isFetching, isAutoRefetchEnabled, toggleAutoRefresh, manualRefresh } =
-    useDashboardDataContext();
+  const {
+    isFetching,
+    isAutoRefetchEnabled,
+    toggleAutoRefresh,
+    manualRefresh,
+    lastUpdated,
+  } = useDashboardDataContext();
+
+  // Force re-render every minute to update "time ago" text
+  const [, forceUpdate] = useState({});
+
+  useEffect(() => {
+    // Only set up interval when auto-refresh is paused and we have a last updated time
+    if (!isAutoRefetchEnabled && lastUpdated) {
+      const interval = setInterval(() => {
+        forceUpdate({});
+      }, 60000); // Update every minute
+
+      return () => clearInterval(interval);
+    }
+  }, [isAutoRefetchEnabled, lastUpdated]);
 
   // Reset countdown on manual refresh
   const handleManualRefresh = () => {
     manualRefresh();
+  };
+
+  const getStatusText = () => {
+    if (isFetching) {
+      return "Updating...";
+    }
+
+    if (!isAutoRefetchEnabled && lastUpdated) {
+      return `Last updated ${formatTimeAgo(lastUpdated)}`;
+    }
+
+    return "Up to date";
   };
 
   return (
@@ -31,7 +63,7 @@ export const DashboardHeader = ({
       </Typography>
       <div className="flex items-center justify-between gap-2 md:justify-baseline">
         <Typography variant="body-02" className="text-neutral-400">
-          {isFetching ? "Updating..." : "Up to date"}
+          {getStatusText()}
         </Typography>
         <div className="flex gap-2">
           <Button variant="navigation" size="lg" onClick={toggleAutoRefresh}>

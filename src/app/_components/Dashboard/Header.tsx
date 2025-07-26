@@ -36,7 +36,6 @@ function Header() {
     return null;
   }
 
-  // Reusable control section component to avoid duplication
   const ControlsSection = ({ className = "" }: { className?: string }) => (
     <div className={`flex items-center gap-4 ${className}`}>
       <Button onClick={resetToDefault} className="w-auto">
@@ -54,7 +53,6 @@ function Header() {
   return (
     <header className="border-b border-neutral-200 bg-neutral-50 py-3">
       <div className="mx-auto flex max-w-[1580px] items-center justify-between px-3">
-        {/* Desktop Controls - Left side */}
         <div className="hidden w-[30%] lg:flex">
           <ControlsSection />
         </div>
@@ -95,7 +93,6 @@ function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu - Collapsible Section */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div

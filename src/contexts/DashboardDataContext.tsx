@@ -26,6 +26,7 @@ type DashboardDataContextProps = {
   isAutoRefetchEnabled: boolean;
   refetchInterval: number;
   summary: DashboardSummary | null;
+  lastUpdated: Date | null;
 };
 
 type DashboardDataProviderProps = {
@@ -103,6 +104,7 @@ export function DashboardDataProvider({
 }: DashboardDataProviderProps) {
   const [isAutoRefetchEnabled, setIsAutoRefetchEnabled] =
     useState(enableAutoRefetch);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   const { data, error, isLoading, isFetching, isError, refetch, isSuccess } =
     useQuery<DashboardApiResponse>({
@@ -120,7 +122,10 @@ export function DashboardDataProvider({
 
   useEffect(() => {
     dispatchSummary({ type: "set", payload: data });
-  }, [data]);
+    if (data && isSuccess) {
+      setLastUpdated(new Date());
+    }
+  }, [data, isSuccess]);
 
   const manualRefresh = () => {
     refetch();
@@ -154,6 +159,7 @@ export function DashboardDataProvider({
         isAutoRefetchEnabled,
         refetchInterval,
         summary,
+        lastUpdated,
       }}
     >
       {children}
