@@ -2,6 +2,7 @@
 import React from "react";
 import { Switch } from "@/components/ui/switch";
 import Typography from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
 import { SunIcon, MoonIcon } from "@/components/ui/icons";
 import { useTheme } from "next-themes";
 import { useDashboardLayout } from "@/contexts/DashboardLayoutContext";
@@ -27,12 +28,7 @@ function Header() {
     <header className="border-b border-neutral-200 bg-neutral-50 py-3">
       <div className="mx-auto flex max-w-[1580px] items-center justify-between px-3">
         <div className="flex w-[30%] gap-4">
-          <button
-            className="rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-[13px]"
-            onClick={resetToDefault}
-          >
-            Reset to default
-          </button>
+          <Button onClick={resetToDefault}>Reset to default</Button>
           <div className="flex items-center gap-2">
             <Switch
               checked={state.isEditMode}
@@ -49,8 +45,8 @@ function Header() {
           className="h-10 w-[136px] object-contain"
         />
         <div className="flex w-[30%] justify-end gap-2">
-          <button
-            className="text-text-primary cursor-pointer rounded-lg p-2 hover:bg-neutral-500 hover:text-neutral-50"
+          <Button
+            variant="icon"
             onClick={toggleTheme}
             title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
           >
@@ -59,7 +55,7 @@ function Header() {
             ) : (
               <MoonIcon className="size-5" />
             )}
-          </button>
+          </Button>
         </div>
       </div>
     </header>

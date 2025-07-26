@@ -21,7 +21,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Health Dashboard",
+  title: "Bask Health Dashboard",
   description: "Real-time health data dashboard with customizable widgets",
 };
 

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import Typography from "./typography";
+import { Button, getPaginationActiveClasses } from "./button";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -326,52 +327,50 @@ const Table = <T,>({
               {selectedRows.length} of {filteredData.length} row(s) selected
             </Typography>
             <div className="flex items-center gap-3">
-              <button
+              <Button
+                variant="navigation"
                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ChevronLeftIcon className="text-text-primary size-4" />
-              </button>
+              </Button>
               <div className="flex items-center gap-4">
                 {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                   const page = i + 1;
                   return (
-                    <button
+                    <Button
                       key={page}
+                      variant="pagination"
                       onClick={() => setCurrentPage(page)}
                       className={cn(
-                        "rounded px-2 py-1",
-                        currentPage === page
-                          ? "bg-primary text-primary-foreground"
-                          : "text-text-primary hover:bg-neutral-100"
+                        currentPage === page ? getPaginationActiveClasses() : ""
                       )}
                     >
                       <Typography variant="body-02">{page}</Typography>
-                    </button>
+                    </Button>
                   );
                 })}
                 {totalPages > 5 && (
                   <>
                     <span className="text-text-primary text-sm">...</span>
-                    <button
+                    <Button
+                      variant="pagination"
                       onClick={() => setCurrentPage(totalPages)}
-                      className="text-text-primary rounded px-2 py-1 hover:bg-neutral-100"
                     >
                       <Typography variant="body-02">{totalPages}</Typography>
-                    </button>
+                    </Button>
                   </>
                 )}
               </div>
-              <button
+              <Button
+                variant="navigation"
                 onClick={() =>
                   setCurrentPage(Math.min(totalPages, currentPage + 1))
                 }
                 disabled={currentPage === totalPages}
-                className="text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ChevronRightIcon className="text-text-primary size-4" />
-              </button>
+              </Button>
             </div>
           </div>
         </div>

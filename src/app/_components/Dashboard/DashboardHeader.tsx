@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Typography from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
 import { PlayIcon, ReplayIcon } from "@/components/ui/icons";
 import { Pause } from "lucide-react";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
@@ -65,10 +66,7 @@ export const DashboardHeader = ({
         <Typography variant="body-02" className="text-neutral-400">
           {isFetching ? "Updating..." : "Up to date"}
         </Typography>
-        <button
-          className="text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-[13px]"
-          onClick={toggleAutoRefresh}
-        >
+        <Button variant="navigation" size="lg" onClick={toggleAutoRefresh}>
           {isAutoRefetchEnabled ? (
             <>
               <Pause className="text-text-primary size-3" /> Pause auto-fetch
@@ -79,14 +77,14 @@ export const DashboardHeader = ({
               auto-fetch
             </>
           )}
-        </button>
-        <button
-          className="text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px]"
+        </Button>
+        <Button
+          variant="navigation"
           onClick={handleManualRefresh}
           title="Refresh now"
         >
           <ReplayIcon className="text-text-primary size-5 scale-x-[-1] transform" />
-        </button>
+        </Button>
         {isAutoRefetchEnabled && (
           <Typography variant="body-02" className="ml-2 text-neutral-400">
             (Auto-refresh: {countdown}s)

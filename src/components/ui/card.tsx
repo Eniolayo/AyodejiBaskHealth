@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import Typography from "./typography";
+import { Button } from "./button";
 import { CloseRoundedIcon, DragHandleDotsIcon } from "./icons";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -117,13 +118,15 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
           <div>
             <div className="flex items-center gap-2">
               {state.isEditMode && (
-                <button
-                  className="cursor-grab rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-[13px] active:cursor-grabbing"
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="cursor-grab px-2 active:cursor-grabbing"
                   {...attributes}
                   {...listeners}
                 >
-                  <DragHandleDotsIcon />
-                </button>
+                  <DragHandleDotsIcon size={18} />
+                </Button>
               )}
               <Typography variant="body-01" className="text-text-primary">
                 {title}
@@ -137,12 +140,9 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
           </div>
           <div className="flex items-center gap-2">
             {state.isEditMode && cardId && rowId && (
-              <button
-                className="rounded-lg border border-neutral-200 bg-neutral-50 p-1.5 text-[13px] hover:border-red-200 hover:bg-red-50"
-                onClick={handleDelete}
-              >
+              <Button variant="danger" size="sm" onClick={handleDelete}>
                 <CloseRoundedIcon className="size-5" />
-              </button>
+              </Button>
             )}
             {action && <div>{action}</div>}
           </div>
