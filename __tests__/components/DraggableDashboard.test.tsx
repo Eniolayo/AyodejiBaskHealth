@@ -3,10 +3,31 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { DraggableDashboard } from "@/app/_components/Dashboard/DraggableDashboard";
 import { DashboardLayoutProvider } from "@/contexts/DashboardLayoutContext";
+import type { ReactNode } from "react";
+
+interface MockSectionProps {
+  cardId?: string;
+  rowId?: string;
+}
+
+interface MockDndContextProps {
+  children?: ReactNode;
+  onDragEnd?: (event: { active: { id: string }; over: { id: string } }) => void;
+  onDragOver?: (event: {
+    active: { id: string };
+    over: { id: string };
+  }) => void;
+}
+
+interface MockSortableContextProps {
+  children?: ReactNode;
+  items?: string[];
+  strategy?: { name: string };
+}
 
 // Mock the dashboard sections
 jest.mock("@/app/_components/Dashboard/SummarySection", () => ({
-  SummarySection: ({ cardId, rowId }: any) => (
+  SummarySection: ({ cardId, rowId }: MockSectionProps) => (
     <div
       data-testid="summary-section"
       data-card-id={cardId}
@@ -18,7 +39,7 @@ jest.mock("@/app/_components/Dashboard/SummarySection", () => ({
 }));
 
 jest.mock("@/app/_components/Dashboard/OrdersSection", () => ({
-  OrdersSection: ({ cardId, rowId }: any) => (
+  OrdersSection: ({ cardId, rowId }: MockSectionProps) => (
     <div data-testid="orders-section" data-card-id={cardId} data-row-id={rowId}>
       Orders Section
     </div>
@@ -26,7 +47,7 @@ jest.mock("@/app/_components/Dashboard/OrdersSection", () => ({
 }));
 
 jest.mock("@/app/_components/Dashboard/TopProductsSection", () => ({
-  TopProductsSection: ({ cardId, rowId }: any) => (
+  TopProductsSection: ({ cardId, rowId }: MockSectionProps) => (
     <div
       data-testid="top-products-section"
       data-card-id={cardId}
@@ -38,7 +59,7 @@ jest.mock("@/app/_components/Dashboard/TopProductsSection", () => ({
 }));
 
 jest.mock("@/app/_components/Dashboard/SalesOverTimeSection", () => ({
-  SalesOverTimeSection: ({ cardId, rowId }: any) => (
+  SalesOverTimeSection: ({ cardId, rowId }: MockSectionProps) => (
     <div
       data-testid="sales-over-time-section"
       data-card-id={cardId}
@@ -50,7 +71,7 @@ jest.mock("@/app/_components/Dashboard/SalesOverTimeSection", () => ({
 }));
 
 jest.mock("@/app/_components/Dashboard/PaymentsHistorySection", () => ({
-  PaymentsHistorySection: ({ cardId, rowId }: any) => (
+  PaymentsHistorySection: ({ cardId, rowId }: MockSectionProps) => (
     <div
       data-testid="payments-history-section"
       data-card-id={cardId}
@@ -62,7 +83,7 @@ jest.mock("@/app/_components/Dashboard/PaymentsHistorySection", () => ({
 }));
 
 jest.mock("@/app/_components/Dashboard/LocationsMapSection", () => ({
-  LocationsMapSection: ({ cardId, rowId }: any) => (
+  LocationsMapSection: ({ cardId, rowId }: MockSectionProps) => (
     <div
       data-testid="locations-map-section"
       data-card-id={cardId}
@@ -75,7 +96,7 @@ jest.mock("@/app/_components/Dashboard/LocationsMapSection", () => ({
 
 // Mock @dnd-kit components with more realistic behavior
 jest.mock("@dnd-kit/core", () => ({
-  DndContext: ({ children, onDragEnd, onDragOver }: any) => (
+  DndContext: ({ children, onDragEnd, onDragOver }: MockDndContextProps) => (
     <div
       data-testid="dnd-context"
       onClick={() => {
@@ -101,7 +122,11 @@ jest.mock("@dnd-kit/core", () => ({
 }));
 
 jest.mock("@dnd-kit/sortable", () => ({
-  SortableContext: ({ children, items, strategy }: any) => (
+  SortableContext: ({
+    children,
+    items,
+    strategy,
+  }: MockSortableContextProps) => (
     <div
       data-testid="sortable-context"
       data-items={JSON.stringify(items)}

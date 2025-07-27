@@ -3,15 +3,19 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Table } from "@/components/ui/table";
 
+interface MockIconProps {
+  className?: string;
+}
+
 // Mock lucide-react icons
 jest.mock("lucide-react", () => ({
-  ChevronLeftIcon: ({ className }: any) => (
+  ChevronLeftIcon: ({ className }: MockIconProps) => (
     <div data-testid="chevron-left" className={className} />
   ),
-  ChevronRightIcon: ({ className }: any) => (
+  ChevronRightIcon: ({ className }: MockIconProps) => (
     <div data-testid="chevron-right" className={className} />
   ),
-  ChevronsUpDown: ({ className }: any) => (
+  ChevronsUpDown: ({ className }: MockIconProps) => (
     <div data-testid="chevrons-up-down" className={className} />
   ),
 }));

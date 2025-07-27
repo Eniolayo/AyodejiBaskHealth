@@ -2,6 +2,17 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import Header from "@/app/_components/Dashboard/Header";
 import { DashboardLayoutProvider } from "@/contexts/DashboardLayoutContext";
 import { ThemeProvider } from "next-themes";
+import type { ReactNode } from "react";
+
+interface MockThemeProviderProps {
+  children?: ReactNode;
+}
+
+interface MockImageProps {
+  src?: string;
+  alt?: string;
+  [key: string]: unknown;
+}
 
 // Mock next-themes
 jest.mock("next-themes", () => ({
@@ -9,13 +20,15 @@ jest.mock("next-themes", () => ({
     theme: "light",
     setTheme: jest.fn(),
   }),
-  ThemeProvider: ({ children }: any) => <div>{children}</div>,
+  ThemeProvider: ({ children }: MockThemeProviderProps) => (
+    <div>{children}</div>
+  ),
 }));
 
 // Mock the logo image
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: ({ src, alt, ...props }: any) => (
+  default: ({ src, alt, ...props }: MockImageProps) => (
     <img src={src} alt={alt} {...props} />
   ),
 }));

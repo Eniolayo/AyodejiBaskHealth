@@ -2,12 +2,31 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Dropdown from "@/components/ui/dropdown";
+import type { ReactNode } from "react";
+
+interface MockAnimatePresenceProps {
+  children?: ReactNode;
+}
+
+interface MockMotionDivProps {
+  children?: ReactNode;
+  onClick?: () => void;
+  className?: string;
+  style?: React.CSSProperties;
+  [key: string]: unknown;
+}
 
 // Mock framer-motion
 jest.mock("framer-motion", () => ({
-  AnimatePresence: ({ children }: any) => children,
+  AnimatePresence: ({ children }: MockAnimatePresenceProps) => children,
   motion: {
-    div: ({ children, onClick, className, style, ...props }: any) => (
+    div: ({
+      children,
+      onClick,
+      className,
+      style,
+      ...props
+    }: MockMotionDivProps) => (
       <div
         data-testid="motion-div"
         onClick={onClick}

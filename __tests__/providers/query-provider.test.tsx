@@ -2,6 +2,16 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { QueryProvider } from "@/providers/query-provider";
+import type { ReactNode } from "react";
+
+interface MockQueryClientProviderProps {
+  children?: ReactNode;
+  client?: unknown;
+}
+
+interface MockReactQueryDevtoolsProps {
+  initialIsOpen?: boolean;
+}
 
 // mock react-query
 jest.mock("@tanstack/react-query", () => ({
@@ -16,7 +26,7 @@ jest.mock("@tanstack/react-query", () => ({
       },
     },
   })),
-  QueryClientProvider: ({ children, client }: any) => (
+  QueryClientProvider: ({ children, client }: MockQueryClientProviderProps) => (
     <div
       data-testid="query-client-provider"
       data-client={client ? "present" : "missing"}
@@ -24,7 +34,7 @@ jest.mock("@tanstack/react-query", () => ({
       {children}
     </div>
   ),
-  ReactQueryDevtools: ({ initialIsOpen }: any) => (
+  ReactQueryDevtools: ({ initialIsOpen }: MockReactQueryDevtoolsProps) => (
     <div
       data-testid="react-query-devtools"
       data-initial-is-open={initialIsOpen}

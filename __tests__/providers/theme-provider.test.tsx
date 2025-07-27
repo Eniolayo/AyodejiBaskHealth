@@ -2,10 +2,20 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { ThemeProvider } from "@/providers/theme-provider";
+import type { ReactNode } from "react";
+
+interface MockThemeProviderProps {
+  children?: ReactNode;
+  attribute?: string;
+  defaultTheme?: string;
+  enableSystem?: boolean;
+  disableTransitionOnChange?: boolean;
+  [key: string]: unknown;
+}
 
 // Mock next-themes
 jest.mock("next-themes", () => ({
-  ThemeProvider: ({ children, ...props }: any) => (
+  ThemeProvider: ({ children, ...props }: MockThemeProviderProps) => (
     <div data-testid="next-themes-provider" data-props={JSON.stringify(props)}>
       {children}
     </div>
