@@ -202,8 +202,20 @@ const Table = <T,>({
 
     if (sortColumn) {
       processed = [...processed].sort((a, b) => {
-        const aVal = a[sortColumn];
-        const bVal = b[sortColumn];
+        const rawA = a[sortColumn];
+        const rawB = b[sortColumn];
+
+        const parseValue = (val: unknown): number | string => {
+          if (typeof val === "string" && val.trim().startsWith("$")) {
+            const num = parseFloat(val.replace(/[^0-9.-]+/g, ""));
+            return isNaN(num) ? val : num;
+          }
+          return val as number | string;
+        };
+
+        const aVal = parseValue(rawA);
+        const bVal = parseValue(rawB);
+
         if (aVal == null) return 1;
         if (bVal == null) return -1;
         if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
