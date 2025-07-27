@@ -3,6 +3,24 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DashboardDataProvider } from "@/contexts/DashboardDataContext";
 import { DashboardLayoutProvider } from "@/contexts/DashboardLayoutContext";
 import { TopProductsSection } from "@/app/_components/Dashboard/TopProductsSection";
+import type { ReactNode } from "react";
+
+// Define proper types for mock components
+interface MockChartProps {
+  children?: ReactNode;
+  data?: unknown;
+  _margin?: unknown;
+  dataKey?: string;
+  fill?: string | null;
+  strokeDasharray?: string;
+  stroke?: string;
+  opacity?: number;
+  width?: number | string | null;
+  height?: number | string | null;
+  x?: number | null;
+  y?: number | null;
+  shape?: (props: MockChartProps) => ReactNode;
+}
 
 // mock API calls
 jest.mock("@/lib/api", () => ({
@@ -10,27 +28,53 @@ jest.mock("@/lib/api", () => ({
 }));
 
 // mock chart components
-jest.mock("recharts", () => ({
-  ComposedChart: ({ children, data, _margin }: any) => (
+jest.mock("recharts", () => {
+  const MockComposedChart = ({ children, data, _margin }: MockChartProps) => (
     <div data-testid="composed-chart" data-chart-data={JSON.stringify(data)}>
       {children}
     </div>
-  ),
-  Bar: ({ dataKey, fill }: any) => (
+  );
+  MockComposedChart.displayName = "MockComposedChart";
+
+  const MockBar = ({ dataKey, fill }: MockChartProps) => (
     <div data-testid="bar" data-key={dataKey} data-fill={fill} />
-  ),
-  XAxis: ({ dataKey }: any) => <div data-testid="x-axis" data-key={dataKey} />,
-  YAxis: ({ dataKey }: any) => <div data-testid="y-axis" data-key={dataKey} />,
-  CartesianGrid: ({ strokeDasharray, stroke, opacity }: any) => (
+  );
+  MockBar.displayName = "MockBar";
+
+  const MockXAxis = ({ dataKey }: MockChartProps) => (
+    <div data-testid="x-axis" data-key={dataKey} />
+  );
+  MockXAxis.displayName = "MockXAxis";
+
+  const MockYAxis = ({ dataKey }: MockChartProps) => (
+    <div data-testid="y-axis" data-key={dataKey} />
+  );
+  MockYAxis.displayName = "MockYAxis";
+
+  const MockCartesianGrid = ({
+    strokeDasharray,
+    stroke,
+    opacity,
+  }: MockChartProps) => (
     <div
       data-testid="cartesian-grid"
       data-stroke-dasharray={strokeDasharray}
       data-stroke={stroke}
       data-opacity={opacity}
     />
-  ),
-  Tooltip: ({ children }: any) => <div data-testid="tooltip">{children}</div>,
-  ResponsiveContainer: ({ children, width, height }: any) => (
+  );
+  MockCartesianGrid.displayName = "MockCartesianGrid";
+
+  const MockTooltip = ({ children }: MockChartProps) => (
+    <div data-testid="tooltip">{children}</div>
+  );
+  MockTooltip.displayName = "MockTooltip";
+
+  const MockResponsiveContainer = ({
+    children,
+    width,
+    height,
+  }: MockChartProps) => (
     <div
       data-testid="responsive-container"
       data-width={width}
@@ -38,11 +82,25 @@ jest.mock("recharts", () => ({
     >
       {children}
     </div>
-  ),
-  LabelList: ({ dataKey }: any) => (
+  );
+  MockResponsiveContainer.displayName = "MockResponsiveContainer";
+
+  const MockLabelList = ({ dataKey }: MockChartProps) => (
     <div data-testid="label-list" data-key={dataKey} />
-  ),
-}));
+  );
+  MockLabelList.displayName = "MockLabelList";
+
+  return {
+    ComposedChart: MockComposedChart,
+    Bar: MockBar,
+    XAxis: MockXAxis,
+    YAxis: MockYAxis,
+    CartesianGrid: MockCartesianGrid,
+    Tooltip: MockTooltip,
+    ResponsiveContainer: MockResponsiveContainer,
+    LabelList: MockLabelList,
+  };
+});
 
 const mockDashboardData = {
   data: {
@@ -954,7 +1012,7 @@ describe("TopProductsSection Component", () => {
 
     it("should handle CustomBottomBar with custom props", async () => {
       // Mock the CustomBottomBar component to test its logic
-      const mockCustomBottomBar = jest.fn((props: any) => {
+      const mockCustomBottomBar = jest.fn((props: MockChartProps) => {
         const fill = props.fill ?? "#000";
         const x = +(props.x ?? 0);
         const y = +(props.y ?? 0);
@@ -969,14 +1027,26 @@ describe("TopProductsSection Component", () => {
         );
       });
 
+      // Test the mock function
+      const result = mockCustomBottomBar({
+        fill: "#ff0000",
+        x: 10,
+        y: 20,
+        width: 30,
+        height: 40,
+      });
+      expect(result).toBeDefined();
+
       // Temporarily replace the mock
       const originalMock = jest.requireMock("recharts").Bar;
-      jest.requireMock("recharts").Bar = ({ dataKey, fill, shape }: any) => {
+      const MockBarWithShape = ({ dataKey, fill, shape }: MockChartProps) => {
         if (shape) {
           return shape({ fill, x: 10, y: 20, width: 30, height: 40 });
         }
         return <div data-testid="bar" data-key={dataKey} data-fill={fill} />;
       };
+      MockBarWithShape.displayName = "MockBarWithShape";
+      jest.requireMock("recharts").Bar = MockBarWithShape;
 
       renderWithProviders(<TopProductsSection />);
 
@@ -988,7 +1058,7 @@ describe("TopProductsSection Component", () => {
 
     it("should handle CustomBottomBar with null/undefined props", async () => {
       // Test CustomBottomBar with null/undefined values
-      const mockCustomBottomBar = jest.fn((props: any) => {
+      const mockCustomBottomBar = jest.fn((props: MockChartProps) => {
         const fill = props.fill ?? "#000";
         const x = +(props.x ?? 0);
         const y = +(props.y ?? 0);

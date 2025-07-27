@@ -168,9 +168,9 @@ describe("Button Component", () => {
       render(<Button>Focus Button</Button>);
 
       const button = screen.getByRole("button");
-      expect(button.className).toContain("focus:outline-none");
-      expect(button.className).toContain("focus:ring-2");
-      expect(button.className).toContain("focus:ring-neutral-200");
+      expect(button.className).toContain("focus-visible:outline-none");
+      expect(button.className).toContain("focus-visible:ring-2");
+      expect(button.className).toContain("focus-visible:ring-neutral-200");
     });
 
     it("should be keyboard navigable", () => {

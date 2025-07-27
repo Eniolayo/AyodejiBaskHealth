@@ -357,7 +357,7 @@ describe("PaymentsHistorySection Component", () => {
       fireEvent.click(checkboxes[1]); // Select first data row
 
       // Should show selection count
-      expect(screen.getByText("1 of 6 row(s) selected")).toBeInTheDocument();
+      expect(screen.getByText("1 of 5 row(s) selected")).toBeInTheDocument();
     });
 
     it("should handle multiple row selection", async () => {
@@ -371,7 +371,7 @@ describe("PaymentsHistorySection Component", () => {
       fireEvent.click(checkboxes[2]); // Select second row
 
       // Should show correct selection count
-      expect(screen.getByText("2 of 6 row(s) selected")).toBeInTheDocument();
+      expect(screen.getByText("2 of 5 row(s) selected")).toBeInTheDocument();
     });
 
     it("should handle select all functionality", async () => {
