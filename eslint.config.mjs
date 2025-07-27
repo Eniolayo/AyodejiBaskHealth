@@ -23,7 +23,7 @@ const eslintConfig = [
         "error",
         { argsIgnorePattern: "^_" },
       ],
-      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-explicit-any": "error",
 
       // General code quality
       "no-console": "warn",

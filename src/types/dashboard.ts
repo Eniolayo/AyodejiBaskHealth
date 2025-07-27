@@ -74,6 +74,17 @@ export type MapData = z.infer<typeof MapDataSchema>;
 export type DashboardData = z.infer<typeof DashboardDataSchema>;
 export type DashboardApiResponse = z.infer<typeof DashboardApiResponseSchema>;
 
+// Additional type safety: API response types
+export type ApiResponse<T> = {
+  success: boolean;
+  data: T;
+  error?: string;
+};
+
+export type DashboardApiResponseType = ApiResponse<{
+  dashboardData: DashboardData;
+}>;
+
 // Export schemas for validation
 export {
   SalesOverTimeChartSchema,

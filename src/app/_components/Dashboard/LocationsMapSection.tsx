@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import Typography from "@/components/ui/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDashboardDataContext } from "@/contexts/DashboardDataContext";
+import { Location as DashboardLocation } from "@/types/dashboard";
 
 type Location = {
   id: string;
@@ -43,7 +44,7 @@ export const LocationsMapSection = ({
   let locationData;
   if (data?.data?.dashboardData) {
     const d = data.data.dashboardData;
-    locationData = d.map.locations.map((loc: any, i: number) => ({
+    locationData = d.map.locations.map((loc: DashboardLocation, i: number) => ({
       id: String(i + 1),
       name: loc.label,
       coordinates: [loc.latitude, loc.longitude] as [number, number],

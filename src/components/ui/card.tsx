@@ -7,9 +7,12 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useDashboardLayout } from "@/contexts/DashboardLayoutContext";
 
+// Use the actual return types from useSortable
+type SortableReturn = ReturnType<typeof useSortable>;
+
 const CardDragContext = React.createContext<{
-  attributes?: Record<string, any>;
-  listeners?: Record<string, any>;
+  attributes?: SortableReturn["attributes"];
+  listeners?: SortableReturn["listeners"];
 } | null>(null);
 
 const useCardDrag = () => {
