@@ -1,156 +1,124 @@
 # Bask Health Dashboard
 
-A modern, real-time health data dashboard built with Next.js 15, featuring customizable widgets, drag-and-drop functionality, and live data updates. This application provides an intuitive interface for monitoring health metrics with a focus on user experience and performance.
+A real-time dashboard built with Next.js 15, TailwindCSS, and TypeScript that displays live data from an external API. This project demonstrates advanced React features, responsive design, and user customization capabilities.
 
-## 🚀 Features
+## 🌐 Live Demo
 
-- **Real-time Data Updates**: Automatic data refresh every 5 seconds with manual refresh capability
-- **Customizable Dashboard**: Drag-and-drop interface for rearranging widgets
-- **Edit Mode**: Toggle between view and edit modes for dashboard customization
-- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- **Theme Support**: Light and dark mode with system preference detection
-- **Persistent Layout**: User customizations saved to localStorage
-- **Interactive Charts**: Sales over time, user engagement, and product analytics
-- **Geographic Visualization**: Interactive map showing location-based activity
-- **Type Safety**: Full TypeScript implementation with Zod validation
-- **Comprehensive Testing**: Jest and React Testing Library with 70% coverage threshold
+**[View Live Dashboard](https://ayodeji-bask-health.vercel.app/)**
 
-## 👤 User Journey
+Experience the real-time dashboard in action with live data updates every 5 seconds!
+
+## 🎯 Project Overview
+
+This dashboard was built as part of the Bask Health frontend assessment. It showcases real-time data visualization, customizable layouts, and modern web development practices. The application pings an external API every 5 seconds to fetch fresh data and displays it through various interactive widgets.
+
+## ✨ Key Features
+
+### Real-time Data Integration
+
+- **Live Updates**: Automatically fetches data every 5 seconds from the provided API endpoint
+- **Manual Refresh**: Users can manually refresh data when needed
+- **Status Indicators**: Clear visual feedback showing when data is updating
+- **Pause/Resume**: Ability to pause auto-refresh for better control
 
 ### Dashboard Customization
 
-1. **Initial View**: Users land on a pre-configured dashboard with 6 widgets arranged in 3 rows
-2. **Edit Mode Activation**: Click the "Edit Mode" button in the header to enable customization
-3. **Widget Rearrangement**:
+- **Drag & Drop Layout**: Users can rearrange widgets by dragging them between rows
+- **Edit Mode**: Toggle between view and edit modes for layout customization
+- **Persistent Configuration**: User layout preferences are saved to localStorage
+- **Reset Functionality**: Option to restore default layout when needed
+
+### Interactive Widgets
+
+- **Summary Cards**: Key metrics including sales, expenses, and profit data
+- **Orders Table**: Recent transaction history with user details
+- **Top Products**: Product performance analytics with sales figures
+- **Sales Over Time**: Interactive chart showing sales trends over time
+- **Payments History**: Transaction timeline with payment details
+- **Locations Map**: Interactive map displaying geographic activity data
+
+### Design & UX
+
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Theme Support**: Light and dark mode with system preference detection
+- **Modern UI**: Clean, professional interface using TailwindCSS
+- **Accessibility**: Keyboard navigation and screen reader support
+
+## 🚀 User Journey
+
+### Getting Started
+
+1. **Landing**: Users arrive at a pre-configured dashboard with 6 widgets arranged in 3 rows
+2. **Data Loading**: The dashboard immediately starts fetching data and displays it in real-time
+3. **Initial Interaction**: Users can view live data updates happening every 5 seconds
+
+### Customizing the Dashboard
+
+1. **Enter Edit Mode**: Click the "Edit Mode" button in the header to enable customization
+2. **Rearrange Widgets**:
    - Drag widgets within the same row to reorder them
    - Drag widgets between rows to move them to different positions
-   - Widgets automatically resize based on their new row configuration
-4. **Widget Removal**: In edit mode, click the close button (×) on any widget to remove it
-5. **Layout Persistence**: All changes are automatically saved and persist across browser sessions
-6. **Reset Functionality**: Use "Reset to Default" to restore the original layout
+   - Widgets automatically resize based on their new configuration
+3. **Remove Widgets**: In edit mode, click the close button (×) on any widget to remove it
+4. **Save Changes**: All changes are automatically saved and persist across browser sessions
+5. **Reset Layout**: Use "Reset to Default" to restore the original layout
 
-### Real-time Data Interaction
+### Interacting with Real-time Data
 
 1. **Auto-refresh**: Data automatically updates every 5 seconds with visual indicators
-2. **Manual Refresh**: Click the refresh button for immediate data updates
-3. **Pause/Resume**: Toggle auto-refresh on/off using the pause/resume button
-4. **Status Indicators**:
+2. **Manual Control**: Click the refresh button for immediate data updates
+3. **Pause Updates**: Toggle auto-refresh on/off using the pause/resume button
+4. **Status Monitoring**:
    - "Updating..." shows when data is being fetched
    - "Up to date" indicates current data status
    - Countdown timer shows time until next auto-refresh
 
-### Widget Types
-
-- **Summary**: Key metrics including total sales, expenses, gross profit, and order count
-- **Orders**: Recent transaction history with user details and amounts
-- **Top Products**: Product performance analytics with sales figures
-- **Sales Over Time**: Time-series chart showing sales trends
-- **Payments History**: Transaction timeline with payment details
-- **Locations Map**: Interactive map displaying geographic activity data
-
-## 🏗️ Architecture & Design Decisions
+## 🏗️ Technical Architecture
 
 ### Technology Stack
 
-**Frontend Framework**: Next.js 15 with App Router
+- **Framework**: Next.js 15 with App Router for modern React development
+- **Styling**: TailwindCSS for utility-first styling and responsive design
+- **Type Safety**: TypeScript throughout for better development experience
+- **State Management**: React Context + useReducer for complex state management
+- **Data Fetching**: TanStack Query for robust API integration and caching
+- **Drag & Drop**: @dnd-kit for accessible drag-and-drop functionality
+- **Maps**: React Leaflet for interactive geographic visualizations
 
-- **Rationale**: Latest React features, improved performance, and built-in optimizations
-- **Benefits**: Server-side rendering, automatic code splitting, and enhanced developer experience
+### Design Decisions
 
-**State Management**: React Context + useReducer
+**Why Next.js 15?**
+I chose Next.js 15 for its latest React features, improved performance, and built-in optimizations. The App Router provides better developer experience and automatic code splitting.
 
-- **Rationale**: Lightweight solution for complex state that doesn't require external libraries
-- **Benefits**: Predictable state updates, easy testing, and minimal bundle size
+**Why TailwindCSS?**
+TailwindCSS enables rapid development with consistent design patterns. The utility-first approach makes it easy to create responsive, accessible components while maintaining a small bundle size.
 
-**Data Fetching**: TanStack Query (React Query)
+**Why TypeScript?**
+TypeScript provides compile-time type checking and better IDE support. Combined with Zod for runtime validation, it ensures data integrity and catches errors early in development.
 
-- **Rationale**: Robust caching, background updates, and error handling
-- **Benefits**: Automatic retries, optimistic updates, and real-time synchronization
-
-**Styling**: Tailwind CSS v4
-
-- **Rationale**: Utility-first approach with excellent developer experience
-- **Benefits**: Rapid development, consistent design system, and small bundle size
-
-**Type Safety**: TypeScript + Zod
-
-- **Rationale**: Runtime validation with compile-time type checking
-- **Benefits**: Catch errors early, better IDE support, and self-documenting code
-
-**Drag & Drop**: @dnd-kit
-
-- **Rationale**: Modern, accessible drag-and-drop library
-- **Benefits**: Touch support, keyboard navigation, and smooth animations
-
-**Maps**: React Leaflet
-
-- **Rationale**: Interactive maps with geographic data visualization
-- **Benefits**: Customizable markers, popups, and real-time updates
+**State Management Approach**
+I used React Context + useReducer for client state (layout, theme) and TanStack Query for server state (API data). This separation keeps the codebase clean and maintainable.
 
 ### Component Architecture
 
-**Context Pattern**: Separate contexts for different concerns
-
-- `DashboardLayoutContext`: Manages widget positioning and edit mode
-- `DashboardDataContext`: Handles data fetching and real-time updates
-- `ThemeProvider`: Manages light/dark mode preferences
-
-**Component Hierarchy**:
-
 ```
 App
-├── DashboardLayoutProvider
-├── DashboardDataProvider
-├── ThemeProvider
+├── DashboardLayoutProvider (manages widget positioning)
+├── DashboardDataProvider (handles data fetching)
+├── ThemeProvider (manages light/dark mode)
 └── Dashboard
-    ├── Header (Edit controls)
-    ├── DashboardHeader (Data controls)
+    ├── Header (edit controls)
+    ├── DashboardHeader (data controls)
     └── DraggableDashboard
-        └── Widget Components
+        └── Widget Components (modular, reusable)
 ```
-
-**Widget System**: Modular, reusable components
-
-- Each widget is self-contained with its own data requirements
-- Consistent interface through shared Card component
-- Drag-and-drop integration via cardId and rowId props
-
-### Data Flow Architecture
-
-1. **API Layer**:
-   - External API proxy through Next.js API routes
-   - Zod validation for type safety
-   - Error handling with custom error classes
-
-2. **State Management**:
-   - React Query for server state (API data)
-   - Context + useReducer for client state (layout, theme)
-   - localStorage for persistence
-
-3. **Real-time Updates**:
-   - Configurable refetch intervals
-   - Background updates with visual indicators
-   - Optimistic UI updates
 
 ### Performance Optimizations
 
-**Bundle Optimization**:
-
-- Dynamic imports for heavy components
-- Tree shaking with ES modules
-- Code splitting by routes
-
-**Rendering Performance**:
-
-- React.memo for expensive components
-- useCallback for event handlers
-- Efficient re-renders with proper dependency arrays
-
-**Data Performance**:
-
-- Intelligent caching with React Query
-- Background updates to avoid blocking UI
-- Optimistic updates for better perceived performance
+- **Bundle Optimization**: Dynamic imports and tree shaking
+- **Rendering Performance**: React.memo and useCallback for expensive components
+- **Data Performance**: Intelligent caching with React Query
+- **Background Updates**: Non-blocking data synchronization
 
 ## 🛠️ Setup & Installation
 
@@ -160,7 +128,7 @@ App
 - npm or yarn package manager
 - Git
 
-### Installation
+### Quick Start
 
 1. **Clone the repository**:
 
@@ -175,19 +143,14 @@ App
    npm install
    ```
 
-### Development
-
-1. **Start the development server**:
+3. **Start development server**:
 
    ```bash
    npm run dev
    ```
 
-2. **Open your browser**:
+4. **Open your browser**:
    Navigate to `http://localhost:3000`
-
-3. **Enable Turbopack** (optional):
-   The project uses Turbopack for faster development builds. It's enabled by default in the dev script.
 
 ### Building for Production
 
@@ -197,7 +160,7 @@ App
    npm run build
    ```
 
-2. **Start the production server**:
+2. **Start production server**:
    ```bash
    npm start
    ```
@@ -205,8 +168,6 @@ App
 ## 🧪 Testing
 
 ### Running Tests
-
-**Unit & Integration Tests**:
 
 ```bash
 npm run test              # Run all tests
@@ -225,26 +186,11 @@ The project maintains comprehensive test coverage with a 70% threshold:
 
 ### Testing Strategy
 
-**Integration Tests**: Jest + React Testing Library
-
-- Component behavior and user interactions
-- Context state management
-- API integration and error handling
-- Drag-and-drop functionality
-- Theme switching and persistence
-
-**Test Structure**:
-
-```
-__tests__/
-├── api/                  # API route tests
-├── components/           # Component tests
-│   └── ui/              # UI component tests
-├── contexts/             # Context tests
-├── lib/                  # Utility tests
-├── pages/                # Page tests
-└── providers/            # Provider tests
-```
+- **Integration Tests**: Component behavior and user interactions
+- **Context Tests**: State management and data flow
+- **API Tests**: Data fetching and error handling
+- **Drag & Drop Tests**: Layout customization functionality
+- **Theme Tests**: Light/dark mode switching
 
 ## 📁 Project Structure
 
@@ -311,7 +257,6 @@ src/
 
 - **Grid System**: 8px base unit with consistent spacing scale
 - **Responsive**: Adaptive spacing for different screen sizes
-- **Component**: Consistent padding and margins throughout
 
 ## 🔧 Configuration
 
@@ -326,3 +271,14 @@ src/
 - **Default Interval**: 5 seconds
 - **Configurable**: Adjustable through context props
 - **Background Updates**: Non-blocking data synchronization
+
+## 🚀 Deployment
+
+The application is deployed on Vercel and can be accessed at the provided URL. The deployment includes:
+
+- Automatic builds from the main branch
+- Performance monitoring and analytics
+
+## 🤝 Contributing
+
+This project was built as part of a technical assessment. For questions or feedback, please reach out through the provided contact information.
