@@ -13,19 +13,19 @@ import {
 } from "@/components/ui/icons";
 import { useTheme } from "next-themes";
 import { useDashboardLayout } from "@/contexts/DashboardLayoutContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Header() {
   const { state, toggleEditMode, resetToDefault } = useDashboardLayout();
-  const { theme, setTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   const toggleMobileMenu = () => {
@@ -33,7 +33,11 @@ function Header() {
   };
 
   if (!mounted) {
-    return null;
+    return (
+      <header className="sticky top-0 z-[99999] border-b border-neutral-200 bg-neutral-50">
+        <Skeleton className="h-16 w-full rounded-none" />
+      </header>
+    );
   }
 
   const ControlsSection = ({ className = "" }: { className?: string }) => (
@@ -69,10 +73,10 @@ function Header() {
           <Button
             variant="icon"
             onClick={toggleTheme}
-            title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+            title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} theme`}
             data-testid="theme-toggle"
           >
-            {theme === "dark" ? (
+            {resolvedTheme === "dark" ? (
               <SunIcon className="size-5" />
             ) : (
               <MoonIcon className="size-5" />
