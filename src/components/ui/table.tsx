@@ -1,12 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import Typography from "./typography";
-import { Button, getPaginationActiveClasses } from "./button";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsUpDown,
-} from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 export interface TableColumn<T> {
   key: keyof T;
@@ -21,20 +16,20 @@ export interface TableProps<T> {
   columns: TableColumn<T>[];
   selectable?: boolean;
   searchable?: boolean;
-  pagination?: boolean;
-  itemsPerPage?: number;
   className?: string;
   onRowSelect?: (selectedRows: T[]) => void;
   onSort?: (column: keyof T, direction: "asc" | "desc") => void;
   loading?: boolean;
   emptyMessage?: string;
   toolbarRight?: React.ReactNode;
+  getRowId?: (row: T, index: number) => string | number;
 }
 
 export interface TableHeaderProps<T> {
   columns: TableColumn<T>[];
   selectable?: boolean;
   selectAll?: boolean;
+  indeterminate?: boolean;
   onSelectAll?: () => void;
   onSort?: (column: keyof T, direction: "asc" | "desc") => void;
   sortColumn?: keyof T;
@@ -54,11 +49,21 @@ const TableHeader = <T,>({
   columns,
   selectable,
   selectAll,
+  indeterminate,
   onSelectAll,
   onSort,
   sortColumn,
   sortDirection,
 }: TableHeaderProps<T>) => {
+  const checkboxRef = React.useRef<HTMLInputElement>(null);
+
+  // Set indeterminate state on the checkbox
+  React.useEffect(() => {
+    if (checkboxRef.current) {
+      checkboxRef.current.indeterminate = !!indeterminate;
+    }
+  }, [indeterminate]);
+
   const handleSort = (columnKey: keyof T) => {
     if (!onSort) return;
     const newDirection =
@@ -72,8 +77,9 @@ const TableHeader = <T,>({
         {selectable && (
           <th className="px-4 py-2 text-left">
             <input
+              ref={checkboxRef}
               type="checkbox"
-              checked={selectAll}
+              checked={selectAll && !indeterminate}
               onChange={onSelectAll}
               className="rounded border-neutral-200 bg-white"
             />
@@ -150,18 +156,17 @@ const Table = <T,>({
   columns,
   selectable = false,
   searchable = false,
-  pagination = false,
-  itemsPerPage = 10,
   className,
   onRowSelect,
   onSort,
   loading = false,
   emptyMessage = "No data available",
   toolbarRight,
+  getRowId,
 }: TableProps<T>) => {
-  const [selectedRows, setSelectedRows] = React.useState<T[]>([]);
-  const [selectAll, setSelectAll] = React.useState(false);
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [selectedRowIds, setSelectedRowIds] = React.useState<
+    Set<string | number>
+  >(new Set());
   const [searchTerm, setSearchTerm] = React.useState("");
   const [sortColumn, setSortColumn] = React.useState<keyof T | undefined>(
     undefined
@@ -170,11 +175,24 @@ const Table = <T,>({
     "asc"
   );
 
-  const filteredData = React.useMemo(() => {
-    let filtered = data;
+  const defaultGetRowId = React.useCallback(
+    (row: T, index: number): string | number => {
+      // Try to use 'id' property if it exists, otherwise use index
+      if (row && typeof row === "object" && "id" in row) {
+        return (row as { id: string | number }).id;
+      }
+      return index;
+    },
+    []
+  );
+
+  const getRowIdFn = getRowId || defaultGetRowId;
+
+  const processedData = React.useMemo(() => {
+    let processed = data;
 
     if (searchTerm) {
-      filtered = data.filter((row) =>
+      processed = data.filter((row) =>
         columns.some((col) => {
           const value = row[col.key];
           return String(value).toLowerCase().includes(searchTerm.toLowerCase());
@@ -183,7 +201,7 @@ const Table = <T,>({
     }
 
     if (sortColumn) {
-      filtered = [...filtered].sort((a, b) => {
+      processed = [...processed].sort((a, b) => {
         const aVal = a[sortColumn];
         const bVal = b[sortColumn];
         if (aVal == null) return 1;
@@ -194,35 +212,88 @@ const Table = <T,>({
       });
     }
 
-    return filtered;
+    return processed;
   }, [data, searchTerm, sortColumn, sortDirection, columns]);
 
-  const paginatedData = React.useMemo(() => {
-    if (!pagination) return filteredData;
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredData.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredData, currentPage, itemsPerPage, pagination]);
+  // Get currently selected rows from the original data
+  const selectedRows = React.useMemo(() => {
+    return data.filter((row, index) =>
+      selectedRowIds.has(getRowIdFn(row, index))
+    );
+  }, [data, selectedRowIds, getRowIdFn]);
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  // Check selection state for header checkbox
+  const selectionState = React.useMemo(() => {
+    if (processedData.length === 0) {
+      return { allSelected: false, indeterminate: false };
+    }
+
+    // Check if ALL processed rows are selected by checking each one individually
+    const allProcessedSelected = processedData.every((row) => {
+      const originalIndex = data.findIndex(
+        (originalRow) => originalRow === row
+      );
+      const rowId = getRowIdFn(row, originalIndex);
+      return selectedRowIds.has(rowId);
+    });
+
+    // Check if SOME processed rows are selected
+    const someProcessedSelected = processedData.some((row) => {
+      const originalIndex = data.findIndex(
+        (originalRow) => originalRow === row
+      );
+      const rowId = getRowIdFn(row, originalIndex);
+      return selectedRowIds.has(rowId);
+    });
+
+    if (allProcessedSelected) {
+      return { allSelected: true, indeterminate: false };
+    } else if (someProcessedSelected) {
+      return { allSelected: false, indeterminate: true };
+    } else {
+      return { allSelected: false, indeterminate: false };
+    }
+  }, [processedData, selectedRowIds, getRowIdFn, data]);
 
   const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedRows([]);
-      setSelectAll(false);
+    // Get all row IDs from the current processed dataset
+    const allProcessedRowIds = processedData.map((row) => {
+      const originalIndex = data.findIndex(
+        (originalRow) => originalRow === row
+      );
+      return getRowIdFn(row, originalIndex);
+    });
+
+    if (selectionState.allSelected) {
+      // If all processed rows are selected, deselect all processed rows
+      setSelectedRowIds((prev) => {
+        const newSet = new Set(prev);
+        allProcessedRowIds.forEach((id) => newSet.delete(id));
+        return newSet;
+      });
     } else {
-      setSelectedRows(paginatedData);
-      setSelectAll(true);
+      // Select all rows in the current processed dataset
+      setSelectedRowIds((prev) => {
+        const newSet = new Set(prev);
+        allProcessedRowIds.forEach((id) => newSet.add(id));
+        return newSet;
+      });
     }
   };
 
   const handleRowSelect = (row: T) => {
-    setSelectedRows((prev) => {
-      const isSelected = prev.includes(row);
-      const newSelection = isSelected
-        ? prev.filter((r) => r !== row)
-        : [...prev, row];
-      onRowSelect?.(newSelection);
-      return newSelection;
+    // Find the original index in the data array for consistent row IDs
+    const originalIndex = data.findIndex((originalRow) => originalRow === row);
+    const rowId = getRowIdFn(row, originalIndex);
+
+    setSelectedRowIds((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(rowId)) {
+        newSet.delete(rowId);
+      } else {
+        newSet.add(rowId);
+      }
+      return newSet;
     });
   };
 
@@ -232,16 +303,18 @@ const Table = <T,>({
     onSort?.(column, direction);
   };
 
+  // Notify parent when selection changes
+  const previousSelectedRowsRef = React.useRef<T[]>([]);
   React.useEffect(() => {
+    // Only notify if the actual selection changed
     if (
-      selectedRows.length === paginatedData.length &&
-      paginatedData.length > 0
+      JSON.stringify(previousSelectedRowsRef.current) !==
+      JSON.stringify(selectedRows)
     ) {
-      setSelectAll(true);
-    } else {
-      setSelectAll(false);
+      onRowSelect?.(selectedRows);
+      previousSelectedRowsRef.current = selectedRows;
     }
-  }, [selectedRows, paginatedData]);
+  }, [selectedRows, onRowSelect]);
 
   if (loading) {
     return (
@@ -285,25 +358,33 @@ const Table = <T,>({
           <TableHeader
             columns={columns}
             selectable={selectable}
-            selectAll={selectAll}
+            selectAll={selectionState.allSelected}
+            indeterminate={selectionState.indeterminate}
             onSelectAll={handleSelectAll}
             onSort={handleSort}
             sortColumn={sortColumn}
             sortDirection={sortDirection}
           />
           <tbody>
-            {paginatedData.length > 0 ? (
-              paginatedData.map((row, index) => (
-                <TableRow
-                  key={index}
-                  row={row}
-                  columns={columns}
-                  index={index}
-                  selectable={selectable}
-                  selected={selectedRows.includes(row)}
-                  onSelect={handleRowSelect}
-                />
-              ))
+            {processedData.length > 0 ? (
+              processedData.map((row, index) => {
+                // Find the original index in the data array for consistent row IDs
+                const originalIndex = data.findIndex(
+                  (originalRow) => originalRow === row
+                );
+                const rowId = getRowIdFn(row, originalIndex);
+                return (
+                  <TableRow
+                    key={rowId}
+                    row={row}
+                    columns={columns}
+                    index={index}
+                    selectable={selectable}
+                    selected={selectedRowIds.has(rowId)}
+                    onSelect={handleRowSelect}
+                  />
+                );
+              })
             ) : (
               <tr>
                 <td
@@ -319,62 +400,6 @@ const Table = <T,>({
           </tbody>
         </table>
       </div>
-
-      {pagination && totalPages > 1 && (
-        <div className="border-t border-neutral-200 px-3 py-3.5">
-          <div className="flex items-center justify-between">
-            <Typography variant="body-02" className="text-neutral-500">
-              {selectedRows.length} of {filteredData.length} row(s) selected
-            </Typography>
-            <div className="flex items-center gap-3">
-              <Button
-                variant="navigation"
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-              >
-                <ChevronLeftIcon className="text-text-primary size-4" />
-              </Button>
-              <div className="flex items-center gap-4">
-                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                  const page = i + 1;
-                  return (
-                    <Button
-                      key={page}
-                      variant="pagination"
-                      onClick={() => setCurrentPage(page)}
-                      className={cn(
-                        currentPage === page ? getPaginationActiveClasses() : ""
-                      )}
-                    >
-                      <Typography variant="body-02">{page}</Typography>
-                    </Button>
-                  );
-                })}
-                {totalPages > 5 && (
-                  <>
-                    <span className="text-text-primary text-sm">...</span>
-                    <Button
-                      variant="pagination"
-                      onClick={() => setCurrentPage(totalPages)}
-                    >
-                      <Typography variant="body-02">{totalPages}</Typography>
-                    </Button>
-                  </>
-                )}
-              </div>
-              <Button
-                variant="navigation"
-                onClick={() =>
-                  setCurrentPage(Math.min(totalPages, currentPage + 1))
-                }
-                disabled={currentPage === totalPages}
-              >
-                <ChevronRightIcon className="text-text-primary size-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

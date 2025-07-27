@@ -61,7 +61,7 @@ export const OrdersSection = ({
               margin={{ top: 10, right: 80, left: 10, bottom: 10 }}
             >
               <XAxis type="number" hide={true} />
-              <YAxis type="category" hide={true} />
+              <YAxis type="category" hide={true} dataKey="month" />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "var(--neutral-100)",

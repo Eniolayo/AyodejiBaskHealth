@@ -42,20 +42,21 @@ export const PaymentsHistorySection = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  let paymentsHistoryData: PaymentData[] = [];
-
-  if (data?.data?.dashboardData) {
-    const d = data.data.dashboardData;
-    paymentsHistoryData = d.tables.recentTransactions.map(
-      (t: { id: number; user: string; amount: string }) => ({
-        id: t.id,
-        status: "Success",
-        name: t.user,
-        amount: t.amount,
-        totalNet: t.amount,
-      })
-    );
-  }
+  const paymentsHistoryData: PaymentData[] = useMemo(() => {
+    if (data?.data?.dashboardData) {
+      const d = data.data.dashboardData;
+      return d.tables.recentTransactions.map(
+        (t: { id: number; user: string; amount: string }) => ({
+          id: t.id,
+          status: "Success",
+          name: t.user,
+          amount: t.amount,
+          totalNet: t.amount,
+        })
+      );
+    }
+    return [];
+  }, [data]);
 
   const filteredData = useMemo(() => {
     return paymentsHistoryData.filter((payment) =>
@@ -157,17 +158,16 @@ export const PaymentsHistorySection = ({
           data={paginatedData}
           columns={visibleColumns}
           selectable
-          pagination={false}
-          itemsPerPage={ITEMS_PER_PAGE}
           onRowSelect={handleRowSelect}
           loading={false}
           emptyMessage="No payments found"
           data-testid="payments-table"
         />
 
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-1">
           <Typography variant="body-02" className="text-neutral-500">
-            {selectedRows.length} of {filteredData.length} row(s) selected
+            {selectedRows.length} of{" "}
+            {Math.min(ITEMS_PER_PAGE, filteredData.length)} row(s) selected
           </Typography>
           <div className="flex items-center gap-3">
             <button

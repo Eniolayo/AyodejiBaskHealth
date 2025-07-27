@@ -29,7 +29,7 @@ const BUTTON_STYLES: Record<
   }
 > = {
   primary: {
-    base: "rounded-lg border border-neutral-200 bg-neutral-50 text-[13px] transition-colors hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    base: "rounded-lg border border-neutral-200 bg-neutral-50 text-[13px] transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     sizes: {
       xs: "px-2 py-1",
       sm: "px-2.5 py-1.5",
@@ -38,7 +38,7 @@ const BUTTON_STYLES: Record<
     },
   },
   secondary: {
-    base: "rounded-lg border border-neutral-200 bg-white text-[13px] transition-colors hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    base: "rounded-lg border border-neutral-200 bg-white text-[13px] transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     sizes: {
       xs: "px-2 py-1",
       sm: "px-2.5 py-1.5",
@@ -47,7 +47,7 @@ const BUTTON_STYLES: Record<
     },
   },
   icon: {
-    base: "text-text-primary cursor-pointer rounded-lg transition-colors hover:bg-neutral-500 hover:text-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    base: "text-text-primary cursor-pointer rounded-lg transition-colors hover:bg-neutral-500 hover:text-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     sizes: {
       xs: "p-1",
       sm: "p-1.5",
@@ -56,7 +56,7 @@ const BUTTON_STYLES: Record<
     },
   },
   navigation: {
-    base: "text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 text-[13px] transition-colors hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    base: "text-text-primary flex cursor-pointer items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 text-[13px] transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     sizes: {
       xs: "p-1",
       sm: "p-1.5",
@@ -65,7 +65,7 @@ const BUTTON_STYLES: Record<
     },
   },
   pagination: {
-    base: "rounded transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    base: "rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     sizes: {
       xs: "px-1.5 py-0.5 text-xs",
       sm: "px-2 py-1 text-sm",
@@ -74,7 +74,7 @@ const BUTTON_STYLES: Record<
     },
   },
   danger: {
-    base: "rounded-lg border border-neutral-200 bg-neutral-50 text-[13px] transition-colors hover:border-red-200 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    base: "rounded-lg border border-neutral-200 bg-neutral-50 text-[13px] transition-colors hover:border-red-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     sizes: {
       xs: "p-1",
       sm: "p-1.5",
@@ -83,7 +83,7 @@ const BUTTON_STYLES: Record<
     },
   },
   ghost: {
-    base: "text-text-primary flex items-center gap-3 rounded-md border border-neutral-200 text-[13px] transition-colors hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-200 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+    base: "text-text-primary flex items-center gap-3 rounded-md border border-neutral-200 text-[13px] transition-colors hover:bg-neutral-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
     sizes: {
       xs: "px-1.5 py-1",
       sm: "px-2 py-1.5",

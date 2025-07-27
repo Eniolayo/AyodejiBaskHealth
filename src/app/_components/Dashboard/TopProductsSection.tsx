@@ -55,13 +55,79 @@ export const TopProductsSection = ({
     const d = data.data.dashboardData;
     productData = d.tables.topProducts.map(
       (prod: { name: string; sales: number }) => ({
-        month: prod.name.replace(/product\s+/i, ""),
+        month: prod.name.replace(/product\s+/i, ""), // Short name for X-axis
+        fullName: prod.name, // Full name for tooltip
         "ACME Prod - 01": prod.sales, // For demo, all sales in one
         "ACME Prod - 02": Math.floor(prod.sales * 0.6),
         total: prod.sales,
       })
     );
   }
+  interface CustomTooltipProps {
+    active?: boolean;
+    payload?: {
+      value: number;
+      name: string;
+      payload: {
+        fullName: string;
+        "ACME Prod - 01": number;
+        "ACME Prod - 02": number;
+        total: number;
+      };
+    }[];
+  }
+
+  const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div
+          style={{
+            backgroundColor: "var(--neutral-100)",
+            border: "1px solid var(--neutral-200)",
+            borderRadius: "8px",
+            color: "var(--text-primary)",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+            padding: "8px 12px",
+            fontSize: "13px",
+          }}
+        >
+          <div
+            style={{
+              fontWeight: "500",
+              marginBottom: "4px",
+              textTransform: "capitalize",
+              fontSize: "16px",
+            }}
+          >
+            {data.fullName}
+          </div>
+          {payload?.map(
+            (
+              entry: {
+                value: number;
+                name: string;
+                payload: Record<string, unknown>;
+              },
+              index: number
+            ) => (
+              <div
+                key={index}
+                style={{
+                  color: "var(--text-primary)",
+                  fontWeight: "500",
+                  marginBottom: "4px",
+                }}
+              >
+                {entry.name}: {entry.value}
+              </div>
+            )
+          )}
+        </div>
+      );
+    }
+    return null;
+  };
 
   if (isLoading) {
     return (
@@ -102,25 +168,9 @@ export const TopProductsSection = ({
                 tickLine={false}
                 axisLine={false}
               />
-              <YAxis hide={true} />
+              <YAxis hide={true} dataKey="" />
               <Tooltip
-                contentStyle={{
-                  backgroundColor: "var(--neutral-100)",
-                  border: "1px solid var(--neutral-200)",
-                  borderRadius: "8px",
-                  color: "var(--text-primary)",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                }}
-                labelStyle={{
-                  color: "var(--text-primary)",
-                  fontWeight: "500",
-                  marginBottom: "4px",
-                }}
-                itemStyle={{
-                  color: "var(--text-primary)",
-                  fontSize: "13px",
-                  textTransform: "capitalize",
-                }}
+                content={<CustomTooltip />}
                 cursor={{ stroke: "var(--neutral-300)", strokeWidth: 1 }}
               />
               <Bar
